@@ -32,18 +32,12 @@ art_ascii = """
      d8888888a                                `Y8888                               * Made With Love *
     AY/'' `\Y8b                                 ``Y8b
     Y'      `YP                                    ~~
-
-    $$\      $$\           $$\ $$\                  $$$$$$\        $$$$$$$$\ $$\ $$\                                                   
-    $$ | $\  $$ |          $$ |$$ |                $$  __$$\       $$  _____|$$ |\__|                                                  
-    $$ |$$$\ $$ | $$$$$$\  $$ |$$ |       $$$$$$\  $$ /  \__|      $$ |      $$ |$$\  $$$$$$\   $$$$$$\   $$$$$$\   $$$$$$\   $$$$$$$\ 
-    $$ $$ $$\$$ | \____$$\ $$ |$$ |      $$  __$$\ $$$$\           $$$$$\    $$ |$$ |$$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\ $$  _____|
-    $$$$  _$$$$ | $$$$$$$ |$$ |$$ |      $$ /  $$ |$$  _|          $$  __|   $$ |$$ |$$ /  $$ |$$ /  $$ |$$$$$$$$ |$$ |  \__|\$$$$$$\  
-    $$$  / \$$$ |$$  __$$ |$$ |$$ |      $$ |  $$ |$$ |            $$ |      $$ |$$ |$$ |  $$ |$$ |  $$ |$$   ____|$$ |       \____$$\ 
-    $$  /   \$$ |\$$$$$$$ |$$ |$$ |      \$$$$$$  |$$ |            $$ |      $$ |$$ |$$$$$$$  |$$$$$$$  |\$$$$$$$\ $$ |      $$$$$$$  |
-    \__/     \__| \_______|\__|\__|       \______/ \__|            \__|      \__|\__|$$  ____/ $$  ____/  \_______|\__|      \_______/ 
-                                                                                 $$ |      $$ |                                    
-                                                                                 $$ |      $$ |                                    
-                                                                                 \__|      \__|                                    
+     _       __      ____         ____   _________                           
+    | |     / /___ _/ / /  ____  / __/  / ____/ (_)___  ____  ___  __________
+    | | /| / / __ `/ / /  / __ \/ /_   / /_  / / / __ \/ __ \/ _ \/ ___/ ___/
+    | |/ |/ / /_/ / / /  / /_/ / __/  / __/ / / / /_/ / /_/ /  __/ /  (__  ) 
+    |__/|__/\__,_/_/_/   \____/_/    /_/   /_/_/ .___/ .___/\___/_/  /____/  
+                                              /_/   /_/                                                         
 """
 
 
@@ -53,11 +47,15 @@ from bluepy.btle import Scanner, DefaultDelegate
 from bluepy import btle
 import json
 
-
+vendor_list = []
 found_flippers = []
 data_baseFlippers = []
 live_flippers = []
-bool_detectNonFlippers = True
+bool_detectNonFlippers = False
+
+
+display_live = []
+display_offline = []
 
 
 class FlipDetection:
@@ -69,6 +67,7 @@ class FlipDetection:
                 flipper['Time Last Seen'] = data['Time Last Seen']
                 flipper['RSSI'] = data['RSSI']
                 flipper['Detection Type'] = data['Detection Type']
+                flipper['unixLastSeen'] = data['unixLastSeen']
                 with open('Flipper.json', 'w') as f:
                     json.dump(file_data, f, indent=4)
                 db.close()
@@ -106,62 +105,197 @@ class FlipDetection:
             return False
         else:
             return True
-    
+    def __getVendor__(mac):
+        mac = mac[:8]
+        for vendor in vendor_list:
+            if vendor['macPrefix'] == mac:
+                return vendor['vendorName']
+        return 'Unknown Vendor'
+                
+        
+    def __convertHowLongAgo__(timey):
+        currentTime = int(time.time())
+        timeAgo = currentTime - timey
+        minutes = timeAgo / 60
+        seconds = timeAgo % 60
+        return f"{int(minutes)}m {int(seconds)}s"
     def __fancyDisplay__():
         global found_flippers
         global data_baseFlippers
         global live_flippers
+        global display_live
+        global display_offline
         FlipDetection.__getLoggedFlippers__()
         allign_center = 10
         print(art_ascii)
-        print(f"[FLIPPER NAME]\t\t\t[MAC ADDRESS]\t\t[RSSI]\t\t[FIRST SEEN]\t\t[LAST SEEN]\t\t[TYPE]\t\t[LIVE]")
-        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        print(f"[NAME]\t\t[MAC]\t\t   [F. TIME]  [L. TIME]  [dBm]    [TYPE]     [SPOOF]   [LIVE]")
+        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         for flipper in data_baseFlippers:
             if len(flipper['Name']) > 15:
                 flipper['Name'] = flipper['Name'][:15]
             if flipper['MAC'] in live_flippers:
                 if FlipDetection.__detectFlipperBoo__(flipper['isFlipper']) == True:
-                    print(flipper['Name'].ljust(allign_center) + "\t\t\t" + flipper['MAC'].ljust(allign_center) + "\t" + str(flipper['RSSI']).ljust(allign_center) + "\t" + flipper['Time First Seen'].ljust(allign_center) + "\t" + flipper['Time Last Seen'].ljust(allign_center) + "\t" + flipper['Detection Type'].ljust(allign_center) + "\tTRUE")
+                    display_live.append(flipper)
             else:
                 if FlipDetection.__detectFlipperBoo__(flipper['isFlipper']) == True:
-                    print(flipper['Name'].ljust(allign_center) + "\t\t\t" + flipper['MAC'].ljust(allign_center) + "\t" + str(flipper['RSSI']).ljust(allign_center) + "\t" + flipper['Time First Seen'].ljust(allign_center) + "\t" + flipper['Time Last Seen'].ljust(allign_center) + "\t" + flipper['Detection Type'].ljust(allign_center) + "\tFALSE")
+                    display_offline.append(flipper)
+        totalLive = 0
+        totalOffline = 0
+        if (len(display_live) > 0):
+            print(f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ({len(display_live)} Online Devices) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".ljust(allign_center))
+            for flipper in display_live:
+                totalLive += 1
+                if totalLive < 30:
+                    print( 
+                        flipper['Name'].ljust(allign_center)
+                        + "\t" + 
+                        flipper['MAC'].ljust(allign_center)
+                        + "  " +
+                        str(FlipDetection.__convertHowLongAgo__(flipper['unixFirstSeen'])).ljust(allign_center)
+                        + " " +
+                        str(FlipDetection.__convertHowLongAgo__(flipper['unixLastSeen'])).ljust(allign_center)
+                        + " " +
+                        str(flipper['RSSI']).ljust(allign_center)
+                        + "" +
+                        flipper['Detection Type'].ljust(allign_center)
+                        + "" +
+                        str(flipper['Spoofing']).ljust(allign_center)
+                        + "" +
+                        "TRUE"
+                    )
+                if totalLive == 29:
+                    totalLiveStr = len(display_live) - 30
+                    print(f"━━━━━━━━━━━━━━━━━━ Too many <online> devices to display. ({totalLiveStr} devices) ━━━━━━━━━━━━━━━━━━━━")
+                    break
+        if (len(display_offline) > 0):
+            print(f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ({len(display_offline)} Offline Devices) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".ljust(allign_center))
+            for flipper in display_offline:
+                totalOffline += 1
+                if totalOffline < 20:
+                    print( 
+                        flipper['Name'].ljust(allign_center)
+                        + "\t" + 
+                        flipper['MAC'].ljust(allign_center)
+                        + "  " +
+                        str(FlipDetection.__convertHowLongAgo__(flipper['unixFirstSeen'])).ljust(allign_center)
+                        + " " +
+                        str(FlipDetection.__convertHowLongAgo__(flipper['unixLastSeen'])).ljust(allign_center)
+                        + " " +
+                        str(flipper['RSSI']).ljust(allign_center)
+                        + "" +
+                        flipper['Detection Type'].ljust(allign_center)
+                        + "" +
+                        str(flipper['Spoofing']).ljust(allign_center)
+                        + "" +
+                        "FALSE"
+                    )
+                if totalOffline == 19:
+                    totalOfflineStr = len(display_offline)  - 20
+                    print(f"━━━━━━━━━━━━━━━━━━ Too many <offline> devices to display. ({totalOfflineStr} devices) ━━━━━━━━━━━━━━━━━━━━")
+                    break
+        display_live = []
+        display_offline = []
         live_flippers = []
     def __scan__():
         try:
             if FlipDetection.__inLinux__() == True and FlipDetection.__inRoot__() == True:
                 scanner = Scanner()
-                devices = scanner.scan(0.8)
+                devices = scanner.scan(5)
                 for dev in devices:
                     for (adtype, desc, value) in dev.getScanData():
-                        if (desc == "Complete Local Name"):
-                            if "Flipper" in value:
-                                record_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-                                random_flipper_name = value
-                                flipper_full_name = random_flipper_name
-                                flipper_rssi = dev.rssi
-                                flipper_mac = dev.addr
-                                for flipper in found_flippers:
-                                    if flipper['MAC'] == flipper_mac:
-                                        found_flippers.remove(flipper) 
-                                arrTemp = {
-                                    "Name": str(flipper_full_name),
-                                    "MAC": str(flipper_mac),
-                                    "RSSI": str(flipper_rssi) + " dBm",
-                                    "Detection Type": "UID",
-                                    "Time Last Seen": str(record_time),
-                                    "Time First Seen": str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),
-                                    "isFlipper": True
-                                }
-                                allowFlipperProxy = True
-                                for flipper in found_flippers:
-                                    if flipper['MAC'] == flipper_mac:
-                                        allowFlipperProxy = False
+                        jsonDump = json.dumps(dev.getScanData())
+                        if not "Complete Local Name" in jsonDump:
+                            record_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+                            random_flipper_name = value
+                            flipper_full_name = FlipDetection.__getVendor__(dev.addr)
+                            flipper_rssi = dev.rssi
+                            flipper_mac = dev.addr
+                            for flipper in found_flippers:
+                                if flipper['MAC'] == flipper_mac:
+                                    found_flippers.remove(flipper)
+                            arrTemp = {
+                                "Name": str(flipper_full_name),
+                                "MAC": str(flipper_mac),
+                                "RSSI": str(flipper_rssi) + " dBm",
+                                "Detection Type": "Vendor",
+                                "Spoofing": False,
+                                "Time Last Seen": str(record_time),
+                                "Time First Seen": str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),
+                                "unixFirstSeen": int(time.time()),
+                                "unixLastSeen": int(time.time()),
+                                "isFlipper": False
+                            }
+                            allowFlipperProxy = True
+                            for flipper in found_flippers:
+                                if flipper['MAC'] == flipper_mac:
+                                    allowFlipperProxy = False
+                            if allowFlipperProxy == True:
+                                live_flippers.append(str(flipper_mac))
+                                found_flippers.append(arrTemp)
+                                FlipDetection.__logFlipper__(flipper_full_name,arrTemp) 
+                        else:
+                            if (desc == "Complete Local Name"):
+                                if "Flipper" in value:
+                                    record_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+                                    random_flipper_name = value
+                                    flipper_full_name = random_flipper_name
+                                    flipper_rssi = dev.rssi
+                                    flipper_mac = dev.addr
+                                    for flipper in found_flippers:
+                                        if flipper['MAC'] == flipper_mac:
+                                            found_flippers.remove(flipper) 
+                                    arrTemp = {
+                                        "Name": str(flipper_full_name),
+                                        "MAC": str(flipper_mac),
+                                        "RSSI": str(flipper_rssi) + " dBm",
+                                        "Detection Type": "Flipper",
+                                        "Spoofing": False,
+                                        "Time Last Seen": str(record_time),
+                                        "Time First Seen": str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),
+                                        "unixFirstSeen": int(time.time()),
+                                        "unixLastSeen": int(time.time()),
+                                        "isFlipper": True
+                                    }
+                                    allowFlipperProxy = True
+                                    for flipper in found_flippers:
+                                        if flipper['MAC'] == flipper_mac:
+                                            allowFlipperProxy = False
 
-                                if allowFlipperProxy:
-                                    live_flippers.append(str(flipper_mac))
-                                    found_flippers.append(arrTemp)
-                                    FlipDetection.__logFlipper__(flipper_full_name,arrTemp)      
-                            elif "80:e1:26" in dev.addr:
+                                    if allowFlipperProxy:
+                                        live_flippers.append(str(flipper_mac))
+                                        found_flippers.append(arrTemp)
+                                        FlipDetection.__logFlipper__(flipper_full_name,arrTemp)      
+                                elif "80:e1:26" in dev.addr:
+                                        record_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+                                        random_flipper_name = value
+                                        flipper_full_name = random_flipper_name
+                                        flipper_rssi = dev.rssi
+                                        flipper_mac = dev.addr
+                                        for flipper in found_flippers:
+                                            if flipper['MAC'] == flipper_mac:
+                                                found_flippers.remove(flipper)
+                                        arrTemp = {
+                                            "Name": str(flipper_full_name),
+                                            "MAC": str(flipper_mac),
+                                            "RSSI": str(flipper_rssi) + " dBm",
+                                            "Detection Type": "Flipper",
+                                            "Spoofing": True,
+                                            "Time Last Seen": str(record_time),
+                                            "Time First Seen": str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),
+                                            "unixFirstSeen": int(time.time()),
+                                            "unixLastSeen": int(time.time()),
+                                            "isFlipper": True
+                                        }
+                                        allowFlipperProxy = True
+                                        for flipper in found_flippers:
+                                            if flipper['MAC'] == flipper_mac:
+                                                allowFlipperProxy = False
+
+                                        if allowFlipperProxy == True:
+                                            live_flippers.append(str(flipper_mac))
+                                            found_flippers.append(arrTemp)
+                                            FlipDetection.__logFlipper__(flipper_full_name,arrTemp)  
+                                else:
                                     record_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
                                     random_flipper_name = value
                                     flipper_full_name = random_flipper_name
@@ -174,52 +308,33 @@ class FlipDetection:
                                         "Name": str(flipper_full_name),
                                         "MAC": str(flipper_mac),
                                         "RSSI": str(flipper_rssi) + " dBm",
-                                        "Detection Type": "UIDv2",
+                                        "Detection Type": "Device",
+                                        "Spoofing": False,
                                         "Time Last Seen": str(record_time),
                                         "Time First Seen": str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),
-                                        "isFlipper": True
+                                        "unixFirstSeen": int(time.time()),
+                                        "unixLastSeen": int(time.time()),
+                                        "isFlipper": False
                                     }
                                     allowFlipperProxy = True
                                     for flipper in found_flippers:
                                         if flipper['MAC'] == flipper_mac:
                                             allowFlipperProxy = False
-
                                     if allowFlipperProxy == True:
                                         live_flippers.append(str(flipper_mac))
                                         found_flippers.append(arrTemp)
                                         FlipDetection.__logFlipper__(flipper_full_name,arrTemp)  
-                            else:
-                                record_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-                                random_flipper_name = value
-                                flipper_full_name = random_flipper_name
-                                flipper_rssi = dev.rssi
-                                flipper_mac = dev.addr
-                                for flipper in found_flippers:
-                                    if flipper['MAC'] == flipper_mac:
-                                        found_flippers.remove(flipper)
-                                arrTemp = {
-                                    "Name": str(flipper_full_name),
-                                    "MAC": str(flipper_mac),
-                                    "RSSI": str(flipper_rssi) + " dBm",
-                                    "Detection Type": "UIDv3",
-                                    "Time Last Seen": str(record_time),
-                                    "Time First Seen": str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),
-                                    "isFlipper": False
-                                }
-                                allowFlipperProxy = True
-                                for flipper in found_flippers:
-                                    if flipper['MAC'] == flipper_mac:
-                                        allowFlipperProxy = False
-                                if allowFlipperProxy == True:
-                                    live_flippers.append(str(flipper_mac))
-                                    found_flippers.append(arrTemp)
-                                    FlipDetection.__logFlipper__(flipper_full_name,arrTemp)  
 
             else:
                 return "Err, something went wrong with validation"
         except (RuntimeError, TypeError, NameError) as e:
                 FlipDetection.__warn__("Encountered an error while scanning for devices. Error: " + str(e))
 if __name__ == '__main__':
+    loadFile = open("mac-vendors-export.json", "r")
+    loadJson = json.load(loadFile)
+    for vendor in loadJson:
+        vendor_list.append(vendor)
+    loadFile.close()
     while True:
         os.system("clear || cls")
         data_baseFlippers = []
