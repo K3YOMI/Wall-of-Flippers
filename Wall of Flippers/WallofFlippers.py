@@ -4,9 +4,8 @@
 # Have a blessed day!
 
 
-#   What is WallofFlippers? 
-#       Wall of Flippers is designed to capture bluetooth devices in the range of your device. In addition, it will detect the Flipper Zero device and 
-#       display it on the screen. It will also log the Flipper Zero device in a JSON file for future reference and other devices as well.
+#   What is NoFlip? 
+#       NoFlip is a simple python script that detects the Flipper Zero device that is used as a multi-tool for ethical hackers.
 
 
 #  How to use?
@@ -42,9 +41,9 @@ art_ascii = """
     $$$  / \$$$ |$$  __$$ |$$ |$$ |      $$ |  $$ |$$ |            $$ |      $$ |$$ |$$ |  $$ |$$ |  $$ |$$   ____|$$ |       \____$$\ 
     $$  /   \$$ |\$$$$$$$ |$$ |$$ |      \$$$$$$  |$$ |            $$ |      $$ |$$ |$$$$$$$  |$$$$$$$  |\$$$$$$$\ $$ |      $$$$$$$  |
     \__/     \__| \_______|\__|\__|       \______/ \__|            \__|      \__|\__|$$  ____/ $$  ____/  \_______|\__|      \_______/ 
-                                                                                    $$ |      $$ |                                    
-                                                                                    $$ |      $$ |                                    
-                                                                                    \__|      \__|                                    
+                                                                                 $$ |      $$ |                                    
+                                                                                 $$ |      $$ |                                    
+                                                                                 \__|      \__|                                    
 """
 
 
@@ -58,7 +57,7 @@ import json
 found_flippers = []
 data_baseFlippers = []
 live_flippers = []
-bool_detectNonFlippers = False
+bool_detectNonFlippers = True
 
 
 class FlipDetection:
