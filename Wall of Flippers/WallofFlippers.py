@@ -127,9 +127,6 @@ class FlipDetection:
         global display_offline
         FlipDetection.__getLoggedFlippers__()
         allign_center = 10
-        print(art_ascii)
-        print(f"[NAME]\t\t[MAC]\t\t   [F. TIME]  [L. TIME]  [dBm]    [TYPE]     [SPOOF]   [LIVE]")
-        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         for flipper in data_baseFlippers:
             if len(flipper['Name']) > 15:
                 flipper['Name'] = flipper['Name'][:15]
@@ -141,8 +138,12 @@ class FlipDetection:
                     display_offline.append(flipper)
         totalLive = 0
         totalOffline = 0
+        print(art_ascii)
+        print(f"Total Online...: {len(display_live)}")
+        print(f"Total Offline..: {len(display_offline)}\n\n")
+        print(f"[NAME]\t\t[MAC]\t\t   [F. TIME]  [L. TIME]  [dBm]    [TYPE]     [SPOOF]   [LIVE]")
+        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         if (len(display_live) > 0):
-            print(f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ({len(display_live)} Online Devices) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".ljust(allign_center))
             for flipper in display_live:
                 totalLive += 1
                 if totalLive < 30:
@@ -168,7 +169,6 @@ class FlipDetection:
                     print(f"━━━━━━━━━━━━━━━━━━ Too many <online> devices to display. ({totalLiveStr} devices) ━━━━━━━━━━━━━━━━━━━━")
                     break
         if (len(display_offline) > 0):
-            print(f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ({len(display_offline)} Offline Devices) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━".ljust(allign_center))
             for flipper in display_offline:
                 totalOffline += 1
                 if totalOffline < 20:
