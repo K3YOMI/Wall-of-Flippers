@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 # All rights reserved to the contributors of the bluepy library. I am not the owner of this library. However, I am the owner of the code below handling
 # the bluetooth scanning detection for the Flipper zero device. For any questions / mistakes, please feel free to contact me on my github account @K3YOMI
 # Have a blessed day!
