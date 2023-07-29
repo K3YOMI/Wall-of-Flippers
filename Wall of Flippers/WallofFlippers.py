@@ -51,7 +51,7 @@ vendor_list = []
 found_flippers = []
 data_baseFlippers = []
 live_flippers = []
-bool_detectNonFlippers = False
+bool_detectNonFlippers = True
 
 
 display_live = []
@@ -144,6 +144,7 @@ class FlipDetection:
         print(f"[NAME]\t\t[MAC]\t\t   [F. TIME]  [L. TIME]  [dBm]    [TYPE]     [SPOOF]   [LIVE]")
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         if (len(display_live) > 0):
+            print("( ONLINE DEVICES )".center(95))
             for flipper in display_live:
                 totalLive += 1
                 if totalLive < 30:
@@ -169,6 +170,7 @@ class FlipDetection:
                     print(f"━━━━━━━━━━━━━━━━━━ Too many <online> devices to display. ({totalLiveStr} devices) ━━━━━━━━━━━━━━━━━━━━")
                     break
         if (len(display_offline) > 0):
+            print("( OFFLINE DEVICES )".center(95))
             for flipper in display_offline:
                 totalOffline += 1
                 if totalOffline < 20:
