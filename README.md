@@ -18,7 +18,7 @@ A python based utility to capture bluetooth devices in the range of your device.
 ## ❌ Requirments
 - [Python](https://www.python.org/downloads/) || **https://www.python.org/downloads/** [packages may be required]
 - [BluePy](https://pypi.org/project/bluepy/) || **https://pypi.org/project/bluepy/** [packages may be required]
-- Bluetooth Capable Device (TBA)
+- Device that supports BLE
 - Sudo / Root Access
 
 
