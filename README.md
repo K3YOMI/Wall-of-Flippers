@@ -3,7 +3,7 @@
 
 
 ## ❌ Description
-A python based utility to capture bluetooth devices in the range of your device. In addition, it will detect the Flipper Zero device and display it on the screen. It will also log the Flipper Zero device in a JSON file for future reference and other devices as well. 
+Wall of Flippers is designed to Flipper Zero devices using BLE (Bluetooth Low Energy)
 
 
 ## 🔨 Languages Used
