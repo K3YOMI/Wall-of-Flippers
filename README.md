@@ -3,7 +3,7 @@
 
 
 ## ❌ Description
-Wall of Flippers is designed to Flipper Zero devices using BLE (Bluetooth Low Energy)
+Wall of Flippers is designed to find Flipper Zero devices using BLE (Bluetooth Low Energy)
 
 
 ## 🔨 Languages Used
