@@ -174,7 +174,7 @@ class FliperZeroDetection:
                                 flipper_name = value
                                 flipper_mac = device.addr
                                 flipper_dbm = device.rssi
-                                if not "80:e1:26" in device.addr:
+                                if not "80:e1:26" and "80:e1:27" in device.addr:
                                     arr_temp = {
                                         "Name": flipper_name,
                                         "macAddr":  str(flipper_mac),
@@ -196,7 +196,7 @@ class FliperZeroDetection:
                                     }
                                 arr_discoveredFlippers.append(flipper_mac)
                                 FliperZeroDetection.logFlipper(flipper_name, arr_temp)
-                            elif "80:e1:26" in device.addr:
+                            elif "80:e1:26" or or "80:e1:27" in device.addr:
                                 recorded_time = int(time.time())
                                 flipper_name = value
                                 flipper_mac = device.addr
