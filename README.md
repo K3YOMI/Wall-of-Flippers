@@ -27,6 +27,4 @@ DC31 flippers will be published *shortly* : )
 
 ## Image Showcase
 ![image](https://github.com/K3YOMI/Wall-of-Flippers/assets/54733885/f188bfbb-fa54-4b1c-b468-7635683d214f)
-![IMG_4147](https://github.com/K3YOMI/Wall-of-Flippers/assets/54733885/69707b8b-5240-43fb-a341-2524612b9097)
-
 
