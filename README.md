@@ -10,7 +10,7 @@ DC31 flippers will be published *shortly* : )
 
 
 ## 🔨 Languages Used
-![PY](https://custom-icon-badges.herokuapp.com/badge/Python-black.svg?logo=python&logoColor=orange)
+![PY](https://custom-icon-badges.herokuapp.com/badge/Python-black.svg?logo=python&logoColor=yellow)
 
 ## ⚙️ Configuration and Setup
   - Install **python3**
