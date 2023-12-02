@@ -196,7 +196,7 @@ class FliperZeroDetection:
                                     }
                                 arr_discoveredFlippers.append(flipper_mac)
                                 FliperZeroDetection.logFlipper(flipper_name, arr_temp)
-                            elif "80:e1:26" or or "80:e1:27" in device.addr:
+                            elif "80:e1:26" or "80:e1:27" in device.addr:
                                 recorded_time = int(time.time())
                                 flipper_name = value
                                 flipper_mac = device.addr
