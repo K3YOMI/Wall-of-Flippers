@@ -68,7 +68,7 @@ wof_data = {
         {"PCK": "4c000f05", "TYPE": "BLE_APPLE_IOS_CRASH_LONG"},
         {"PCK": "4c000719010", "TYPE": "BLE_APPLE_DEVICE_POPUP_CLOSE"},
         {"PCK": "4c000f05c0", "TYPE": "BLE_APPLE_ACTION_MODAL_LONG"},
-        {"PCK": "00805f9b34fb", "TYPE": "BLE_ANDROID_DEVICE_CONNECT"},
+        {"PCK": "0000fe2c-0000-1000-8000-00805f9b34fb", "TYPE": "BLE_ANDROID_DEVICE_CONNECT"},
         {"PCK": "75004209810214150321010985010116063c948e00000000c700", "TYPE": "BLE_SAMSUNG_BUDS_POPUP_LONG"},
         {"PCK": "7500010002000101ff000043", "TYPE": "BLE_SAMSUNG_WATCH_PAIR_LONG"},
         {"PCK": "0600030080", "TYPE": "BLE_WINDOWS_SWIFT_PAIR_SHORT"},
@@ -131,12 +131,12 @@ class FlipperUtils:
         print(f"Total Online...: {len(wof_data['display_live'])}")
         print(f"Total Offline..: {len(wof_data['display_offline'])}\n\n")
         total_ble = 0
-        if (len(wof_data['forbidden_packets_found']) > 1):
+        if (len(wof_data['forbidden_packets_found']) > 0):
             print(f"[NAME]\t\t\t\t\t[MAC]\t\t   [PACKET]")
             print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
             for packet in wof_data['forbidden_packets_found']:
                 total_ble = total_ble + 1
-                if (total_ble <= 5):
+                if (total_ble <= 10):
                     name = packet['Type']
                     mac = packet['MAC']
                     pkt = packet['PCK']
@@ -146,7 +146,7 @@ class FlipperUtils:
                         mac.ljust(allign_center) + "  " + 
                         pkt.ljust(allign_center)
                     )
-        if (len(wof_data['forbidden_packets_found']) > 5):
+        if (len(wof_data['forbidden_packets_found']) > 25):
             print(f"━━━━━━━━━━━━━━━━━━ Bluetooth Low Energy (BLE) Attacks Detected ({len(wof_data['forbidden_packets_found'])}+ Packets) ━━━━━━━━━━━━━━━━━━━━")
         print(f"\n\n[NAME]\t\t[MAC]\t\t   [F. TIME]  [L. TIME]  [dBm]    [TYPE]     [SPOOF]   [LIVE]")
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
@@ -237,4 +237,6 @@ if __name__ == '__main__':
             FlipDetection.__scan__()
         time.sleep(0.1)
 
-# Meow... <3
+
+
+                
