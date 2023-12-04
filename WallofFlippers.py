@@ -54,7 +54,7 @@ wof_data = { # I just hold important data
     "forbidden_packets_found": [], # (IGNORE)
     "forbidden_packets": [ # You can add your own packet detection here (optional)
         {"PCK": "4c000f05", "TYPE": "BLE_APPLE_IOS_CRASH_LONG"},
-        {"PCK": "4c000719010", "TYPE": "BLE_APPLE_DEVICE_POPUP_CLOSE"},
+        {"PCK": "4c00071901122055", "TYPE": "BLE_APPLE_DEVICE_POPUP_CLOSE"},
         {"PCK": "4c000f05c0", "TYPE": "BLE_APPLE_ACTION_MODAL_LONG"},
         {"PCK": "0000fe2c-0000-1000-8000-00805f9b34fb", "TYPE": "BLE_ANDROID_DEVICE_CONNECT"},
         {"PCK": "75004209810214150321010985010116063c948e00000000c700", "TYPE": "BLE_SAMSUNG_BUDS_POPUP_LONG"},
