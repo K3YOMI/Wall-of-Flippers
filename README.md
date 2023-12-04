@@ -37,7 +37,7 @@ _______
 ![ezgif-4-eadf27922b](https://github.com/K3YOMI/Wall-of-Flippers/assets/54733885/9e0aeef5-962e-4e0c-b4d5-0b6163441c5c)
 _______
 
-## 💡 Future Improvments
+## 💡 Future Improvements
 - GoLang Support
 - hcidump / hcitool support
 
@@ -46,7 +46,7 @@ _______
 ## 📚 Some Documentation
 
 
-### Requirments
+### Requirements
 A few things are required to properly run WoF. One of them being a linux based operating system.
 This is due to the fact that bluepy (the library used to scan for BTLE devices) requires root privileges and only supports
 linux based systems. Eventually, we will start to support other operating systems. Recommended device to run WoF is a Raspberry Pi as its 
@@ -65,11 +65,12 @@ Finally, `bluepy` is required. This can be installed with the following command:
 
     $ sudo pip3 install bluepy
 
-*Your install may look different depending if python3 is used*
+*Your install may look different depending if python3 is used*\
+*Additionally, if you are having trouble. Feel free to visit this repo for better documentation: https://github.com/IanHarvey/bluepy/*
 
 
 
-### Installiaton
+### Installation
   Alright, it's fun for the fun install process. Downloading WoF is quite straightforward as it's a few commands. 
   I'd recommend using `git` as this command can be easily used to retrieve the repository. Otherwise, just donwload via GitHub.
 
