@@ -35,6 +35,9 @@ Please keep in mind this is a work in progress and will still continue to get up
   - LoveSpouse BTLE Detection
 _______
 ![ezgif-4-eadf27922b](https://github.com/K3YOMI/Wall-of-Flippers/assets/54733885/9e0aeef5-962e-4e0c-b4d5-0b6163441c5c)
+![image](https://github.com/K3YOMI/Wall-of-Flippers/assets/54733885/fbf21224-ecbd-45cb-9a81-ebf48d4bb7d7)
+
+
 _______
 
 ## 💡 Future Improvements
