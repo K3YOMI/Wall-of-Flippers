@@ -89,5 +89,9 @@ Finally, `bluepy` is required. This can be installed with the following command:
   Tad-ah! You are now properly running WoF on your device. Hopefully this small guide works and gets you started on collecting flippers or checking for
   BTLE based attacks. Feel free to report bugs as this can help improve WoF. You can modify, release, or use Wall of Flippers in any way you want
   as long as proper credit is given to `emilia (jbohack)` and `k3yomi (kiyomi)`. Thank you!
-  
+
+### Support Kiyomi (Developer)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/k3yomi)
+### Support Emilia (Contributor)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/emilia0001)
 
