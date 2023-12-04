@@ -60,7 +60,7 @@ wof_data = { # I just hold important data
         {"PCK": "750042098102141503210109____01__063c948e00000000c700", "TYPE": "BLE_SAMSUNG_BUDS_POPUP_LONG"},
         {"PCK": "7500010002000101ff000043__", "TYPE": "BLE_SAMSUNG_WATCH_PAIR_LONG"},
         {"PCK": "0600030080________________________", "TYPE": "BLE_WINDOWS_SWIFT_PAIR_SHORT"},
-        {"PCK": "ff006db643ce97fe427_______", "TYPE": "BLE_LOVE_TOYS_SHORT_WAY"},
+        {"PCK": "ff006db643ce97fe427_______", "TYPE": "BLE_LOVE_TOYS_SHORT_DISTANCE"},
     ]
 }
 
