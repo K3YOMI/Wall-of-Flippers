@@ -53,19 +53,16 @@ wof_data = { # I just hold important data
     "bool_scanning": False, # (IGNORE)
     "forbidden_packets_found": [], # (IGNORE)
     "forbidden_packets": [ # You can add your own packet detection here (optional)
-        {"PCK": "4c000f05", "TYPE": "BLE_APPLE_IOS_CRASH_LONG"},
-        {"PCK": "4c00071901122055", "TYPE": "BLE_APPLE_DEVICE_POPUP_CLOSE"},
-        {"PCK": "4c000f05c0", "TYPE": "BLE_APPLE_ACTION_MODAL_LONG"},
-        {"PCK": "0000fe2c-0000-1000-8000-00805f9b34fb", "TYPE": "BLE_ANDROID_DEVICE_CONNECT"},
-        {"PCK": "75004209810214150321010985010116063c948e00000000c700", "TYPE": "BLE_SAMSUNG_BUDS_POPUP_LONG"},
-        {"PCK": "7500010002000101ff000043", "TYPE": "BLE_SAMSUNG_WATCH_PAIR_LONG"},
-        {"PCK": "0600030080", "TYPE": "BLE_WINDOWS_SWIFT_PAIR_SHORT"},
-        {"PCK": "ff006db643ce97fe427c", "TYPE": "BLE_LOVE_TOYS_VIBRATE_SHORT"},
-        {"PCK": "ff006db643ce97fe427ce5157d", "TYPE": "BLE_LOVE_TOYS_DENIAL_SHORT"},
+        {"PCK": "4c000f05c_________000010______", "TYPE": "BLE_APPLE_IOS_CRASH_LONG"},
+        {"PCK": "4c000719010_2055__________________________________________", "TYPE": "BLE_APPLE_DEVICE_POPUP_CLOSE"},
+        {"PCK": "4c000f05c00_______", "TYPE": "BLE_APPLE_ACTION_MODAL_LONG"},
+        {"PCK": "2cfe______", "TYPE": "BLE_ANDROID_DEVICE_CONNECT"},
+        {"PCK": "750042098102141503210109____01__063c948e00000000c700", "TYPE": "BLE_SAMSUNG_BUDS_POPUP_LONG"},
+        {"PCK": "7500010002000101ff000043__", "TYPE": "BLE_SAMSUNG_WATCH_PAIR_LONG"},
+        {"PCK": "0600030080________________________", "TYPE": "BLE_WINDOWS_SWIFT_PAIR_SHORT"},
+        {"PCK": "ff006db643ce97fe427_______", "TYPE": "BLE_LOVE_TOYS_SHORT_WAY"},
     ]
 }
-
-
 
 
 
@@ -175,12 +172,25 @@ class FlipDetection:
             devices = scanner.scan(5)
             for dev in devices:
                 for (adtype, desc, value) in dev.getScanData():
-                    packet = str(value)
-                    for packet in wof_data['forbidden_packets']:
-                        name = packet['TYPE']
-                        pck = packet['PCK']
-                        if (pck in value):
-                            wof_data['forbidden_packets_found'].append({"MAC": dev.addr, "Type": name, "PCK": value})
+                    string1 = value
+                    string2 = ""
+                    packet_listing = wof_data['forbidden_packets']
+                    for packet in packet_listing:
+                        similar = True
+                        packet_encoded = packet['PCK']
+                        packet_type = packet['TYPE']
+                        string2 = packet_encoded
+                        total_underscores = string2.count("_")
+                        total_found = 0
+                        for char1, char2 in zip(string1, string2):
+                            if char2 != '_' and char1 != char2:
+                                similar = False
+                            if (char1 == char2):
+                                total_found += 1
+                        if (similar == True):
+                            get_non_underscore_chars = len(string2) - total_underscores
+                            if (total_found == get_non_underscore_chars):
+                                wof_data['forbidden_packets_found'].append({"MAC": dev.addr, "PCK": string1, "Type": packet_type})
                     if (desc == "Complete Local Name"):
                         if ("Flipper") in value:
                             record_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -234,7 +244,6 @@ if __name__ == '__main__':
             FlipperUtils.__fancyDisplay__()
             FlipDetection.__scan__()
         time.sleep(0.1)
-
 
 
                 
