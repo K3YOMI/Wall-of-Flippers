@@ -1,70 +1,58 @@
 
-# All rights reserved to the contributors of the bluepy library. I am not the owner of this library. However, I am the owner of the code below handling
-# the bluetooth scanning detection for the Flipper zero device. For any questions / mistakes, please feel free to contact me on my github account @K3YOMI
-# Have a blessed day!
+# bluepy library (https://github.com/IanHarvey/bluepy/blob/master/README.md)
 
-
-#   What is NoFlip? 
-#       NoFlip is a simple python script that detects the Flipper Zero device that is used as a multi-tool for ethical hackers.
-#       Additionally, we added BLE attack detection to the script to detect any BLE attacks that are being sent from a flipper zero or similar devices.
+#   What is Wall of Flippers? 
+#   Wall of Flippers (WoF) is a Python based project designed for Bluetooth Low Energy (BTLE) exploration. 
+#   Its primary functionality involves the discovery of the Flipper Zero and the identification of potential BTLE based attacks
 
 
 #  How to use?
-#       1. Install bluepy (pip3 install bluepy) 
-#       2. Run the script (python3/python/py noflip.py)
-#       3. Watch it scan for all the bluetooth capable devices in range of your device.
-#       4. If you see a Flipper Zero device, it will be detected and you will be notified. shortly after with a timestamp, MAC, RSSI, and name.
-
-
-# Made with Love... uWu
-
-art_ascii = """
-                      YAao,
-                        Y8888b,
-                      ,oA8888888b,
-                ,aaad8888888888888888bo,
-             ,d888888888888888888888888888b,
-           ,888888888888888888888888888888888b,             
-          d8888888888888888888888888888888888888,           
-         d888888888888888888888888888888888888888b
-        d888888P'                    `Y88888888Ꙩ \,
-        88888P'                    Ybaaaa888888  Ꙩ l
-       a8888'                      `Y8888P' `V888888            ( K3YOMI && jbohack )
-     d8888888a                                `Y8888           * We love you nekolai *
-    AY/'' `\Y8b                                 ``Y8b
-    Y'      `YP                                    ~~
-     _       __      ____         ____   _________                           
-    | |     / /___ _/ / /  ____  / __/  / ____/ (_)___  ____  ___  __________
-    | | /| / / __ `/ / /  / __ \/ /_   / /_  / / / __ \/ __ \/ _ \/ ___/ ___/
-    | |/ |/ / /_/ / / /  / /_/ / __/  / __/ / / / /_/ / /_/ /  __/ /  (__  ) 
-    |__/|__/\__,_/_/_/   \____/_/    /_/   /_/_/ .___/ .___/\___/_/  /____/   v2 - Rewritten
-                                              /_/   /_/                                
-
-
-    Last Updated >> 12/02/2023                         
-"""
-
-
-
-import os,time,random
-from bluepy.btle import Scanner, DefaultDelegate
-from bluepy import btle
-import json
+#       1. Install libglib2.0-dev (sudo apt-get install python-pip libglib2.0-dev) 
+#       2. Install bluepy (sudo pip install bluepy)
+#       3. Run the script (sudo python WallofFlippers.py)
 
 
 
 
-wof_data = {
-    "found_flippers": [],
-    "data_baseFlippers": [],
-    "live_flippers": [],
-    "display_live": [],
-    "display_offline": [],
-    "max_online": 30,
-    "max_offline": 15,
-    "bool_scanning": False,
-    "forbidden_packets_found": [],
-    "forbidden_packets": [
+import os,time,json,random
+from bluepy.btle import Scanner
+
+dolphin_thinking = [
+    'Let\'s hunt some flippers', 
+    "uWu, I see a flipper nearby!", 
+    "I have been deployed owo", 
+    "Ya'll like war driving flippers?", 
+    "I was made with love and care",
+    "Please stop annoying people with your flipper...",
+    "Script kiddie detector 9000",
+    "This video is sponsored by PCBWay!!!",
+    "I'm a flipper, you're a flipper, we're all flippers!",
+    "Please refrain from annoying people with your flipper...",
+    "My VIBRO Motor go brrrrrzz5rzrrz",
+    "Fun fact: Astro is a synesthesiac moon deer 🤯",
+    "Flipper Zero : Advanced Warefare",
+    "Why does my flipper make a ticking noise with the RGB Mod??!?!",
+    "No, you can not control traffic lights. Stop asking....",
+    "Don't be a skid!!!!!!",
+    "yo put a lily quote in there - lily",
+    "discord.gg/squachtopia",
+]
+ascii = open('ascii.txt', 'r').read()
+
+
+
+
+wof_data = { # I just hold important data
+    "found_flippers": [], # (IGNORE)
+    "data_baseFlippers": [], # (IGNORE)
+    "live_flippers": [], # (IGNORE)
+    "display_live": [], # (IGNORE)
+    "display_offline": [], # (IGNORE)
+    "max_online": 30, # Max online devices to display
+    "max_offline": 15, # Max offline devices to display
+    "bool_scanning": False, # (IGNORE)
+    "forbidden_packets_found": [], # (IGNORE)
+    "forbidden_packets": [ # You can add your own packet detection here (optional)
         {"PCK": "4c000f05", "TYPE": "BLE_APPLE_IOS_CRASH_LONG"},
         {"PCK": "4c000719010", "TYPE": "BLE_APPLE_DEVICE_POPUP_CLOSE"},
         {"PCK": "4c000f05c0", "TYPE": "BLE_APPLE_ACTION_MODAL_LONG"},
@@ -82,6 +70,8 @@ wof_data = {
 
 
 class FlipperUtils:
+    def __asciiArt__():
+        print(ascii.replace("[RANDOM_QUOTE]", random.choice(dolphin_thinking)))
     def __convertHowLongAgo__(timey):
         currentTime = int(time.time())
         timeAgo = currentTime - timey
@@ -127,7 +117,7 @@ class FlipperUtils:
         totalLive = 0
         totalOffline = 0
         os.system("clear || cls")
-        print(art_ascii)
+        FlipperUtils.__asciiArt__()
         print(f"Total Online...: {len(wof_data['display_live'])}")
         print(f"Total Offline..: {len(wof_data['display_offline'])}\n\n")
         total_ble = 0
@@ -230,6 +220,14 @@ class FlipDetection:
                 wof_data['bool_scanning'] == False
 if __name__ == '__main__':
     os.system("clear || cls")
+    get_os = os.name
+    get_root = os.getuid()
+    if (get_os != "posix"):
+        print("[!] NoFlip >> WoF is not supported on Windows.\n\t      Reason: Dependency on bluepy library.")
+        exit()
+    if (get_root != 0):
+        print("[!] NoFlip >> WoF requires root privileges to run.\n\t      Reason: Dependency on bluepy library.")
+        exit()
     while True:
         if (wof_data['bool_scanning'] == False):
             wof_data['data_baseFlippers'] = []
