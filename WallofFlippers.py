@@ -17,6 +17,7 @@
 import os,time,json,random
 from bluepy.btle import Scanner
 
+
 dolphin_thinking = [
     'Let\'s hunt some flippers', 
     "uWu, I see a flipper nearby!", 
@@ -32,10 +33,12 @@ dolphin_thinking = [
     "Fun fact: Astro is a synesthesiac moon deer 🤯",
     "Flipper Zero : Advanced Warefare",
     "Why does my flipper make a ticking noise with the RGB Mod??!?!",
-    "No, you can not control traffic lights. Stop asking....",
+    "Stop committing 'war crimes' with your flipper",
     "Don't be a skid!!!!!!",
     "yo put a lily quote in there - lily",
     "discord.gg/squachtopia",
+    "Hack the planet!",
+    "I look really intimidating!"
 ]
 ascii = open('ascii.txt', 'r').read()
 
@@ -49,7 +52,7 @@ wof_data = { # I just hold important data
     "display_live": [], # (IGNORE)
     "display_offline": [], # (IGNORE)
     "max_online": 30, # Max online devices to display
-    "max_offline": 15, # Max offline devices to display
+    "max_offline": 30, # Max offline devices to display
     "bool_scanning": False, # (IGNORE)
     "forbidden_packets_found": [], # (IGNORE)
     "forbidden_packets": [ # You can add your own packet detection here (optional)
@@ -61,8 +64,10 @@ wof_data = { # I just hold important data
         {"PCK": "7500010002000101ff000043__", "TYPE": "BLE_SAMSUNG_WATCH_PAIR_LONG"},
         {"PCK": "0600030080________________________", "TYPE": "BLE_WINDOWS_SWIFT_PAIR_SHORT"},
         {"PCK": "ff006db643ce97fe427_______", "TYPE": "BLE_LOVE_TOYS_SHORT_DISTANCE"},
-    ]
+    ]                                                  
 }
+
+
 
 
 
@@ -74,9 +79,6 @@ class FlipperUtils:
         timeAgo = currentTime - timey
         minutes = str(timeAgo // 60) + "m"
         seconds = str(timeAgo % 60) + "s"
-        if timeAgo // 60 > 10000:
-            minutes = "---"
-            seconds = "---"
         return f"{(minutes)} {(seconds)}"
     def __logFlipper__(name, data): 
         db = open('Flipper.json', 'r')
@@ -103,8 +105,9 @@ class FlipperUtils:
         for flipper in file_data:
             wof_data['data_baseFlippers'].append(flipper)
         db.close()
-        allign_center = 10
+        allign_center = 8
         for flipper in wof_data['data_baseFlippers']:
+            flipper['Name'] = flipper['Name'].replace("Flipper ", "")
             if len(flipper['Name']) > 15:
                 flipper['Name'] = flipper['Name'][:15]
             if flipper['MAC'] in wof_data['live_flippers']:
@@ -135,29 +138,64 @@ class FlipperUtils:
                     )
         if (len(wof_data['forbidden_packets_found']) > 25):
             print(f"━━━━━━━━━━━━━━━━━━ Bluetooth Low Energy (BLE) Attacks Detected ({len(wof_data['forbidden_packets_found'])}+ Packets) ━━━━━━━━━━━━━━━━━━━━")
-        print(f"\n\n[NAME]\t\t[MAC]\t\t   [F. TIME]  [L. TIME]  [dBm]    [TYPE]     [SPOOF]   [LIVE]")
-        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        print(f"\n\n[FLIPPER]".ljust(8)
+            + "\t" +
+            "[ADDR]".ljust(8)
+            + "\t\t" +
+            "[FIRST]".ljust(8)
+            + "\t" +
+            "[LAST]".ljust(8)
+            + "\t" +
+            "[RSSI]".ljust(8)
+            + "\t" +
+            "[SPOOFING]".ljust(8)
+        )
+        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         if (len(wof_data['display_live']) > 0):
-            print("( ONLINE DEVICES )".center(95))
+            print("(ONLINE DEVICES)".center(100))
             for flipper in wof_data['display_live']:
                 totalLive += 1
                 if totalLive < wof_data['max_online']:
-                    print(  flipper['Name'].ljust(allign_center) + "\t" +  flipper['MAC'].ljust(allign_center) + "  " + str(FlipperUtils.__convertHowLongAgo__(flipper['unixFirstSeen'])).ljust(allign_center) + " " + str(FlipperUtils.__convertHowLongAgo__(flipper['unixLastSeen'])).ljust(allign_center) + " " + str(flipper['RSSI']).ljust(allign_center) + "" + flipper['Detection Type'].ljust(allign_center) + "" + str(flipper['Spoofing']).ljust(allign_center) + "" + "True" )
+                    print(  
+                        flipper['Name'].ljust(8)
+                        + "\t" + 
+                        flipper['MAC']
+                        + "\t" + 
+                        str(FlipperUtils.__convertHowLongAgo__(flipper['unixFirstSeen'])).ljust(8) 
+                        + "\t" + 
+                        str(FlipperUtils.__convertHowLongAgo__(flipper['unixLastSeen'])).ljust(8) 
+                        + "\t" + 
+                        str((flipper['RSSI'])) +"".ljust(8) 
+                        + "\t" + 
+                        str(flipper['Spoofing']).ljust(8) 
+                    )
                 if totalLive == wof_data['max_online'] - 1:
                     totalLiveStr = len(wof_data['display_live']) - wof_data['max_online']
-                    print(f"━━━━━━━━━━━━━━━━━━ Too many <online> devices to display. ({totalLiveStr} devices) ━━━━━━━━━━━━━━━━━━━━")
+                    print(f"Too many <online> devices to display. ({totalLiveStr} devices)".center(100))
                     break
         if (len(wof_data['display_offline']) > 0):
             # reorganize to show the unix last seen first
             wof_data['display_offline'] = sorted(wof_data['display_offline'], key=lambda k: k['unixLastSeen'], reverse=True)
-            print("( OFFLINE DEVICES )".center(95))
+            print("(OFFLINE DEVICES)".center(100))
             for flipper in wof_data['display_offline']:
                 totalOffline += 1
                 if totalOffline < wof_data['max_offline']:
-                    print( flipper['Name'].ljust(allign_center)+ "\t" + flipper['MAC'].ljust(allign_center)+ "  " + str(FlipperUtils.__convertHowLongAgo__(flipper['unixFirstSeen'])).ljust(allign_center) + " " + str(FlipperUtils.__convertHowLongAgo__(flipper['unixLastSeen'])).ljust(allign_center) + " " + str(flipper['RSSI']).ljust(allign_center) + "" + flipper['Detection Type'].ljust(allign_center) + "" + str(flipper['Spoofing']).ljust(allign_center) + "" + "False")
+                    print( 
+                        flipper['Name'].ljust(8)
+                        + "\t" + 
+                        flipper['MAC']
+                        + "\t" + 
+                        str(FlipperUtils.__convertHowLongAgo__(flipper['unixFirstSeen'])).ljust(8) 
+                        + "\t" + 
+                        str(FlipperUtils.__convertHowLongAgo__(flipper['unixLastSeen'])).ljust(8)
+                        + "\t" + 
+                        "-".ljust(8)
+                        + "\t" + 
+                        str(flipper['Spoofing']).ljust(8)
+                    )
                 if totalOffline == wof_data['max_offline'] - 1:
                     totalOfflineStr = len(wof_data['display_offline'])  - wof_data['max_offline']
-                    print(f"━━━━━━━━━━━━━━━━━━ Too many <offline> devices to display. ({totalOfflineStr} devices) ━━━━━━━━━━━━━━━━━━━━")
+                    print(f" Too many <offline> devices to display. ({totalOfflineStr} devices)".center(100))
                     break
         wof_data['display_live'] = []
         wof_data['display_offline'] = []
@@ -200,7 +238,7 @@ class FlipDetection:
                             flipper_mac = dev.addr
                             for flipper in wof_data['found_flippers']: 
                                 if flipper['MAC'] == flipper_mac: wof_data['found_flippers'].remove(flipper)
-                            arrTemp = {"Name": str(flipper_full_name),"MAC": str(flipper_mac),"RSSI": str(flipper_rssi) + " dBm","Detection Type": "Flipper","Spoofing": False,"Time Last Seen": str(record_time),"Time First Seen": str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),"unixFirstSeen": int(time.time()),"unixLastSeen": int(time.time()),"isFlipper": True}
+                            arrTemp = {"Name": str(flipper_full_name),"MAC": str(flipper_mac),"RSSI": str(flipper_rssi) + "","Detection Type": "Flipper","Spoofing": False,"Time Last Seen": str(record_time),"Time First Seen": str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),"unixFirstSeen": int(time.time()),"unixLastSeen": int(time.time()),"isFlipper": True}
                             allowFlipperProxy = True
                             for flipper in wof_data['found_flippers']:
                                 if flipper['MAC'] == flipper_mac: allowFlipperProxy = False
@@ -216,7 +254,7 @@ class FlipDetection:
                                 flipper_mac = dev.addr
                                 for flipper in wof_data['found_flippers']: 
                                     if flipper['MAC'] == flipper_mac: wof_data['found_flippers'].remove(flipper)
-                                arrTemp = {"Name": str(flipper_full_name),"MAC": str(flipper_mac),"RSSI": str(flipper_rssi) + " dBm","Detection Type": "Flipper","Spoofing": True,"Time Last Seen": str(record_time),"Time First Seen": str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),"unixFirstSeen": int(time.time()),"unixLastSeen": int(time.time()),"isFlipper": True}
+                                arrTemp = {"Name": str(flipper_full_name),"MAC": str(flipper_mac),"RSSI": str(flipper_rssi) + "","Detection Type": "Flipper","Spoofing": True,"Time Last Seen": str(record_time),"Time First Seen": str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),"unixFirstSeen": int(time.time()),"unixLastSeen": int(time.time()),"isFlipper": True}
                                 allowFlipperProxy = True
                                 for flipper in wof_data['found_flippers']:
                                     if flipper['MAC'] == flipper_mac: allowFlipperProxy = False
@@ -244,6 +282,3 @@ if __name__ == '__main__':
             FlipperUtils.__fancyDisplay__()
             FlipDetection.__scan__()
         time.sleep(0.1)
-
-
-                
