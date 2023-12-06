@@ -122,7 +122,7 @@ class FlipperUtils:
         print(f"Total Offline..: {len(wof_data['display_offline'])}\n\n")
         total_ble = 0
         if (len(wof_data['forbidden_packets_found']) > 0):
-            print(f"[NAME]\t\t\t\t\t[MAC]\t\t   [PACKET]")
+            print(f"[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
             print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
             for packet in wof_data['forbidden_packets_found']:
                 total_ble = total_ble + 1
