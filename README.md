@@ -47,10 +47,10 @@ _______
 
 
 ### Requirements
-A few things are required to properly run WoF. One of them being a linux based operating system.
-This is due to the fact that bluepy (the library used to scan for BTLE devices) requires root privileges and only supports
-linux based systems. Eventually, we will start to support other operating systems. Recommended device to run WoF is a Raspberry Pi as its 
-easily portable. Additionally, it's also required to have a `chipset` or a USB `adapter` that supports BTLE.
+A few things are required to properly run WoF. We Recommend the Raspberry Pi as its compact and portable! Additionally, it's also required to have a `chipset` or a USB `adapter` that supports BTLE.
+Additionally, we also now have *limited* support for Windows and *full* support for linux at this time. 
+
+## Linux Install Guide
 
 Another `requirement` is Python. Debian based install:
 
@@ -70,7 +70,7 @@ Finally, `bluepy` is required. This can be installed with the following command:
 
 
 
-### Installation
+### Git Clone and Running
   Alright, it's fun for the fun install process. Downloading WoF is quite straightforward as it's a few commands. 
   I'd recommend using `git` as this command can be easily used to retrieve the repository. Otherwise, just donwload via GitHub.
 
@@ -82,7 +82,37 @@ Finally, `bluepy` is required. This can be installed with the following command:
 
   Next, run under `sudo` as this part is required to properly use the `pyblue` functionality.
 
-    $ sudo python3 WallofFlippers.py
+    $ sudo python3 WallofFlippers.py 
+
+
+
+## Windows Install Guide
+  Another `requirement` is Python. Windows Based Below:\
+  https://www.python.org/
+
+  `bleak` is required. This can be installed with the following command:
+
+    $ pip install bleak
+
+  Additional commands may need to be ran for pip to run properly. see: https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-internal-or-external-command
+
+  *Your install may look different depending if py is used*\
+  *Additionally, if you are having trouble. Feel free to visit this repo for better documentation: https://github.com/hbldh/bleak*
+
+  ### Git Clone and Running
+  Alright, it's fun for the fun install process. Downloading WoF is quite straightforward as it's a few commands. 
+  I'd recommend using `git` as this command can be easily used to retrieve the repository. Otherwise, just donwload via GitHub.
+  
+    $ git clone https://github.com/K3YOMI/Wall-of-Flippers
+    
+  After installing, navigate to the Wall of Flippers directory
+  
+    $ cd ./Wall\ of\ Flippers
+
+  Next, run this command below to start the python script and wallah! You are now running Wall of Flippers!
+
+    $ py WallofFlippers.py 
+
 
   ### Conclusion
 
