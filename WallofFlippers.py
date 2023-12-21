@@ -5,42 +5,19 @@
 #   Wall of Flippers (WoF) is a Python based project designed for Bluetooth Low Energy (BTLE) exploration. 
 #   Its primary functionality involves the discovery of the Flipper Zero and the identification of potential BTLE based attacks
 
-
-#  How to use?
-#       1. Install libglib2.0-dev (sudo apt-get install python-pip libglib2.0-dev) 
-#       2. Install bluepy (sudo pip install bluepy)
-#       3. Run the script (sudo python WallofFlippers.py)
-
-
-
-
-import os,time,json,random
-from bluepy.btle import Scanner
-
+# Thanks for all the support, feels very welcoming to see people interested in this project! - Kiyomi + Emilia
 
 dolphin_thinking = [
     'Let\'s hunt some flippers', 
-    "uWu, I see a flipper nearby!", 
-    "I have been deployed owo", 
     "Ya'll like war driving flippers?", 
-    "I was made with love and care",
-    "Please stop annoying people with your flipper...",
-    "Script kiddie detector 9000",
-    "This video is sponsored by PCBWay!!!",
+    "Skid detector 9000",
     "I'm a flipper, you're a flipper, we're all flippers!",
-    "Please refrain from annoying people with your flipper...",
-    "My VIBRO Motor go brrrrrzz5rzrrz",
-    "Fun fact: Astro is a synesthesiac moon deer 🤯",
     "Flipper Zero : Advanced Warefare",
-    "Why does my flipper make a ticking noise with the RGB Mod??!?!",
-    "Stop committing 'war crimes' with your flipper",
     "Don't be a skid!!!!!!",
-    "yo put a lily quote in there - lily",
     "discord.gg/squachtopia",
     "Hack the planet!",
-    "I look really intimidating!"
 ]
-ascii = open('ascii.txt', 'r').read()
+ascii = open('ascii.txt', 'r', encoding="utf8").read()
 
 
 
@@ -55,7 +32,8 @@ wof_data = { # I just hold important data
     "max_offline": 30, # Max offline devices to display
     "bool_scanning": False, # (IGNORE)
     "forbidden_packets_found": [], # (IGNORE)
-    "forbidden_packets": [ # You can add your own packet detection here (optional)
+    "system_type": None, # (IGNORE)
+    "forbidden_packets": [ # Not complete and feel free to add more ("_" = Random Value)
         {"PCK": "4c000f05c_________000010______", "TYPE": "BLE_APPLE_IOS_CRASH_LONG"},
         {"PCK": "4c000719010_2055__________________________________________", "TYPE": "BLE_APPLE_DEVICE_POPUP_CLOSE"},
         {"PCK": "4c000f05c00_______", "TYPE": "BLE_APPLE_ACTION_MODAL_LONG"},
@@ -71,7 +49,7 @@ wof_data = { # I just hold important data
 
 
 
-class FlipperUtils:
+class FlipperUtils: # meow meow, I dislike this class
     def __asciiArt__():
         print(ascii.replace("[RANDOM_QUOTE]", random.choice(dolphin_thinking)))
     def __convertHowLongAgo__(timey):
@@ -85,7 +63,6 @@ class FlipperUtils:
         file_data = json.load(db)
         for flipper in file_data:
              if flipper['MAC'] == data['MAC']:
-                flipper['Time Last Seen'] = data['Time Last Seen']
                 flipper['RSSI'] = data['RSSI']
                 flipper['Detection Type'] = data['Detection Type']
                 flipper['unixLastSeen'] = data['unixLastSeen']
@@ -121,78 +98,40 @@ class FlipperUtils:
         print(f"Total Online...: {len(wof_data['display_live'])}")
         print(f"Total Offline..: {len(wof_data['display_offline'])}\n\n")
         total_ble = 0
-        if (len(wof_data['forbidden_packets_found']) > 0):
-            print(f"[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
-            print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-            for packet in wof_data['forbidden_packets_found']:
-                total_ble = total_ble + 1
-                if (total_ble <= 10):
-                    name = packet['Type']
-                    mac = packet['MAC']
-                    pkt = packet['PCK']
-                    print(  
-                        name.ljust(allign_center) + 
-                          "\t\t" +  
-                        mac.ljust(allign_center) + "  " + 
-                        pkt.ljust(allign_center)
-                    )
-        if (len(wof_data['forbidden_packets_found']) > 25):
-            print(f"━━━━━━━━━━━━━━━━━━ Bluetooth Low Energy (BLE) Attacks Detected ({len(wof_data['forbidden_packets_found'])}+ Packets) ━━━━━━━━━━━━━━━━━━━━")
-        print(f"\n\n[FLIPPER]".ljust(8)
-            + "\t" +
-            "[ADDR]".ljust(8)
-            + "\t\t" +
-            "[FIRST]".ljust(8)
-            + "\t" +
-            "[LAST]".ljust(8)
-            + "\t" +
-            "[RSSI]".ljust(8)
-            + "\t" +
-            "[SPOOFING]".ljust(8)
-        )
+        if (wof_data['system_type'] == "posix"):
+            if (len(wof_data['forbidden_packets_found']) > 0):
+                print(f"[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
+                print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+                for packet in wof_data['forbidden_packets_found']:
+                    total_ble = total_ble + 1
+                    if (total_ble <= 10):
+                        name = packet['Type']
+                        mac = packet['MAC']
+                        pkt = packet['PCK']
+                        print(name.ljust(allign_center) +   "\t\t" +  mac.ljust(allign_center) + "  " + pkt.ljust(allign_center))
+            if (len(wof_data['forbidden_packets_found']) > 25):
+                print(f"━━━━━━━━━━━━━━━━━━ Bluetooth Low Energy (BLE) Attacks is still in development. ━━━━━━━━━━━━━━━━━━")
+        else:
+            print(f"━━━━━━━━━━━━━━━━━━ Bluetooth Low Energy (BLE) Attack Detections Are Not Supported On Windows ━━━━━━━━━━━━━━━━━━━━")
+        print(f"\n\n[FLIPPER]".ljust(8)+ "\t" +"[ADDR]".ljust(8)+ "\t\t" +"[FIRST]".ljust(8)+ "\t" +"[LAST]".ljust(8)+ "\t" +"[RSSI]".ljust(8)+ "\t" +"[SPOOFING]".ljust(8))
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         if (len(wof_data['display_live']) > 0):
             print("(ONLINE DEVICES)".center(100))
             for flipper in wof_data['display_live']:
                 totalLive += 1
                 if totalLive < wof_data['max_online']:
-                    print(  
-                        flipper['Name'].ljust(8)
-                        + "\t" + 
-                        flipper['MAC']
-                        + "\t" + 
-                        str(FlipperUtils.__convertHowLongAgo__(flipper['unixFirstSeen'])).ljust(8) 
-                        + "\t" + 
-                        str(FlipperUtils.__convertHowLongAgo__(flipper['unixLastSeen'])).ljust(8) 
-                        + "\t" + 
-                        str((flipper['RSSI'])) +"".ljust(8) 
-                        + "\t" + 
-                        str(flipper['Spoofing']).ljust(8) 
-                    )
+                    print(flipper['Name'].ljust(8)+ "\t" + flipper['MAC']+ "\t" + str(FlipperUtils.__convertHowLongAgo__(flipper['unixFirstSeen'])).ljust(8) + "\t" + str(FlipperUtils.__convertHowLongAgo__(flipper['unixLastSeen'])).ljust(8) + "\t" + str((flipper['RSSI'])) +"".ljust(8) + "\t" + str(flipper['Spoofing']).ljust(8) )
                 if totalLive == wof_data['max_online'] - 1:
                     totalLiveStr = len(wof_data['display_live']) - wof_data['max_online']
                     print(f"Too many <online> devices to display. ({totalLiveStr} devices)".center(100))
                     break
         if (len(wof_data['display_offline']) > 0):
-            # reorganize to show the unix last seen first
             wof_data['display_offline'] = sorted(wof_data['display_offline'], key=lambda k: k['unixLastSeen'], reverse=True)
             print("(OFFLINE DEVICES)".center(100))
             for flipper in wof_data['display_offline']:
                 totalOffline += 1
                 if totalOffline < wof_data['max_offline']:
-                    print( 
-                        flipper['Name'].ljust(8)
-                        + "\t" + 
-                        flipper['MAC']
-                        + "\t" + 
-                        str(FlipperUtils.__convertHowLongAgo__(flipper['unixFirstSeen'])).ljust(8) 
-                        + "\t" + 
-                        str(FlipperUtils.__convertHowLongAgo__(flipper['unixLastSeen'])).ljust(8)
-                        + "\t" + 
-                        "-".ljust(8)
-                        + "\t" + 
-                        str(flipper['Spoofing']).ljust(8)
-                    )
+                    print( flipper['Name'].ljust(8)+ "\t" + flipper['MAC']+ "\t" + str(FlipperUtils.__convertHowLongAgo__(flipper['unixFirstSeen'])).ljust(8) + "\t" + str(FlipperUtils.__convertHowLongAgo__(flipper['unixLastSeen'])).ljust(8)+ "\t" + "-".ljust(8)+ "\t" + str(flipper['Spoofing']).ljust(8))
                 if totalOffline == wof_data['max_offline'] - 1:
                     totalOfflineStr = len(wof_data['display_offline'])  - wof_data['max_offline']
                     print(f" Too many <offline> devices to display. ({totalOfflineStr} devices)".center(100))
@@ -203,82 +142,88 @@ class FlipperUtils:
         wof_data['forbidden_packets_found'] = []
 
 class FlipDetection:
-    def __scan__():
-        try:
-            scanner = Scanner()
-            wof_data['bool_scanning'] = True
+    async def run_detection_async(os_type): # F*ck it, lets make it async and make it one function
+        wof_data['bool_scanning'] = True
+        ble_packets = []
+        if (os_type == "nt"):
+            devices = await BleakScanner.discover() # Windows Supported BLE Package (Non-Cross-Platform packages scare me)
+            for device in devices:
+                adv_name = device.name
+                adv_addr = device.address.lower()
+                adv_rssi =  device.rssi
+                adv_packet = device.metadata.get("manufacturer_data", "DATA_I_DONT_CARE_TO_LOOK_AT_BECAUSE_ITS_VERY_LONG")
+                ble_packets.append({"Name": adv_name, "MAC": adv_addr, "RSSI": adv_rssi, "PCK": adv_packet})
+        if (os_type == "posix"):
+            scanner = Scanner() # Linux Supported BLE Package 
             devices = scanner.scan(5)
-            for dev in devices:
-                for (adtype, desc, value) in dev.getScanData():
-                    string1 = value
-                    string2 = ""
-                    packet_listing = wof_data['forbidden_packets']
-                    for packet in packet_listing:
-                        similar = True
-                        packet_encoded = packet['PCK']
-                        packet_type = packet['TYPE']
-                        string2 = packet_encoded
-                        total_underscores = string2.count("_")
-                        total_found = 0
-                        for char1, char2 in zip(string1, string2):
-                            if char2 != '_' and char1 != char2:
-                                similar = False
-                            if (char1 == char2):
-                                total_found += 1
-                        if (similar == True):
-                            get_non_underscore_chars = len(string2) - total_underscores
-                            if (total_found == get_non_underscore_chars):
-                                wof_data['forbidden_packets_found'].append({"MAC": dev.addr, "PCK": string1, "Type": packet_type})
-                    if (desc == "Complete Local Name"):
-                        if ("Flipper") in value:
-                            record_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-                            random_flipper_name = value
-                            flipper_full_name = random_flipper_name
-                            flipper_rssi = dev.rssi
-                            flipper_mac = dev.addr
-                            for flipper in wof_data['found_flippers']: 
-                                if flipper['MAC'] == flipper_mac: wof_data['found_flippers'].remove(flipper)
-                            arrTemp = {"Name": str(flipper_full_name),"MAC": str(flipper_mac),"RSSI": str(flipper_rssi) + "","Detection Type": "Flipper","Spoofing": False,"Time Last Seen": str(record_time),"Time First Seen": str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),"unixFirstSeen": int(time.time()),"unixLastSeen": int(time.time()),"isFlipper": True}
-                            allowFlipperProxy = True
-                            for flipper in wof_data['found_flippers']:
-                                if flipper['MAC'] == flipper_mac: allowFlipperProxy = False
-                            if allowFlipperProxy:
-                                wof_data['live_flippers'].append(str(flipper_mac))
-                                wof_data['found_flippers'].append(arrTemp)
-                                FlipperUtils.__logFlipper__(flipper_full_name,arrTemp)     
-                        elif ("80:e1:26" or "80:e1:27") in dev.addr:
-                                record_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-                                random_flipper_name = value
-                                flipper_full_name = random_flipper_name
-                                flipper_rssi = dev.rssi
-                                flipper_mac = dev.addr
-                                for flipper in wof_data['found_flippers']: 
-                                    if flipper['MAC'] == flipper_mac: wof_data['found_flippers'].remove(flipper)
-                                arrTemp = {"Name": str(flipper_full_name),"MAC": str(flipper_mac),"RSSI": str(flipper_rssi) + "","Detection Type": "Flipper","Spoofing": True,"Time Last Seen": str(record_time),"Time First Seen": str(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())),"unixFirstSeen": int(time.time()),"unixLastSeen": int(time.time()),"isFlipper": True}
-                                allowFlipperProxy = True
-                                for flipper in wof_data['found_flippers']:
-                                    if flipper['MAC'] == flipper_mac: allowFlipperProxy = False
-                                if allowFlipperProxy == True:
-                                    wof_data['live_flippers'].append(str(flipper_mac))
-                                    wof_data['found_flippers'].append(arrTemp)
-                                    FlipperUtils.__logFlipper__(flipper_full_name,arrTemp)  
+            for device in devices:
+                for (adv_type, adv_description, adv_value) in device.getScanData():
+                    adv_name = adv_value if adv_description == "Complete Local Name" else adv_value
+                    adv_addr = device.addr.lower()
+                    adv_rssi = device.rssi
+                    ble_packets.append({"Name": adv_name, "MAC": adv_addr, "RSSI": adv_rssi, "PCK": adv_value})
+        for packet in ble_packets: # I'm sorry for this code... I'm not proud of it either
+            adv_name = packet['Name']
+            adv_addr = packet['MAC']
+            adv_rssi = packet['RSSI']
+            adv_packet = packet['PCK']
+            ble_blacklist_check = ""
+            the_wall_of_forbidden_packets = wof_data['forbidden_packets']
+            for packet in the_wall_of_forbidden_packets:
+                bool_isSimilar = True
+                packet_value = packet['PCK']
+                packet_type = packet['TYPE']
+                ble_blacklist_check = packet_value
+                total_underscores = ble_blacklist_check.count("_")
+                total_found = 0
+                for char1, char2 in zip(adv_packet, ble_blacklist_check):
+                    if char2 != '_' and char1 != char2:
+                        bool_isSimilar = False
+                    if (char1 == char2):
+                        total_found += 1
+                if (bool_isSimilar == True):
+                    get_non_underscore_chars = len(ble_blacklist_check) - total_underscores
+                    if (total_found == get_non_underscore_chars):
+                        wof_data['forbidden_packets_found'].append({"MAC": adv_addr, "PCK": adv_packet, "Type": packet_type})
+
+            if (adv_name == "Flipper"):
+                adv_recorded = int(time.time())
+                for adv_device in wof_data['found_flippers']:
+                    if adv_device['MAC'] == adv_addr: wof_data['found_flippers'].remove(adv_device)
+                data = {"Name": adv_name,"MAC": adv_addr,"RSSI": adv_rssi,"Detection Type": "Flipper","Spoofing": True,"unixFirstSeen": adv_recorded,"unixLastSeen": adv_recorded}
+                is_added = True
+                for adv_device in wof_data['found_flippers']:
+                    if adv_device['MAC'] == adv_addr: is_added = False
+                if is_added:
+                    wof_data['live_flippers'].append(adv_addr)
+                    wof_data['found_flippers'].append(data)
+                    FlipperUtils.__logFlipper__(adv_name,data)
+            elif ("80:e1:26" or "80:e1:27") in adv_addr: # If there are any other valid Flipper MAC addresses, please let me know asap. : D
+                adv_recorded = int(time.time())
+                for adv_device in wof_data['found_flippers']:
+                    if adv_device['MAC'] == adv_addr: wof_data['found_flippers'].remove(adv_device)
+                data = {"Name": adv_name,"MAC": adv_addr,"RSSI": adv_rssi,"Detection Type": "Flipper","Spoofing": True,"unixFirstSeen": adv_recorded,"unixLastSeen": adv_recorded}
+                is_added = True
+                for adv_device in wof_data['found_flippers']:
+                    if adv_device['MAC'] == adv_addr: is_added = False
+                if is_added:
+                    wof_data['live_flippers'].append(adv_addr)
+                    wof_data['found_flippers'].append(data)
+                    FlipperUtils.__logFlipper__(adv_name,data)
             wof_data['bool_scanning'] = False
-        except (RuntimeError, TypeError, NameError) as e:
-                print("[!] NoFlip >> Encountered an error while scanning for devices. Error: " + str(e))
-                wof_data['bool_scanning'] == False
-if __name__ == '__main__':
-    os.system("clear || cls")
-    get_os = os.name
-    get_root = os.getuid()
-    if (get_os != "posix"):
-        print("[!] NoFlip >> WoF is not supported on Windows.\n\t      Reason: Dependency on bluepy library.")
-        exit()
-    if (get_root != 0):
-        print("[!] NoFlip >> WoF requires root privileges to run.\n\t      Reason: Dependency on bluepy library.")
-        exit()
-    while True:
-        if (wof_data['bool_scanning'] == False):
-            wof_data['data_baseFlippers'] = []
-            FlipperUtils.__fancyDisplay__()
-            FlipDetection.__scan__()
-        time.sleep(0.1)
+
+
+import os,time,json,random,asyncio # Importing all the required modules (Windows and Linux modules are different)
+os.system("clear || cls")
+system_type = os.name
+wof_data['system_type'] = system_type
+if system_type == "nt": from bleak import BleakScanner # Windows BLE Package
+if system_type == "posix": from bluepy.btle import Scanner # Linux BLE Package
+if system_type == "posix" and os.geteuid() != 0: print("[!] NoFlip >> WoF requires root privileges to run.\n\t      Reason: Dependency on bluepy library."); exit() # Check if the user is root (Linux)
+while True:
+    if (wof_data['bool_scanning'] == False):
+        wof_data['data_baseFlippers'] = []
+        FlipperUtils.__fancyDisplay__()
+        asyncio.run(FlipDetection.run_detection_async(system_type))
+    time.sleep(0.1) # Don't worry about this - Everything is fine... :P
+
