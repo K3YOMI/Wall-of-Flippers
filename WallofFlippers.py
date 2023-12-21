@@ -112,7 +112,7 @@ class FlipperUtils: # meow meow, I dislike this class
             if (len(wof_data['forbidden_packets_found']) > 25):
                 print(f"━━━━━━━━━━━━━━━━━━ Bluetooth Low Energy (BLE) Attacks Detected ({len(wof_data['forbidden_packets_found'])}+ Packets) ━━━━━━━━━━━━━━━━━━━━")
         else:
-            print(f"━━━━━━━━━━━━━━━━━━ Bluetooth Low Energy (BLE) Attack Detection For Windows Is Not Yet Supported ━━━━━━━━━━━━━━━━━━━━")
+            print(f"━━━━━━━━━━━━━━━━━━ BLE Attack Detection is still in development for Windows ━━━━━━━━━━━━━━━━━━━━")
         print(f"\n\n[FLIPPER]".ljust(8)+ "\t" +"[ADDR]".ljust(8)+ "\t\t" +"[FIRST]".ljust(8)+ "\t" +"[LAST]".ljust(8)+ "\t" +"[RSSI]".ljust(8)+ "\t" +"[SPOOFING]".ljust(8))
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         if (len(wof_data['display_live']) > 0):
