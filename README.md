@@ -121,6 +121,10 @@ Finally, `bluepy` is required. This can be installed with the following command:
   as long as proper credit is given to `emilia (jbohack)` and `k3yomi (kiyomi)`. Thank you!
 
 
+  ## Notice (Please Read)
+  This project isn't the solution for catching every Bluetooth Low Energy (BLE) attack or Flipper Zero device. Users can easily dodge detection by changing their device's MAC address or name, or simply turning off Bluetooth. The main purpose here is keeping track of activity to catch a few "script kiddies" now and then. It's not foolproof, but it's a useful tool for identifying issues and figuring out how often devices are being misused. The real goal is to encourage updates for vulnerable devices, so they can't be exploited in the future. While this project doesn't stop attacks, logging is a crucial step in understanding device issues and abuse patterns. If you have any questions or concerns about bluetooth or the project itself, don't hesitate to reach out to me!
+
+  
 ![Untitled2](https://github.com/K3YOMI/Wall-of-Flippers/assets/54733885/a146acc6-7786-4406-b818-36a48b29473d)
 
 ### Support Kiyomi (Developer)
