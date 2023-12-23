@@ -112,7 +112,7 @@ class FlipperUtils: # meow meow, I dislike this class
             if (len(wof_data['forbidden_packets_found']) > 25):
                 print(f"━━━━━━━━━━━━━━━━━━ Bluetooth Low Energy (BLE) Attacks Detected ({len(wof_data['forbidden_packets_found'])}+ Packets) ━━━━━━━━━━━━━━━━━━━━")
         else:
-            print(f"━━━━━━━━━━━━━━━━━━ BLE Attack Detection is still in development for Windows ━━━━━━━━━━━━━━━━━━━━")
+            print(f"━━━━━━━━━━━━━━━━━━ BLE Attack Detection is still in development for Windows. ━━━━━━━━━━━━━━━━━━━━")
         print(f"\n\n[FLIPPER]".ljust(8)+ "\t" +"[ADDR]".ljust(8)+ "\t\t" +"[FIRST]".ljust(8)+ "\t" +"[LAST]".ljust(8)+ "\t" +"[RSSI]".ljust(8)+ "\t" +"[SPOOFING]".ljust(8))
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         if (len(wof_data['display_live']) > 0):
@@ -158,10 +158,12 @@ class FlipDetection:
             devices = scanner.scan(5)
             for device in devices:
                 for (adv_type, adv_description, adv_value) in device.getScanData():
-                    adv_name = adv_value if adv_description == "Complete Local Name" else adv_value
-                    adv_addr = device.addr.lower()
-                    adv_rssi = device.rssi
-                    ble_packets.append({"Name": adv_name, "MAC": adv_addr, "RSSI": adv_rssi, "PCK": adv_value})
+                    adv_name = adv_value
+                    if adv_description == "Complete Local Name":
+                        adv_name = adv_value
+                        adv_addr = device.addr.lower()
+                        adv_rssi = device.rssi
+                        ble_packets.append({"Name": adv_name, "MAC": adv_addr, "RSSI": adv_rssi, "PCK": adv_value})
         for packet in ble_packets: # I'm sorry for this code... I'm not proud of it either
             adv_name = packet['Name']
             adv_addr = packet['MAC']
