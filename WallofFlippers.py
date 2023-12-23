@@ -204,7 +204,7 @@ class FlipDetection:
                     wof_data['live_flippers'].append(adv_addr)
                     wof_data['found_flippers'].append(data)
                     FlipperUtils.__logFlipper__(adv_name,data)
-            elif ("80:e1:26" or "80:e1:27") in adv_addr: # If there are any other valid Flipper MAC addresses, please let me know asap. : D
+            elif any(adv_addr.startswith(addr) for addr in ("80:e1:26", "80:e1:27")): # If there are any other valid Flipper MAC addresses, please let me know asap. : D
                 adv_recorded = int(time.time())
                 for adv_device in wof_data['found_flippers']:
                     if adv_device['MAC'] == adv_addr: wof_data['found_flippers'].remove(adv_device)
