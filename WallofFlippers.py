@@ -164,6 +164,10 @@ class FlipDetection:
                         adv_addr = device.addr.lower()
                         adv_rssi = device.rssi
                         ble_packets.append({"Name": adv_name, "MAC": adv_addr, "RSSI": adv_rssi, "PCK": adv_value})
+                    else:
+                        adv_addr = device.addr.lower()
+                        adv_rssi = device.rssi
+                        ble_packets.append({"Name": adv_name, "MAC": adv_addr, "RSSI": adv_rssi, "PCK": adv_value})
         for packet in ble_packets: # I'm sorry for this code... I'm not proud of it either
             adv_name = packet['Name']
             adv_addr = packet['MAC']
