@@ -40,10 +40,10 @@ _______
 ## 💡 Future Improvements
 - GoLang Support
 - hcidump / hcitool support
+- Capture the Flippers??? 👀
 
 
-
-## 📚 Some Documentation
+## 📚 Documentation
 
 
 ### Requirements
