@@ -100,6 +100,7 @@ class FlipperUtils: # meow meow, I dislike this class
         total_ble = 0
         if (wof_data['system_type'] == "posix"):
             if (len(wof_data['forbidden_packets_found']) > 0):
+                print("Notice: These packets may not be related to the Flipper Zero.\n")
                 print(f"[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
                 print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
                 for packet in wof_data['forbidden_packets_found']:
