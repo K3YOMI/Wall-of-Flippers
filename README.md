@@ -41,6 +41,9 @@ _______
 - GoLang Support
 - hcidump / hcitool support
 - Capture the Flippers??? 👀
+- Built-in BLE Exploitation
+- Auto-install Functionality
+- Suspicious BLE Advertisements
 
 
 ## 📚 Documentation
