@@ -226,7 +226,7 @@ system_type = os.name
 wof_data['system_type'] = system_type
 if system_type == "nt": from bleak import BleakScanner # Windows BLE Package
 if system_type == "posix": from bluepy.btle import Scanner # Linux BLE Package
-if system_type == "posix" and os.geteuid() != 0: print("[!] NoFlip >> WoF requires root privileges to run.\n\t      Reason: Dependency on bluepy library."); exit() # Check if the user is root (Linux)
+if system_type == "posix" and os.geteuid() != 0: print("[!] Wall of Flippers >> WoF requires root privileges to run.\n\t      Reason: Dependency on bluepy library."); exit() # Check if the user is root (Linux)
 while True:
     if (wof_data['bool_scanning'] == False):
         wof_data['data_baseFlippers'] = []
