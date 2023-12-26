@@ -17,7 +17,8 @@ dolphin_thinking = [
     "discord.gg/squachtopia",
     "Hack the planet!",
 ]
-ascii = open('ascii.txt', 'r', encoding="utf8").read()
+with open('ascii.txt', 'r', encoding="utf8") as f:
+    ascii = f.read()
 
 
 
@@ -59,8 +60,8 @@ class FlipperUtils: # meow meow, I dislike this class
         seconds = str(timeAgo % 60) + "s"
         return f"{(minutes)} {(seconds)}"
     def __logFlipper__(name, data): 
-        db = open('Flipper.json', 'r')
-        file_data = json.load(db)
+        with open('Flipper.json', 'r') as db:
+            file_data = json.load(db)
         for flipper in file_data:
              if flipper['MAC'] == data['MAC']:
                 flipper['RSSI'] = data['RSSI']
@@ -69,24 +70,18 @@ class FlipperUtils: # meow meow, I dislike this class
                 flipper['Spoofing'] = data['Spoofing']
                 with open('Flipper.json', 'w') as f:
                     json.dump(file_data, f, indent=4)
-                db.close()
                 return
         file_data.append(data)
         with open('Flipper.json', 'w') as f:
                json.dump(file_data, f, indent=4)
-        db.close()
     def __fancyDisplay__():
         global wof_data
-        db = open('Flipper.json', 'r')
-        file_data = json.load(db)
-        for flipper in file_data:
-            wof_data['data_baseFlippers'].append(flipper)
-        db.close()
+        with open('Flipper.json', 'r') as db:
+            file_data = json.load(db)
+        wof_data['data_baseFlippers'].extend(flipper for flipper in file_data)
         allign_center = 8
         for flipper in wof_data['data_baseFlippers']:
-            flipper['Name'] = flipper['Name'].replace("Flipper ", "")
-            if len(flipper['Name']) > 15:
-                flipper['Name'] = flipper['Name'][:15]
+            flipper['Name'] = flipper['Name'].replace("Flipper ", "")[:15]
             if flipper['MAC'] in wof_data['live_flippers']:
                 wof_data['display_live'].append(flipper)
             else:
@@ -98,25 +93,25 @@ class FlipperUtils: # meow meow, I dislike this class
         print(f"Total Online...: {len(wof_data['display_live'])}")
         print(f"Total Offline..: {len(wof_data['display_offline'])}\n\n")
         total_ble = 0
-        if (wof_data['system_type'] == "posix"):
-            if (len(wof_data['forbidden_packets_found']) > 0):
+        if wof_data['system_type'] == "posix":
+            if wof_data['forbidden_packets_found']:
                 print("Notice: These attacks may not be related to the Flipper Zero.\n")
                 print(f"[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
                 print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
                 for packet in wof_data['forbidden_packets_found']:
                     total_ble = total_ble + 1
-                    if (total_ble <= 10):
+                    if total_ble <= 10:
                         name = packet['Type']
                         mac = packet['MAC']
                         pkt = packet['PCK']
                         print(name.ljust(allign_center) +   "\t\t" +  mac.ljust(allign_center) + "  " + pkt.ljust(allign_center))
-            if (len(wof_data['forbidden_packets_found']) > 25):
+            if len(wof_data['forbidden_packets_found']) > 25:
                 print(f"━━━━━━━━━━━━━━━━━━ Bluetooth Low Energy (BLE) Attacks Detected ({len(wof_data['forbidden_packets_found'])}+ Packets) ━━━━━━━━━━━━━━━━━━━━")
         else:
             print(f"━━━━━━━━━━━━━━━━━━ BLE Attack Detection is still in development for Windows. ━━━━━━━━━━━━━━━━━━━━")
         print(f"\n\n[FLIPPER]".ljust(8)+ "\t" +"[ADDR]".ljust(8)+ "\t\t" +"[FIRST]".ljust(8)+ "\t" +"[LAST]".ljust(8)+ "\t" +"[RSSI]".ljust(8)+ "\t" +"[SPOOFING]".ljust(8))
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-        if (len(wof_data['display_live']) > 0):
+        if wof_data['display_live']:
             print("(ONLINE DEVICES)".center(100))
             for flipper in wof_data['display_live']:
                 totalLive += 1
@@ -126,7 +121,7 @@ class FlipperUtils: # meow meow, I dislike this class
                     totalLiveStr = len(wof_data['display_live']) - wof_data['max_online']
                     print(f"Too many <online> devices to display. ({totalLiveStr} devices)".center(100))
                     break
-        if (len(wof_data['display_offline']) > 0):
+        if wof_data['display_offline']:
             wof_data['display_offline'] = sorted(wof_data['display_offline'], key=lambda k: k['unixLastSeen'], reverse=True)
             print("(OFFLINE DEVICES)".center(100))
             for flipper in wof_data['display_offline']:
@@ -146,7 +141,7 @@ class FlipDetection:
     async def run_detection_async(os_type): # F*ck it, lets make it async and make it one function
         wof_data['bool_scanning'] = True
         ble_packets = []
-        if (os_type == "nt"):
+        if os_type == "nt":
             devices = await BleakScanner.discover() # Windows Supported BLE Package (Non-Cross-Platform packages scare me)
             for device in devices:
                 adv_name = device.name
@@ -154,14 +149,13 @@ class FlipDetection:
                 adv_rssi =  device.rssi
                 adv_packet = device.metadata.get("manufacturer_data", "DATA_I_DONT_CARE_TO_LOOK_AT_BECAUSE_ITS_VERY_LONG")
                 ble_packets.append({"Name": adv_name, "MAC": adv_addr, "RSSI": adv_rssi, "PCK": adv_packet})
-        if (os_type == "posix"):
+        if os_type == "posix":
             scanner = Scanner() # Linux Supported BLE Package 
             devices = scanner.scan(5)
             for device in devices:
                 for (adv_type, adv_description, adv_value) in device.getScanData():
                     adv_name = adv_value
                     if adv_description == "Complete Local Name":
-                        adv_name = adv_value
                         adv_addr = device.addr.lower()
                         adv_rssi = device.rssi
                         ble_packets.append({"Name": adv_name, "MAC": adv_addr, "RSSI": adv_rssi, "PCK": adv_value})
@@ -186,21 +180,19 @@ class FlipDetection:
                 for char1, char2 in zip(adv_packet, ble_blacklist_check):
                     if char2 != '_' and char1 != char2:
                         bool_isSimilar = False
-                    if (char1 == char2):
+                    if char1 == char2:
                         total_found += 1
-                if (bool_isSimilar == True):
+                if bool_isSimilar:
                     get_non_underscore_chars = len(ble_blacklist_check) - total_underscores
-                    if (total_found == get_non_underscore_chars):
+                    if total_found == get_non_underscore_chars:
                         wof_data['forbidden_packets_found'].append({"MAC": adv_addr, "PCK": adv_packet, "Type": packet_type})
 
-            if (adv_name == "Flipper"):
+            if adv_name == "Flipper":
                 adv_recorded = int(time.time())
                 for adv_device in wof_data['found_flippers']:
                     if adv_device['MAC'] == adv_addr: wof_data['found_flippers'].remove(adv_device)
                 data = {"Name": adv_name,"MAC": adv_addr,"RSSI": adv_rssi,"Detection Type": "Flipper","Spoofing": True,"unixFirstSeen": adv_recorded,"unixLastSeen": adv_recorded}
-                is_added = True
-                for adv_device in wof_data['found_flippers']:
-                    if adv_device['MAC'] == adv_addr: is_added = False
+                is_added = all(adv_device['MAC'] != adv_addr for adv_device in wof_data['found_flippers'])
                 if is_added:
                     wof_data['live_flippers'].append(adv_addr)
                     wof_data['found_flippers'].append(data)
@@ -210,9 +202,7 @@ class FlipDetection:
                 for adv_device in wof_data['found_flippers']:
                     if adv_device['MAC'] == adv_addr: wof_data['found_flippers'].remove(adv_device)
                 data = {"Name": adv_name,"MAC": adv_addr,"RSSI": adv_rssi,"Detection Type": "Flipper","Spoofing": True,"unixFirstSeen": adv_recorded,"unixLastSeen": adv_recorded}
-                is_added = True
-                for adv_device in wof_data['found_flippers']:
-                    if adv_device['MAC'] == adv_addr: is_added = False
+                is_added = all(adv_device['MAC'] != adv_addr for adv_device in wof_data['found_flippers'])
                 if is_added:
                     wof_data['live_flippers'].append(adv_addr)
                     wof_data['found_flippers'].append(data)
@@ -228,7 +218,7 @@ if system_type == "nt": from bleak import BleakScanner # Windows BLE Package
 if system_type == "posix": from bluepy.btle import Scanner # Linux BLE Package
 if system_type == "posix" and os.geteuid() != 0: print("[!] Wall of Flippers >> WoF requires root privileges to run.\n\t      Reason: Dependency on bluepy library."); exit() # Check if the user is root (Linux)
 while True:
-    if (wof_data['bool_scanning'] == False):
+    if not wof_data['bool_scanning']:
         wof_data['data_baseFlippers'] = []
         FlipperUtils.__fancyDisplay__()
         asyncio.run(FlipDetection.run_detection_async(system_type))
