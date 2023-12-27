@@ -1,0 +1,3 @@
+libglib2.0-dev; sys_platform == "linux"
+bluepy; sys_platform == "linux"
+bleak; sys_platform != "linux"
