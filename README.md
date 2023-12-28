@@ -57,7 +57,6 @@ Additionally, we also now have *limited* support for Windows and *full* support 
 
 Another `requirement` is Python. Debian based install:
 
-
     $ sudo apt-get install python3
 
 Additionally, bluepy `requires` the `libglib2.0-dev` library to be installed. Debian based install:
@@ -67,7 +66,11 @@ Additionally, bluepy `requires` the `libglib2.0-dev` library to be installed. De
 
 Finally, `bluepy` is required. This can be installed with the following command:
 
-    $ sudo pip3 install bluepy
+    $ pip3 install bluepy
+    
+  or
+  
+    $ pip3 install -r requirements.txt
 
 *Your install may look different depending if python3 is used*\
 *Additionally, if you are having trouble. Feel free to visit this repo for better documentation: https://github.com/IanHarvey/bluepy/*
@@ -96,7 +99,11 @@ Finally, `bluepy` is required. This can be installed with the following command:
 
   `bleak` is required. This can be installed with the following command:
 
-    $ pip install bleak
+    $ pip install bleak 
+
+  or
+  
+    $ pip install -r requirements.txt
 
   Additional commands may need to be ran for pip to run properly. see: https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-internal-or-external-command
 
@@ -119,7 +126,7 @@ Finally, `bluepy` is required. This can be installed with the following command:
 
 
   ### Conclusion
-
+  
   Tad-ah! You are now properly running WoF on your device. Hopefully this small guide works and gets you started on collecting flippers or checking for
   BTLE based attacks. Feel free to report bugs as this can help improve WoF. You can modify, release, or use Wall of Flippers in any way you want
   as long as proper credit is given to `emilia (jbohack)` and `k3yomi (kiyomi)`. Thank you!
