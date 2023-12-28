@@ -62,7 +62,8 @@ Another `requirement` is Python. Debian based install:
 
 Additionally, bluepy `requires` the `libglib2.0-dev` library to be installed. Debian based install:
 
-    $ sudo apt-get install python3-pip libglib2.0-dev
+    $ sudo apt-get install python3-pip 
+    $ sudo apt-get install libglib2.0-dev
 
 Finally, `bluepy` is required. This can be installed with the following command:
 
