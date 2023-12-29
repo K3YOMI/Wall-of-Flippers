@@ -57,12 +57,12 @@ Additionally, we also now have *limited* support for Windows and *full* support 
 
 Another `requirement` is Python. Debian based install:
 
-    $ sudo apt-get install python3
+    sudo apt-get install python3
 
 Additionally, bluepy `requires` the `libglib2.0-dev` library to be installed. Debian based install:
 
-    $ sudo apt-get install python3-pip 
-    $ sudo apt-get install libglib2.0-dev
+    sudo apt-get install python3-pip 
+    sudo apt-get install libglib2.0-dev
 
 Finally, `bluepy` is required. This can be installed with the following command:
 
@@ -70,7 +70,7 @@ Finally, `bluepy` is required. This can be installed with the following command:
     
   or
   
-    $ pip3 install -r requirements.txt
+    pip3 install -r requirements.txt
 
 *Your install may look different depending if python3 is used*\
 *Additionally, if you are having trouble. Feel free to visit this repo for better documentation: https://github.com/IanHarvey/bluepy/*
@@ -83,19 +83,19 @@ Finally, `bluepy` is required. This can be installed with the following command:
 
   Installing git (If needed)
 
-    $ sudo apt-get install git
+    sudo apt-get install git
 
   git clone command
 
-    $ git clone https://github.com/K3YOMI/Wall-of-Flippers
+    git clone https://github.com/K3YOMI/Wall-of-Flippers
 
   After installing, navigate to the Wall of Flippers directory
 
-    $ cd ./Wall\ of\ Flippers
+    cd ./Wall\ of\ Flippers
 
   Next, run under `sudo` as this part is required to properly use the `pyblue` functionality.
 
-    $ sudo python3 WallofFlippers.py 
+    sudo python3 WallofFlippers.py 
 
 
 
@@ -105,11 +105,11 @@ Finally, `bluepy` is required. This can be installed with the following command:
 
   `bleak` is required. This can be installed with the following command:
 
-    $ pip install bleak 
+    pip install bleak 
 
   or
   
-    $ pip install -r requirements.txt
+    pip install -r requirements.txt
 
   Additional commands may need to be ran for pip to run properly. see: https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-internal-or-external-command
 
@@ -120,15 +120,15 @@ Finally, `bluepy` is required. This can be installed with the following command:
   Alright, it's fun for the fun install process. Downloading WoF is quite straightforward as it's a few commands. 
   I'd recommend using `git` as this command can be easily used to retrieve the repository. Otherwise, just donwload via GitHub.
   
-    $ git clone https://github.com/K3YOMI/Wall-of-Flippers
+    git clone https://github.com/K3YOMI/Wall-of-Flippers
     
   After installing, navigate to the Wall of Flippers directory
   
-    $ cd ./Wall\ of\ Flippers
+    cd ./Wall\ of\ Flippers
 
   Next, run this command below to start the python script and wallah! You are now running Wall of Flippers!
 
-    $ py WallofFlippers.py 
+    py WallofFlippers.py 
 
 
   ### Conclusion
