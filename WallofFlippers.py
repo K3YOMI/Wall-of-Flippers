@@ -118,8 +118,8 @@ wof_data = {
         {"option": "4", "action": "Auto-Install", "description": "Install dependencies for Wall of Flippers (Windows / (APT) Debian Linux)", "return": "install_dependencies"},
         {"option": "5", "action": "Exit", "description": "....", "return": "exit"},
     ],
-    "ascii": open('ascii.txt', 'r', encoding="utf8").read(),
-    "ascii_ctf": open('ascii_ctf.txt', 'r', encoding="utf8").read()  
+    "ascii": open('ascii.txt', 'r', encoding="utf8").read().encode("ascii", "ignore").decode("ascii"),
+    "ascii_ctf": open('ascii_ctf.txt', 'r', encoding="utf8").read().encode("ascii", "ignore").decode("ascii"), 
 } 
 class wall_of_flippers:
     def display(str_text):
@@ -306,19 +306,19 @@ class library:
         #Check python dependencies and display a message if they are not installed.
         try:
             import bleak # Windows BLE Package
-            print(f"[✓] Bleak is installed")
+            print(f"[X] Bleak is installed")
         except ImportError:
-            print("[X] Bleak is not installed yet, ignore if you are running under a linux system.")
+            print("[ ] Bleak is not installed yet, ignore if you are running under a linux system.")
         try:
             import requests # HTTP Requests
-            print(f"[✓] Requests is installed")
+            print(f"[X] Requests is installed")
         except ImportError:
-            print("[X] Requests is not installed yet")
+            print("[ ] Requests is not installed yet")
         try:
             import bluepy.btle # Linux BLE Package
-            print(f"[✓] Bluepy is installed")
+            print(f"[X] Bluepy is installed")
         except ImportError:
-            print("[X] Bluepy is not installed yet")
+            print("[ ] Bluepy is not installed yet")
         print("\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]")
         print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         print("\n".join([f"{option['option'].ljust(8)}{option['action'].ljust(34)}{option['description']}" for option in dialogue_options]))
