@@ -72,6 +72,9 @@
 
 # 🐬 Current features and future updates <a name = "doc_features"></a>
 - [x] Discover Flipper Zero Devices (Bluetooth must be enabled)
+- [X] Flipper Name Discovery
+- [X] Flipper Address Discovery
+- [X] Flipper "Identifier" Discovery   
 - [x] Ability to archive past flipper zero devices discovered
 - [x] Auto-install functionality for Debian Linux and Windows
 - [x] Ability to identify potential Bluetooth advertisment attacks
