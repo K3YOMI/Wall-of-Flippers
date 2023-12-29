@@ -44,9 +44,9 @@ Scanner = None
 table_ctf_compeition_confiugrations = { # This is not yet complete. expect this to come later :3 (Security and cheating is a concern still but will be worked on...)
     "is_enabled": False, 
     "ctf_link": "http://xxx.xxx.xxx.xxx:xx",
-    "ctf_username": "USER_NAME_TO_USE",
+    "ctf_username": "YOUR_USERNAME",
     "ctf_password": "YOUR_SECRET_PASSWORD_TO_JOIN",
-    "ctf_key": "YOUR_SECRET_K3Y_TO_JOIN",
+    "ctf_key": "YOUR_SECRET_KEY_TO_JOIN",
     "my_collection": [],
     "temp_collection": [],
 }
@@ -306,17 +306,17 @@ class library:
         #Check python dependencies and display a message if they are not installed.
         try:
             import bleak # Windows BLE Package
-            print(f"[✓] Bleak is installed".encode('utf-8'))
+            print(f"[✓] Bleak is installed")
         except ImportError:
             print("[X] Bleak is not installed yet, ignore if you are running under a linux system.")
         try:
             import requests # HTTP Requests
-            print(f"[✓] Requests is installed".encode('utf-8'))
+            print(f"[✓] Requests is installed")
         except ImportError:
             print("[X] Requests is not installed yet")
         try:
             import bluepy.btle # Linux BLE Package
-            print(f"[✓] Bluepy is installed".encode('utf-8'))
+            print(f"[✓] Bluepy is installed")
         except ImportError:
             print("[X] Bluepy is not installed yet")
         print("\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]")
@@ -336,7 +336,7 @@ class library:
             # If CTF mode is enabled, switch to the CTF version of the ASCII art.
             s_ascii = wof_data['ascii_ctf']
         r_quote = random.choice(wof_data['dolphin_thinking']) if not str_text else str_text
-        print(s_ascii.replace("[RANDOM_QUOTE]", r_quote).encode('utf-8'))
+        print(s_ascii.replace("[RANDOM_QUOTE]", r_quote))
     def in_ctf(): # This function returns whether or not CTF mode is enabled.
         return table_ctf_compeition_confiugrations['is_enabled'] # Self explanatory
     def unix2Text(s_raw): # This function converts a unix timestamp to a human readable format.
