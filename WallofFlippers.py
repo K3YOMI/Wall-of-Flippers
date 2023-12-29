@@ -169,12 +169,12 @@ class wall_of_flippers:
                             addrs.append(packet['MAC'])
                     if len(packet['PCK']) > wof_data['max_byte_length']:
                         wof_data['forbidden_packets_found'].append({"MAC": packet['MAC'], "PCK": packet['PCK'], "Type": f"SUSPICIOUS_PACKET (+{wof_data['max_byte_length']} bytes)"})
-                print(f"Most Common Advertisement.........: {most_common_packet} ({packet_counts[most_common_packet]} packets) ({len(addrs)} unique addresses)")
+                print(f"Most Common Advertisement........: {most_common_packet} ({packet_counts[most_common_packet]} packets) ({len(addrs)} unique addresses)")
                 # Add a summary if there are too many unique addresses
                 if len(addrs) > 5:
                     wof_data['forbidden_packets_found'].append({"MAC": str(len(addrs)) + " Unique Addresses", "PCK": most_common_packet, "Type": "SUSPICIOUS_ADVERTISEMENT"})
             else: 
-                print(f"Most Common Advertisement.........: None")
+                print(f"Most Common Advertisement........: None")
             # Display forbidden packets
             if len(wof_data['forbidden_packets_found']) > 0:
                 t_packets = 0
