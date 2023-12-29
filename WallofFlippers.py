@@ -298,6 +298,8 @@ class library:
 
     """
     def __init__():
+        with open('packet_logger.txt', 'w') as all_packets_file:
+            all_packets_file.write("")
         dialogue_options = wof_data['init_directory_options']
         dialogue_options_dict = {option['option']: option['return'] for option in dialogue_options}
         library.ascii_art("Please Select an option to continue")
@@ -356,7 +358,8 @@ class library:
                     'RSSI': str(s_table['RSSI']),
                     'Detection Type': s_table['Detection Type'],
                     'unixLastSeen': s_table['unixLastSeen'],
-                    "Name": s_table['Name'],
+                    'Name': s_table['Name'],
+                    'Type': s_table['Type'],
                 })
                 break
         else:
