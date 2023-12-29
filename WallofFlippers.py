@@ -281,7 +281,7 @@ class capture_the_flippers:
                             flipper['Name'] = flipper['Name'].replace("Flipper ", "")
                             if len(flipper['Name']) > 15:
                                 flipper['Name'] = flipper['Name'][:15]
-                            print(f"{flipper['Name'].ljust(8)}\t{flipper['MAC'].ljust(8)}\t{flipper['Detection Type'].ljust(8)}")
+                            print(f"{flipper['Name'].ljust(8)}\t{flipper['MAC'].ljust(8)}\t{flipper['Detection Type']} ({flipper['Type']})".ljust(8))
                     else:
                         print("You have not captured any flippers yet.".center(100))
         except Exception as error:
@@ -306,17 +306,17 @@ class library:
         #Check python dependencies and display a message if they are not installed.
         try:
             import bleak # Windows BLE Package
-            print(f"[✓] Bleak is installed")
+            print(f"[✓] Bleak is installed".encode('utf-8'))
         except ImportError:
             print("[X] Bleak is not installed yet, ignore if you are running under a linux system.")
         try:
             import requests # HTTP Requests
-            print(f"[✓] Requests is installed")
+            print(f"[✓] Requests is installed".encode('utf-8'))
         except ImportError:
             print("[X] Requests is not installed yet")
         try:
             import bluepy.btle # Linux BLE Package
-            print(f"[✓] Bluepy is installed")
+            print(f"[✓] Bluepy is installed".encode('utf-8'))
         except ImportError:
             print("[X] Bluepy is not installed yet")
         print("\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]")
@@ -336,7 +336,7 @@ class library:
             # If CTF mode is enabled, switch to the CTF version of the ASCII art.
             s_ascii = wof_data['ascii_ctf']
         r_quote = random.choice(wof_data['dolphin_thinking']) if not str_text else str_text
-        print(s_ascii.replace("[RANDOM_QUOTE]", r_quote))
+        print(s_ascii.replace("[RANDOM_QUOTE]", r_quote).encode('utf-8'))
     def in_ctf(): # This function returns whether or not CTF mode is enabled.
         return table_ctf_compeition_confiugrations['is_enabled'] # Self explanatory
     def unix2Text(s_raw): # This function converts a unix timestamp to a human readable format.
