@@ -377,7 +377,7 @@ class library:
         table_forbidden_packets_list = wof_data['forbidden_packets']
         for adv in ble_packets:
             Advertisement_name = adv['Name']
-            Advertisment_type = adv['Type']
+            Advertisement_type = adv['Type']
             Advertisement_rssi = adv['RSSI']
             Advertisement_mac = adv['MAC']
             Advertisement_packets = adv['PCK']
@@ -412,7 +412,7 @@ class library:
                     "Detection Type": "Name",
                     "unixLastSeen": int_recorded,
                     "unixFirstSeen": int_recorded,
-                    "Type": Advertisment_type,
+                    "Type": Advertisement_type,
                     "UUID": Advertisement_uuid,
                 }
                 if Advertisement_mac not in [flipper['MAC'] for flipper in wof_data['found_flippers']]:
@@ -432,7 +432,7 @@ class library:
                     "Detection Type": "Address",
                     "unixLastSeen": int_recorded,
                     "unixFirstSeen": int_recorded,
-                    "Type": Advertisment_type,
+                    "Type": Advertisement_type,
                     "UUID": Advertisement_uuid,
                 }
                 if Advertisement_mac not in [flipper['MAC'] for flipper in wof_data['found_flippers']]:
@@ -453,7 +453,7 @@ class library:
                     "unixLastSeen": int_recorded,
                     "unixFirstSeen": int_recorded,
                     "UUID": Advertisement_uuid,
-                    "Type": Advertisment_type
+                    "Type": Advertisement_type
                 }
                 if Advertisement_mac not in [flipper['MAC'] for flipper in wof_data['found_flippers']]:
                     wof_data['found_flippers'].append(t_data)
@@ -539,7 +539,7 @@ class library:
                         if i_data['Value'] == "00003083-0000-1000-8000-00805f9b34fb": # Transparent Flipper
                             device_uuid = i_data['Value']
                             device_type = "Transparent"
-                            device_packets.append(i_data['Value'])
+                        device_packets.append(i_data['Value'])
                     ble_packets.append({
                         "Name": device_name,
                         "MAC": device.addr,
