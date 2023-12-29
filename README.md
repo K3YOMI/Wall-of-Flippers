@@ -1,153 +1,223 @@
-# Wall of Flippers (WoF)
-                                YAao,                            
-                                 Y8888b, 
-                               ,oA8888888b,      
-                         ,aaad8888888888888888bo,   
-                      ,d888888888888888888888888888b,               
-                    ,888888888888888888888888888888888b,            
-                   d8888888888888888888888888888888888888,           
-                  d888888888888888888888888888888888888888b                 
-                 d888888P'                    `Y88888888Ꙩ \,             
-                 88888P'                    Ybaaaa888888  Ꙩ l          
-                a8888'                      `Y8888P' `V888888    
-              d8888888a                                `Y8888           
-             AY/'' `\Y8b                                 ``Y8b
-             Y'      `YP                                    ~~
-     _       __      ____         ____   _________                           
-    | |     / /___ _/ / /  ____  / __/  / ____/ (_)___  ____  ___  __________
-    | | /| / / __ `/ / /  / __ \/ /_   / /_  / / / __ \/ __ \/ _ \/ ___/ ___/
-    | |/ |/ / /_/ / / /  / /_/ / __/  / __/ / / / /_/ / /_/ /  __/ /  (__  ) 
-    |__/|__/\__,_/_/_/   \____/_/    /_/   /_/_/ .___/ .___/\___/_/  /____/ 
-                                              /_/   /_/
-
-## 💡 Introduction
-Wall of Flippers (WoF) is a Python based project designed for Bluetooth Low Energy (BTLE) exploration. Its primary functionality involves the discovery of the Flipper Zero device and the identification of potential BTLE based attacks.
-Please keep in mind this is a work in progress and will still continue to get updates.
-
-
-## 🛠️ Features
-- Flipper Zero Detection (BT Must be Enabled)
-- Flipper Archiving (Saving Past Data)
-- Bluetooth Low Energy Attacks
-  - iOS Crash and Popup BTLE Detection
-  - Android Crash and Popup BTLE Detection
-  - Windows Swift Pair BTLE Detection
-  - LoveSpouse BTLE Detection
-_______
-![ezgif-4-eadf27922b](https://github.com/K3YOMI/Wall-of-Flippers/assets/54733885/9e0aeef5-962e-4e0c-b4d5-0b6163441c5c)
-_______
-
-## 💡 Future Improvements
-- GoLang Support
-- hcidump / hcitool support
-- Capture the Flippers??? 👀
-- Built-in BLE Exploitation
-- Auto-install Functionality
-- Suspicious BLE Advertisements
-
-
-## 📚 Documentation
-
-
-### Requirements
-A few things are required to properly run WoF. We Recommend the Raspberry Pi as its compact and portable! Additionally, it's also required to have a `chipset` or a USB `adapter` that supports BTLE.
-Additionally, we also now have *limited* support for Windows and *full* support for linux at this time. 
-
-## Linux Install Guide
-
-Another `requirement` is Python. Debian based install:
-
-    sudo apt-get install python3
-
-Additionally, bluepy `requires` the `libglib2.0-dev` library to be installed. Debian based install:
-
-    sudo apt-get install python3-pip 
-    sudo apt-get install libglib2.0-dev
-
-Finally, `bluepy` is required. This can be installed with the following command:
-
-    $ pip3 install bluepy
-    
-  or
-  
-    pip3 install -r requirements.txt
-
-*Your install may look different depending if python3 is used*\
-*Additionally, if you are having trouble. Feel free to visit this repo for better documentation: https://github.com/IanHarvey/bluepy/*
+<p align="center">
+ <img src="https://github.com/K3YOMI/priv-docs/assets/54733885/c204e9bb-f802-40b7-b351-5dec720d3747" alt="Wall of Flippers"></a>
+</p>
 
 
 
-### Git Clone and Running
-  Alright, it's fun for the fun install process. Downloading WoF is quite straightforward as it's a few commands. 
-  I'd recommend using `git` as this command can be easily used to retrieve the repository. Otherwise, just donwload via GitHub.
 
-  Installing git (If needed)
+<h1 style='font-size: 65px'; align="center">Wall of Flippers</h1>
 
-    sudo apt-get install git
-
-  git clone command
-
-    git clone https://github.com/K3YOMI/Wall-of-Flippers
-
-  After installing, navigate to the Wall of Flippers directory
-
-    cd ./Wall\ of\ Flippers
-
-  Next, run under `sudo` as this part is required to properly use the `pyblue` functionality.
-
-    sudo python3 WallofFlippers.py 
-
-
-
-## Windows Install Guide
-  Another `requirement` is Python. Windows Based Below:\
-  https://www.python.org/
-
-  `bleak` is required. This can be installed with the following command:
-
-    pip install bleak 
-
-  or
-  
-    pip install -r requirements.txt
-
-  Additional commands may need to be ran for pip to run properly. see: https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-internal-or-external-command
-
-  *Your install may look different depending if py is used*\
-  *Additionally, if you are having trouble. Feel free to visit this repo for better documentation: https://github.com/hbldh/bleak*
-
-  ### Git Clone and Running
-  Alright, it's fun for the fun install process. Downloading WoF is quite straightforward as it's a few commands. 
-  I'd recommend using `git` as this command can be easily used to retrieve the repository. Otherwise, just donwload via GitHub.
-  
-    git clone https://github.com/K3YOMI/Wall-of-Flippers
-    
-  After installing, navigate to the Wall of Flippers directory
-  
-    cd ./Wall\ of\ Flippers
-
-  Next, run this command below to start the python script and wallah! You are now running Wall of Flippers!
-
-    py WallofFlippers.py 
+<div align="center">
+  	<p align = "center">🐬 A simple and easy way to find Flipper Zero Devices and Bluetooth Low Energy Based Attacks 🐬</p>
+  	<p align = "center">🐬 Documentation written by @k3yomi 🐬</p>
+	<div align="center" style="border: none;">
+		<table align="center" style="border-collapse: collapse; margin: 0 auto;">
+			<tr align="center">
+				<td align="center">
+					<a href="https://ko-fi.com/k3yomi" style="text-decoration: none;">
+						<img align="center" src='https://avatars.githubusercontent.com/u/54733885?s=55&v=4' width="55" height="55">
+						<img align="center" src='https://ko-fi.com/img/githubbutton_sm.svg'>
+					</a>
+					<h3 align="center">k3yomi (Project Maintainer)</h3>
+				</td>
+				<td align="center">
+					<a href="https://ko-fi.com/emilia0001" style="text-decoration: none;">
+						<img align="center" src='https://avatars.githubusercontent.com/u/37256246?s=55&v=4' width="55" height="55", style="border-radius: 50%;">
+						<img align="center" src='https://ko-fi.com/img/githubbutton_sm.svg'>
+					</a>
+					<h3 align="center">Emilia (jbohack) (Contributor)</h3>
+				</td>
+			</tr>
+		</table>
+		<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/K3YOMI/Wall-of-Flippers">
+		<img alt="GitHub forks" src="https://img.shields.io/github/forks/K3YOMI/Wall-of-Flippers">
+		<img alt="GitHub issues" src="https://img.shields.io/github/issues/K3YOMI/Wall-of-Flippers">
+		<img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/K3YOMI/Wall-of-Flippers">
+		<a href="https://discord.gg/Bg2fvmjQvg" style="text-decoration: none;">
+			<img src="https://discord.com/api/guilds/1190160512953094235/widget.png?style=shield" alt="Discord Shield"/>
+		</a>
+	</div>
+</div>
 
 
-  ### Conclusion
-  
-  Tad-ah! You are now properly running WoF on your device. Hopefully this small guide works and gets you started on collecting flippers or checking for
-  BTLE based attacks. Feel free to report bugs as this can help improve WoF. You can modify, release, or use Wall of Flippers in any way you want
-  as long as proper credit is given to `emilia (jbohack)` and `k3yomi (kiyomi)`. Thank you!
+---
+<div>
+    <img align="right" height="490vh" src="https://github.com/K3YOMI/Wall-of-Flippers/assets/54733885/a146acc6-7786-4406-b818-36a48b29473d">
+    <img align="right" height="490vh" src="https://upload.wikimedia.org/wikipedia/commons/3/3d/1_120_transparent.png">
+</div>
 
+# Table of Contents
+- [Introduction](#doc_introduction)
+- [Features](#doc_features)
+- [Install Guide](#doc_install)
+  	- [Linux Install](#linux_install)
+    	- [Debian Linux Install](#debian_install)
+    	- [Arch Linux Install (SOON)](#arch_install)
+    	- [Nethunter Install (SOON)](#methunter_install)
+    	- [PinePhone Install (SOON)](#pinephone_install)
+  	- [Windows Install](#windows_install)
+- [Issues and Fixes](#doc_issues_and_fixes)
+- [Our Statement](#doc_statement)
+- [Credits and Packages](#doc_credits)
 
-  ## Notice (Please Read)
-  This project isn't the solution for catching every Bluetooth Low Energy (BLE) attack or Flipper Zero device. Users can easily dodge detection by changing their device's MAC address or name, or simply turning off Bluetooth. The main purpose here is keeping track of activity to catch a few "script kiddies" now and then. It's not foolproof, but it's a useful tool for identifying issues and figuring out how often devices are being misused. The real goal is to encourage updates for vulnerable devices, so they can't be exploited in the future. While this project doesn't stop attacks, logging is a crucial step in understanding device issues and abuse patterns. If you have any questions or concerns about bluetooth or the project itself, don't hesitate to reach out to me!
-
-  
-![Untitled2](https://github.com/K3YOMI/Wall-of-Flippers/assets/54733885/a146acc6-7786-4406-b818-36a48b29473d)
-
-### Support Kiyomi (Developer)
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/k3yomi)
-### Support Emilia (Contributor)
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/emilia0001)
+<br><br>
 
 
 
+# 🐬 Wall of Flippers? <a name = "doc_introduction"></a>
+> Wall of Flippers (WoF) is a python based project involving the discovery of the Flipper Zero device and the identification of potential Bluetooth advertisment attacks. Please keep in mind that these two types of detections may **not** be related. 
+
+
+
+# 🐬 Current features and future updates <a name = "doc_features"></a>
+- [x] Discover Flipper Zero Devices (Bluetooth must be enabled)
+- [x] Ability to archive past flipper zero devices discovered
+- [x] Auto-install functionality for Debian Linux and Windows
+- [x] Ability to identify potential Bluetooth advertisment attacks
+	- [x] Suspected Advertisment Attacks
+	- [ ] 31+ Byte Advertisment Attacks
+	- [x] ~iOS Crash Advertisment Attack~ (Patched as of the latest iOS update)
+	- [x] iOS Popup advertisment Attacks
+	- [x] Samsung and Andorid BLE Advertisment Attacks
+	- [x] Windows Swift Pair Advertisment Attacks
+	- [x] LoveSpouse Advertisment Attacks (Denial of Pleasure)
+- [ ] Capture the Flippers (CTF) - A simple CTF to collect Flipper Zero devices
+	- [x] Leaderboard
+	- [ ] Hosting Support (Local and Public)
+	- [ ] Ability to add custom challenges
+	- [x] Point System and Scoring
+	- [x] Username and Key System
+- [x] BLE Advertisments
+	- [x] Ability to send custom BLE advertisments
+- [ ] Hcitool support
+- [ ] Chromium Web Bluetooth Support
+- [ ] Animations (Looking for ascii art artists)
+
+
+
+
+# 🐬 Installing and Requirements <a name = "doc_install"></a>
+
+> A few things are required to properly run Wall of Flippers. We Recommend a Raspberry Pi as it's compact and portable! It's also required to have a `chipset` or a USB `adapter` that supports Bluetooth Low Energy. At this current time, there is `limited` support for Wall of Flippers on Windows. Hence we recommend using a linux based operating system as that has been used for testing and development. For BLE advertising, I recommened an external USB adapter as the internal adapter on the Raspberry Pi is not powerful enough to send BLE advertisments long range.  
+
+
+
+## Linux Install Guide <a name = "linux_install"></a>
+
+### Arch Linux <a name = "arch_install"></a>
+> Documentation coming soon!
+
+### Nethunter Install <a name = "methunter_install"></a>
+> Documentation coming soon!
+
+### PinePhone Install <a name = "pinephone_install"></a>
+> Documentation coming soon!
+
+
+### Debian Linux <a name = "debian_install"></a>
+> Wall of Flippers on debian linux is currently one of the best ways to run Wall of Flippers. Mostly due to it being stable and having a lot of support for BTLE. To start off, is is highly recommened to follow all instructions we provide unless you know what you are doing. To get started, we need to set up the directory and install the required packages.
+
+### Step 1 (One): Full system upgrade / update
+> Before we continue with the installation, we need to make sure our system is up to date. To do this update through the command line.
+
+	sudo apt-get update && sudo apt-get upgrade -y
+
+### Step 2 (Two): Git Clone and Git Installiation 
+> To start off, we need to clone the repository and install the required packages. To do this, we need to run the following commands in the terminal. However, if you do not have git installed, you can simply install it by running this command (apt package manager only): 
+
+	sudo apt-get install git
+	git clone https://www.github.com/K3YOMI/Wall-of-Flippers
+	cd ./Wall-of-Flippers
+
+### Step 3 (Three): Installing python and pip (python3 / python3-pip)
+> Installing python3 and python3-pip is required to run wall of flippers and installs it's dependencies. The command below will install python3 and python3-pip for you. 
+
+	sudo apt-get install python3 python3-pip
+
+### Step 4 (Four): Installing the required packages (Multiple Ways)
+> Installing the required packets and dependencies can be done in three ways with this install. You can choose to use the terminal with the commands below, use requirements.txt, or you use the easy install script within Wall of Flippers. The choice is up to you depending on your preference. To get started with the terminal way. We will use these commands below.
+
+	sudo apt-get install libglib2.0-dev
+	sudo pip3 install bluepy
+	sudo pip3 install requests
+
+> If you would like to use the requirements.txt file, you can use the following commands below.
+
+	sudo apt-get install libglib2.0-dev
+	sudo pip3 install -r requirements.txt
+
+> If you would like to use the easy install script, you can use the following commands below.
+
+	sudo python3 WallofFlippers.py
+	# You should get a prompt upon startup, press 4 for the easy install and follow the directions and prompts for the install.
+
+### Step 5 (Five): Running Wall of Flippers
+> Once you have finished with all the dependencies and requirements, you can now run Wall of Flippers. To do this, you can run the following command below.
+
+	sudo python3 WallofFlippers.py 
+
+> Please keep note that running Wall of Flippers requires elevated privileges. Hence the `sudo` command. If you do not want to run Wall of Flippers with elevated privileges, you can run the following command below.
+
+	sudo chmod +x WallofFlippers.py
+	./WallofFlippers.py
+
+## Windows Install Guide <a name = "windows_install"></a>
+> Windows is currently not fully supported. However, you can still run Wall of Flippers on Windows. A few missing features like the ability to detect advertisment attacks and ability to send advertisments. However the detection of the Flipper Zero device is still supported. To get started, we will need to clone the repository and install the required packages. To do this, we need to run the following commands in the command prompt. However, if you do not have git installed, you can simply install it by downloading it from the official website.
+
+### Step 1 (One): Git Clone and Git Installiation 
+
+
+	Download Link: https://git-scm.com/downloads
+
+> Once you have downloaded git, you can now run the following commands below.
+
+	git clone https://www.github.com/K3YOMI/Wall-of-Flippers
+	cd ./Wall-of-Flippers
+
+
+### Step 2 (Two): Installing python and pip (python / pip)
+> This step is quite straightforward as we will be installing python and pip. To do this, we will need to download the latest version of python from the official website. Once you have downloaded the installer, you can run it and install python. Please make sure to check the box that says `Add Python to PATH`. This will allow you to run python from the command prompt. Once you have installed python, you can now install the required packages. 
+
+	Download Link: https://www.python.org/downloads/
+
+> Once you have installed python, you can now install the required packages. To do this, we will need to run the following commands below.
+
+	pip install bleak
+	pip install requests
+
+
+> Alternatively, you can use the requirements.txt file to install the required packages. To do this, we will need to run the following commands below.
+
+	pip install -r requirements.txt
+
+> If you would like to use the easy install script, you can use the following commands below.
+
+	python WallofFlippers.py
+	# You should get a prompt upon startup, press 4 for the easy install and follow the directions and prompts for the install.
+
+> If you are having issues with pip being not recognized as a command, please refer to this question below:\
+https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-internal-or-external-command
+
+### Step 3 (Three): Running Wall of Flippers
+> Once you have finished with all the dependencies and requirements, you can now run Wall of Flippers. To do this, you can run the following command below.
+
+	python WallofFlippers.py
+	
+> Please keep note that this is a watered down version of Wall of Flippers. Hence the lack of features. If you would like to run the full version of Wall of Flippers, please refer to the Linux Install Guide above.
+
+
+# Issues and Fixes <a name = "doc_issues_and_fixes"></a>
+> If you encounter any issues or bugs, please report them to us on our github page. We will try our best to fix them as soon as possible. If you would like to contribute to the project, please feel free to make a pull request. We will review it and merge it if it is a good addition to the project. We will be starting a discord server soon for support and development. Please keep an eye out for that. Thank you for your support and we hope you enjoy this project! <3
+
+# Our Statement <a name = "doc_statement"></a>
+> This project isn't the solution to combat the Flipper Zero device or any form of btle attacks. **THIS DOES NOT MITIGATE OR STOP ANYTHING** However, the flipper zero device is a great tool for learning and understanding the inctracies of the cyberworld. Now for the detections for this project, we heavily rely on the advertisments that the Flipper Zero sends out for detection. While a user can do many things to avoid being detected by Wall of Flippers. (Depending if the Identifier method gets worked around) We highly advise using this project for an end all solution. While not all bluetooth attacks are sent from only the flipper, it's a good start to understand the world of bluetooth and the attacks that can be accomplished with simple devices. We hope you enjoy this project and we hope you take the time to learn and build off of this. We are always looking for contributions and new ideas. Thank you for looking at this project and we hope you enjoy it! -k3yomi and emilia0001
+
+
+
+# Credits and Packages <a name = "doc_credits"></a>
+> This project was made possible by the following people. Please make sure to check them out and support them! <3
+
+| Project Maintainer | Project Contributor | AppleJuice BLE Advertisment Data | Bleak Package | Bluepy Package |
+| --- | --- | --- | --- | --- |
+| [![k3yomi](https://avatars.githubusercontent.com/k3yomi)](https://www.github.com/k3yomi) | [![emilia0001](https://avatars.githubusercontent.com/jbohack)](https://www.github.com/jbohack) | [![emilia0001](https://avatars.githubusercontent.com/ecto-1a)](https://www.github.com/ecto-1a) | [![emilia0001](https://avatars.githubusercontent.com/hbldh)](https://www.github.com/hbldh) | [![emilia0001](https://avatars.githubusercontent.com/IanHarvey)](https://www.github.com/IanHarvey) |
+| k3yomi | emilia0001 | Ecto-1A | hbldh | IanHarvey |
