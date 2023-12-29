@@ -74,7 +74,7 @@
 - [x] Discover Flipper Zero Devices (Bluetooth must be enabled)
 - [X] Flipper Name Discovery
 - [X] Flipper Address Discovery
-- [X] Flipper "Identifier" Discovery ( Transparent, White, Black Version Detection)
+- [X] Flipper "Identifier" Discovery ( Transparent, White, & Black Flipper Detection)
 - [x] Ability to archive past flipper zero devices discovered
 - [x] Auto-install functionality for Debian Linux and Windows
 - [x] Ability to identify potential Bluetooth advertisment attacks
