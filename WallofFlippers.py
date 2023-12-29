@@ -344,6 +344,9 @@ class library:
         if t_minutes > 1000:
             t_minutes = ">999"
         return f"{t_minutes}m {t_seconds}s"
+    def t_log_packet(s_table): # This function logs ALL packets to a txt file (Temporarily)
+        with open('packet_logger.txt', 'a') as all_packets_file:
+            all_packets_file.write(f"{json.dumps(s_table, indent=4)}\n")
     def log(s_table): # This function logs the flipper data to Flipper.json
         with open('Flipper.json', 'r') as flipper_file: # Load flipper data from Flipper.json
             flipper_data = json.load(flipper_file)
@@ -402,6 +405,7 @@ class library:
                                 "PCK": indiv_packet,
                                 "MAC": Advertisement_mac,
                             })
+            library.t_log_packet(adv)
             if Advertisement_name.lower().startswith("flipper"):
                 int_recorded = int(time.time())
                 wof_data['found_flippers'] = [flipper for flipper in wof_data['found_flippers'] if Advertisement_mac != flipper['MAC']]
@@ -507,7 +511,8 @@ class library:
                         "RSSI": Advertisement_rssi,
                         "PCK": "NOT FOUND",
                         "UUID": "NOT FOUND",
-                        "Manufacturer": "NOT FOUND"
+                        "Manufacturer": "NOT FOUND",
+                        "Type": "NOT FOUND"
                     })
             else:
                 wof_data['bool_isScanning'] = False
