@@ -81,6 +81,12 @@ Finally, `bluepy` is required. This can be installed with the following command:
   Alright, it's fun for the fun install process. Downloading WoF is quite straightforward as it's a few commands. 
   I'd recommend using `git` as this command can be easily used to retrieve the repository. Otherwise, just donwload via GitHub.
 
+  Installing git (If needed)
+
+    $ sudo apt-get install git
+
+  git clone command
+
     $ git clone https://github.com/K3YOMI/Wall-of-Flippers
 
   After installing, navigate to the Wall of Flippers directory
