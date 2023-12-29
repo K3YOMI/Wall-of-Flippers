@@ -118,8 +118,8 @@ wof_data = {
         {"option": "4", "action": "Auto-Install", "description": "Install dependencies for Wall of Flippers (Windows / (APT) Debian Linux)", "return": "install_dependencies"},
         {"option": "5", "action": "Exit", "description": "....", "return": "exit"},
     ],
-    "ascii": open('ascii.txt', 'r', encoding="utf8").read().encode("ascii", "ignore").decode("ascii"),
-    "ascii_ctf": open('ascii_ctf.txt', 'r', encoding="utf8").read().encode("ascii", "ignore").decode("ascii"), 
+    "ascii": open('ascii.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),
+    "ascii_ctf": open('ascii_ctf.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"), 
 } 
 class wall_of_flippers:
     def display(str_text):
