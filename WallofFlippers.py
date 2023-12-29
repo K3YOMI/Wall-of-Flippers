@@ -131,6 +131,8 @@ class wall_of_flippers:
         # Categorize flipper data into live and offline flippers
         for key in wof_data['base_flippers']:
             key['Name'] = key['Name'].replace("Flipper ", "")[:15]
+            if 'Type' not in key:  # Add a check for the 'Type' key
+                key['Type'] = "Unknown"
             if key['MAC'] in wof_data['live_flippers']:
                 wof_data['display_live'].append(key)
             else:
@@ -203,7 +205,7 @@ class wall_of_flippers:
                 t_live += 1
                 if t_live <= wof_data['max_online']:
                     key['RSSI'] = str(f"{key['RSSI']} dBm")
-                    print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2Text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2Text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type'].ljust(t_allignment)}")               
+                    print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2Text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2Text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))         
                 if t_live > wof_data['max_online']:
                     t_left_over = int_online_flippers - wof_data['max_online']
                     print(f"Too many <online> devices to display. ({t_left_over} devices)".center(100))
@@ -217,11 +219,11 @@ class wall_of_flippers:
                 t_offline += 1
                 if t_offline <= wof_data['max_offline']:
                     key['RSSI'] = str(f"{key['RSSI']} dBm")  
-                    print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2Text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2Text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type'].ljust(t_allignment)}")            
-                if t_offline > wof_data['max_offline']:
-                    t_left_over = int_offline_flippers - wof_data['max_offline']
-                    print(f"Too many <offline> devices to display. ({t_left_over} devices)".center(100))
-                    break
+                    print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2Text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2Text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))                    
+                    if t_offline > wof_data['max_offline']:
+                        t_left_over = int_offline_flippers - wof_data['max_offline']
+                        print(f"Too many <offline> devices to display. ({t_left_over} devices)".center(100))
+                        break
         # Display message if no devices detected
         if int_offline_flippers == 0 and int_online_flippers == 0:
             print("No devices detected".center(100))
@@ -362,6 +364,8 @@ class library:
                 "Detection Type": s_table['Detection Type'],
                 "unixLastSeen": s_table['unixLastSeen'],
                 "unixFirstSeen": s_table['unixFirstSeen'],
+                "Type": s_table['Type'],
+                "UUID": s_table['UUID'],
             })
         with open('Flipper.json', 'w') as flipper_file: # Save the flipper data to Flipper.json
             json.dump(flipper_data, flipper_file, indent=4)     
@@ -373,6 +377,7 @@ class library:
         table_forbidden_packets_list = wof_data['forbidden_packets']
         for adv in ble_packets:
             Advertisement_name = adv['Name']
+            Advertisment_type = adv['Type']
             Advertisement_rssi = adv['RSSI']
             Advertisement_mac = adv['MAC']
             Advertisement_packets = adv['PCK']
@@ -407,6 +412,8 @@ class library:
                     "Detection Type": "Name",
                     "unixLastSeen": int_recorded,
                     "unixFirstSeen": int_recorded,
+                    "Type": Advertisment_type,
+                    "UUID": Advertisement_uuid,
                 }
                 if Advertisement_mac not in [flipper['MAC'] for flipper in wof_data['found_flippers']]:
                     wof_data['found_flippers'].append(t_data)
@@ -425,6 +432,8 @@ class library:
                     "Detection Type": "Address",
                     "unixLastSeen": int_recorded,
                     "unixFirstSeen": int_recorded,
+                    "Type": Advertisment_type,
+                    "UUID": Advertisement_uuid,
                 }
                 if Advertisement_mac not in [flipper['MAC'] for flipper in wof_data['found_flippers']]:
                     wof_data['found_flippers'].append(t_data)
@@ -433,7 +442,7 @@ class library:
                     bool_flipper_discovered = True
                     table_flippers_discovered.append(t_data)
                     table_latest_discovered = t_data
-            elif Advertisement_uuid == "00003082-0000-1000-8000-00805f9b34fb":
+            elif Advertisement_uuid != "NOT FOUND":
                 int_recorded = int(time.time())
                 wof_data['found_flippers'] = [flipper for flipper in wof_data['found_flippers'] if Advertisement_mac != flipper['MAC']]
                 t_data = {
@@ -443,6 +452,8 @@ class library:
                     "Detection Type": "Identifier",
                     "unixLastSeen": int_recorded,
                     "unixFirstSeen": int_recorded,
+                    "UUID": Advertisement_uuid,
+                    "Type": Advertisment_type
                 }
                 if Advertisement_mac not in [flipper['MAC'] for flipper in wof_data['found_flippers']]:
                     wof_data['found_flippers'].append(t_data)
@@ -510,6 +521,7 @@ class library:
                     device_name = "NOT FOUND"
                     device_manufacturer = "NOT FOUND"
                     device_uuid = "NOT FOUND"
+                    device_type = "NOT FOUND"
                     device_formatted = []
                     for scan_list_item in scan_list:
                         device_formatted.append({"ADTYPE": scan_list_item[0], "Description": scan_list_item[1], "Value": scan_list_item[2]})
@@ -518,9 +530,15 @@ class library:
                             device_name = i_data['Value']
                         if i_data['Description'] == "Manufacturer":
                             device_manufacturer = i_data['Value']
-                        if i_data['Value'] == "00003082-0000-1000-8000-00805f9b34fb":
+                        if i_data['Value'] == "00003082-0000-1000-8000-00805f9b34fb": # White Flipper
                             device_uuid = i_data['Value']
-                        else:
+                            device_type = "White"
+                        if i_data['Value'] == "00003081-0000-1000-8000-00805f9b34fb": # Black Flipper
+                            device_uuid = i_data['Value']
+                            device_type = "Black"
+                        if i_data['Value'] == "00003083-0000-1000-8000-00805f9b34fb": # Transparent Flipper
+                            device_uuid = i_data['Value']
+                            device_type = "Transparent"
                             device_packets.append(i_data['Value'])
                     ble_packets.append({
                         "Name": device_name,
@@ -528,7 +546,8 @@ class library:
                         "RSSI": device.rssi,
                         "PCK": device_packets,
                         "UUID": device_uuid,
-                        "Manufacturer": device_manufacturer
+                        "Manufacturer": device_manufacturer,
+                        "Type": device_type
                     })
             else:
                 wof_data['bool_isScanning'] = False
@@ -701,7 +720,7 @@ if selection_box == 'advertise_bluetooth_packets':
                     except KeyboardInterrupt:
                         stop_le_advertising(sock)
                         library.ascii_art("Thank you for using Wall of Flippers... Goodbye!")
-                        exit()
+                        exit() # test
     except KeyboardInterrupt:
         library.ascii_art("Thank you for using Wall of Flippers... Goodbye!")
         print("\n[!] Wall of Flippers >> Exiting...")
