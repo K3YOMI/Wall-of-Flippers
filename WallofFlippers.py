@@ -532,7 +532,7 @@ class library:
 
 
 
-    async def detection_async(os):
+    async def detection_async(os): # The main attraction (literally...)
         wof_data['bool_isScanning'] = True
         ble_packets = []
         if os == "nt": # Windows Detection
