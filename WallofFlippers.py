@@ -1,236 +1,222 @@
-
-# bluepy library (https://github.com/IanHarvey/bluepy/blob/master/README.md)
-
-#   What is Wall of Flippers? 
-#   Wall of Flippers (WoF) is a Python based project designed for Bluetooth Low Energy (BTLE) exploration. 
-#   Its primary functionality involves the discovery of the Flipper Zero and the identification of potential BTLE based attacks
-
-# Thanks for all the support, feels very welcoming to see people interested in this project! - Kiyomi + Emilia
-
-dolphin_thinking = [
-    'Let\'s hunt some flippers', 
-    "Ya'll like war driving flippers?", 
-    "Skid detector 9000",
-    "I'm a flipper, you're a flipper, we're all flippers!",
-    "Flipper Zero : Advanced Warefare",
-    "Don't be a skid!!!!!!",
-    "discord.gg/squachtopia",
-    "Hack the planet!",
-]
-ascii = open('ascii.txt', 'r', encoding="utf8").read()
+<p align="center">
+ <img src="https://github.com/K3YOMI/priv-docs/assets/54733885/c204e9bb-f802-40b7-b351-5dec720d3747" alt="Wall of Flippers"></a>
+</p>
 
 
 
 
-wof_data = { # I just hold important data
-    "found_flippers": [], # (IGNORE)
-    "data_baseFlippers": [], # (IGNORE)
-    "live_flippers": [], # (IGNORE)
-    "display_live": [], # (IGNORE)
-    "display_offline": [], # (IGNORE)
-    "max_online": 30, # Max online devices to display
-    "max_offline": 30, # Max offline devices to display
-    "bool_scanning": False, # (IGNORE)
-    "forbidden_packets_found": [], # (IGNORE)
-    "system_type": None, # (IGNORE)
-    "forbidden_packets": [ # Not complete and feel free to add more ("_" = Random Value)
-        {"PCK": "4c000f05c_________000010______", "TYPE": "BLE_APPLE_IOS_CRASH_LONG"},
-        {"PCK": "4c000719010_2055__________________________________________", "TYPE": "BLE_APPLE_DEVICE_POPUP_CLOSE"},
-        {"PCK": "4c000f05c00_______", "TYPE": "BLE_APPLE_ACTION_MODAL_LONG"},
-        {"PCK": "2cfe______", "TYPE": "BLE_ANDROID_DEVICE_CONNECT"},
-        {"PCK": "750042098102141503210109____01__063c948e00000000c700", "TYPE": "BLE_SAMSUNG_BUDS_POPUP_LONG"},
-        {"PCK": "7500010002000101ff000043__", "TYPE": "BLE_SAMSUNG_WATCH_PAIR_LONG"},
-        {"PCK": "0600030080________________________", "TYPE": "BLE_WINDOWS_SWIFT_PAIR_SHORT"},
-        {"PCK": "ff006db643ce97fe427_______", "TYPE": "BLE_LOVE_TOYS_SHORT_DISTANCE"},
-    ]                                                  
-}
+<h1 style='font-size: 65px'; align="center">Wall of Flippers</h1>
+
+<div align="center">
+  	<p align = "center">🐬 A simple and easy way to find Flipper Zero Devices and Bluetooth Low Energy Based Attacks 🐬</p>
+  	<p align = "center">🐬 Documentation written by @k3yomi 🐬</p>
+	<div align="center" style="border: none;">
+		<table align="center" style="border-collapse: collapse; margin: 0 auto;">
+			<tr align="center">
+				<td align="center">
+					<a href="https://ko-fi.com/k3yomi" style="text-decoration: none;">
+						<img align="center" src='https://avatars.githubusercontent.com/u/54733885?s=55&v=4' width="55" height="55">
+						<img align="center" src='https://ko-fi.com/img/githubbutton_sm.svg'>
+					</a>
+					<h3 align="center">k3yomi (Project Maintainer)</h3>
+				</td>
+				<td align="center">
+					<a href="https://ko-fi.com/emilia0001" style="text-decoration: none;">
+						<img align="center" src='https://avatars.githubusercontent.com/u/37256246?s=55&v=4' width="55" height="55", style="border-radius: 50%;">
+						<img align="center" src='https://ko-fi.com/img/githubbutton_sm.svg'>
+					</a>
+					<h3 align="center">Emilia (jbohack) (Contributor)</h3>
+				</td>
+			</tr>
+		</table>
+		<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/K3YOMI/Wall-of-Flippers">
+		<img alt="GitHub forks" src="https://img.shields.io/github/forks/K3YOMI/Wall-of-Flippers">
+		<img alt="GitHub issues" src="https://img.shields.io/github/issues/K3YOMI/Wall-of-Flippers">
+		<img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/K3YOMI/Wall-of-Flippers">
+		<a href="https://discord.gg/Bg2fvmjQvg" style="text-decoration: none;">
+			<img src="https://discord.com/api/guilds/1190160512953094235/widget.png?style=shield" alt="Discord Shield"/>
+		</a>
+	</div>
+</div>
+
+
+---
+<div>
+    <img align="right" height="490vh" src="https://github.com/K3YOMI/Wall-of-Flippers/assets/54733885/a146acc6-7786-4406-b818-36a48b29473d">
+    <img align="right" height="490vh" src="https://upload.wikimedia.org/wikipedia/commons/3/3d/1_120_transparent.png">
+</div>
+
+# Table of Contents
+- [Introduction](#doc_introduction)
+- [Features](#doc_features)
+- [Install Guide](#doc_install)
+  	- [Linux Install](#linux_install)
+    	- [Debian Linux Install](#debian_install)
+    	- [Arch Linux Install (SOON)](#arch_install)
+    	- [Nethunter Install (SOON)](#methunter_install)
+    	- [PinePhone Install (SOON)](#pinephone_install)
+  	- [Windows Install](#windows_install)
+- [Issues and Fixes](#doc_issues_and_fixes)
+- [Our Statement](#doc_statement)
+- [Credits and Packages](#doc_credits)
+
+<br><br>
+
+
+
+# 🐬 Wall of Flippers? <a name = "doc_introduction"></a>
+> Wall of Flippers (WoF) is a python based project involving the discovery of the Flipper Zero device and the identification of potential Bluetooth advertisment attacks. Please keep in mind that these two types of detections may **not** be related. 
+
+
+
+# 🐬 Current features and future updates <a name = "doc_features"></a>
+- [x] Discover Flipper Zero Devices (Bluetooth must be enabled)
+- [x] Ability to archive past flipper zero devices discovered
+- [x] Auto-install functionality for Debian Linux and Windows
+- [x] Ability to identify potential Bluetooth advertisment attacks
+	- [x] Suspected Advertisment Attacks
+	- [ ] 31+ Byte Advertisment Attacks
+	- [x] ~iOS Crash Advertisment Attack~ (Patched as of the latest iOS update)
+	- [x] iOS Popup advertisment Attacks
+	- [x] Samsung and Andorid BLE Advertisment Attacks
+	- [x] Windows Swift Pair Advertisment Attacks
+	- [x] LoveSpouse Advertisment Attacks (Denial of Pleasure)
+- [ ] Capture the Flippers (CTF) - A simple CTF to collect Flipper Zero devices
+	- [x] Leaderboard
+	- [ ] Hosting Support (Local and Public)
+	- [ ] Ability to add custom challenges
+	- [x] Point System and Scoring
+	- [x] Username and Key System
+- [x] BLE Advertisments
+	- [x] Ability to send custom BLE advertisments
+- [ ] Hcitool support
+- [ ] Chromium Web Bluetooth Support
+- [ ] Animations (Looking for ascii art artists)
 
 
 
 
+# 🐬 Installing and Requirements <a name = "doc_install"></a>
 
-class FlipperUtils: # meow meow, I dislike this class
-    def __asciiArt__():
-        print(ascii.replace("[RANDOM_QUOTE]", random.choice(dolphin_thinking)))
-    def __convertHowLongAgo__(timey):
-        currentTime = int(time.time())
-        timeAgo = currentTime - timey
-        minutes = str(timeAgo // 60) + "m"
-        seconds = str(timeAgo % 60) + "s"
-        return f"{(minutes)} {(seconds)}"
-    def __logFlipper__(name, data): 
-        db = open('Flipper.json', 'r')
-        file_data = json.load(db)
-        for flipper in file_data:
-             if flipper['MAC'] == data['MAC']:
-                flipper['RSSI'] = data['RSSI']
-                flipper['Detection Type'] = data['Detection Type']
-                flipper['unixLastSeen'] = data['unixLastSeen']
-                flipper['Spoofing'] = data['Spoofing']
-                with open('Flipper.json', 'w') as f:
-                    json.dump(file_data, f, indent=4)
-                db.close()
-                return
-        file_data.append(data)
-        with open('Flipper.json', 'w') as f:
-               json.dump(file_data, f, indent=4)
-        db.close()
-    def __fancyDisplay__():
-        global wof_data
-        db = open('Flipper.json', 'r')
-        file_data = json.load(db)
-        for flipper in file_data:
-            wof_data['data_baseFlippers'].append(flipper)
-        db.close()
-        allign_center = 8
-        for flipper in wof_data['data_baseFlippers']:
-            flipper['Name'] = flipper['Name'].replace("Flipper ", "")
-            if len(flipper['Name']) > 15:
-                flipper['Name'] = flipper['Name'][:15]
-            if flipper['MAC'] in wof_data['live_flippers']:
-                wof_data['display_live'].append(flipper)
-            else:
-                wof_data['display_offline'].append(flipper)
-        totalLive = 0
-        totalOffline = 0
-        os.system("clear || cls")
-        FlipperUtils.__asciiArt__()
-        print(f"Total Online...: {len(wof_data['display_live'])}")
-        print(f"Total Offline..: {len(wof_data['display_offline'])}\n\n")
-        total_ble = 0
-        if (wof_data['system_type'] == "posix"):
-            if (len(wof_data['forbidden_packets_found']) > 0):
-                print("Notice: These attacks may not be related to the Flipper Zero.\n")
-                print(f"[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
-                print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-                for packet in wof_data['forbidden_packets_found']:
-                    total_ble = total_ble + 1
-                    if (total_ble <= 10):
-                        name = packet['Type']
-                        mac = packet['MAC']
-                        pkt = packet['PCK']
-                        print(name.ljust(allign_center) +   "\t\t" +  mac.ljust(allign_center) + "  " + pkt.ljust(allign_center))
-            if (len(wof_data['forbidden_packets_found']) > 25):
-                print(f"━━━━━━━━━━━━━━━━━━ Bluetooth Low Energy (BLE) Attacks Detected ({len(wof_data['forbidden_packets_found'])}+ Packets) ━━━━━━━━━━━━━━━━━━━━")
-        else:
-            print(f"━━━━━━━━━━━━━━━━━━ BLE Attack Detection is still in development for Windows. ━━━━━━━━━━━━━━━━━━━━")
-        print(f"\n\n[FLIPPER]".ljust(8)+ "\t" +"[ADDR]".ljust(8)+ "\t\t" +"[FIRST]".ljust(8)+ "\t" +"[LAST]".ljust(8)+ "\t" +"[RSSI]".ljust(8)+ "\t" +"[SPOOFING]".ljust(8))
-        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-        if (len(wof_data['display_live']) > 0):
-            print("(ONLINE DEVICES)".center(100))
-            for flipper in wof_data['display_live']:
-                totalLive += 1
-                if totalLive < wof_data['max_online']:
-                    print(flipper['Name'].ljust(8)+ "\t" + flipper['MAC']+ "\t" + str(FlipperUtils.__convertHowLongAgo__(flipper['unixFirstSeen'])).ljust(8) + "\t" + str(FlipperUtils.__convertHowLongAgo__(flipper['unixLastSeen'])).ljust(8) + "\t" + str((flipper['RSSI'])) +"".ljust(8) + "\t" + str(flipper['Spoofing']).ljust(8) )
-                if totalLive == wof_data['max_online'] - 1:
-                    totalLiveStr = len(wof_data['display_live']) - wof_data['max_online']
-                    print(f"Too many <online> devices to display. ({totalLiveStr} devices)".center(100))
-                    break
-        if (len(wof_data['display_offline']) > 0):
-            wof_data['display_offline'] = sorted(wof_data['display_offline'], key=lambda k: k['unixLastSeen'], reverse=True)
-            print("(OFFLINE DEVICES)".center(100))
-            for flipper in wof_data['display_offline']:
-                totalOffline += 1
-                if totalOffline < wof_data['max_offline']:
-                    print( flipper['Name'].ljust(8)+ "\t" + flipper['MAC']+ "\t" + str(FlipperUtils.__convertHowLongAgo__(flipper['unixFirstSeen'])).ljust(8) + "\t" + str(FlipperUtils.__convertHowLongAgo__(flipper['unixLastSeen'])).ljust(8)+ "\t" + "-".ljust(8)+ "\t" + str(flipper['Spoofing']).ljust(8))
-                if totalOffline == wof_data['max_offline'] - 1:
-                    totalOfflineStr = len(wof_data['display_offline'])  - wof_data['max_offline']
-                    print(f" Too many <offline> devices to display. ({totalOfflineStr} devices)".center(100))
-                    break
-        wof_data['display_live'] = []
-        wof_data['display_offline'] = []
-        wof_data['live_flippers'] = []
-        wof_data['forbidden_packets_found'] = []
-
-class FlipDetection:
-    async def run_detection_async(os_type): # F*ck it, lets make it async and make it one function
-        wof_data['bool_scanning'] = True
-        ble_packets = []
-        if (os_type == "nt"):
-            devices = await BleakScanner.discover() # Windows Supported BLE Package (Non-Cross-Platform packages scare me)
-            for device in devices:
-                adv_name = device.name
-                adv_addr = device.address.lower()
-                adv_rssi =  device.rssi
-                adv_packet = device.metadata.get("manufacturer_data", "DATA_I_DONT_CARE_TO_LOOK_AT_BECAUSE_ITS_VERY_LONG")
-                ble_packets.append({"Name": adv_name, "MAC": adv_addr, "RSSI": adv_rssi, "PCK": adv_packet})
-        if (os_type == "posix"):
-            scanner = Scanner() # Linux Supported BLE Package 
-            devices = scanner.scan(5)
-            for device in devices:
-                for (adv_type, adv_description, adv_value) in device.getScanData():
-                    adv_name = adv_value
-                    if adv_description == "Complete Local Name":
-                        adv_name = adv_value
-                        adv_addr = device.addr.lower()
-                        adv_rssi = device.rssi
-                        ble_packets.append({"Name": adv_name, "MAC": adv_addr, "RSSI": adv_rssi, "PCK": adv_value})
-                    elif not any(device.addr.lower().startswith(addr) for addr in ("80:e1:26", "80:e1:27")):
-                        adv_addr = device.addr.lower()
-                        adv_rssi = device.rssi
-                        ble_packets.append({"Name": adv_name, "MAC": adv_addr, "RSSI": adv_rssi, "PCK": adv_value})
-        for packet in ble_packets: # I'm sorry for this code... I'm not proud of it either
-            adv_name = packet['Name']
-            adv_addr = packet['MAC']
-            adv_rssi = packet['RSSI']
-            adv_packet = packet['PCK']
-            ble_blacklist_check = ""
-            the_wall_of_forbidden_packets = wof_data['forbidden_packets']
-            for packet in the_wall_of_forbidden_packets:
-                bool_isSimilar = True
-                packet_value = packet['PCK']
-                packet_type = packet['TYPE']
-                ble_blacklist_check = packet_value
-                total_underscores = ble_blacklist_check.count("_")
-                total_found = 0
-                for char1, char2 in zip(adv_packet, ble_blacklist_check):
-                    if char2 != '_' and char1 != char2:
-                        bool_isSimilar = False
-                    if (char1 == char2):
-                        total_found += 1
-                if (bool_isSimilar == True):
-                    get_non_underscore_chars = len(ble_blacklist_check) - total_underscores
-                    if (total_found == get_non_underscore_chars):
-                        wof_data['forbidden_packets_found'].append({"MAC": adv_addr, "PCK": adv_packet, "Type": packet_type})
-
-            if (adv_name == "Flipper"):
-                adv_recorded = int(time.time())
-                for adv_device in wof_data['found_flippers']:
-                    if adv_device['MAC'] == adv_addr: wof_data['found_flippers'].remove(adv_device)
-                data = {"Name": adv_name,"MAC": adv_addr,"RSSI": adv_rssi,"Detection Type": "Flipper","Spoofing": True,"unixFirstSeen": adv_recorded,"unixLastSeen": adv_recorded}
-                is_added = True
-                for adv_device in wof_data['found_flippers']:
-                    if adv_device['MAC'] == adv_addr: is_added = False
-                if is_added:
-                    wof_data['live_flippers'].append(adv_addr)
-                    wof_data['found_flippers'].append(data)
-                    FlipperUtils.__logFlipper__(adv_name,data)
-            elif any(adv_addr.startswith(addr) for addr in ("80:e1:26", "80:e1:27")): # If there are any other valid Flipper MAC addresses, please let me know asap. : D
-                adv_recorded = int(time.time())
-                for adv_device in wof_data['found_flippers']:
-                    if adv_device['MAC'] == adv_addr: wof_data['found_flippers'].remove(adv_device)
-                data = {"Name": adv_name,"MAC": adv_addr,"RSSI": adv_rssi,"Detection Type": "Flipper","Spoofing": True,"unixFirstSeen": adv_recorded,"unixLastSeen": adv_recorded}
-                is_added = True
-                for adv_device in wof_data['found_flippers']:
-                    if adv_device['MAC'] == adv_addr: is_added = False
-                if is_added:
-                    wof_data['live_flippers'].append(adv_addr)
-                    wof_data['found_flippers'].append(data)
-                    FlipperUtils.__logFlipper__(adv_name,data)
-            wof_data['bool_scanning'] = False
+> A few things are required to properly run Wall of Flippers. We Recommend a Raspberry Pi as it's compact and portable! It's also required to have a `chipset` or a USB `adapter` that supports Bluetooth Low Energy. At this current time, there is `limited` support for Wall of Flippers on Windows. Hence we recommend using a linux based operating system as that has been used for testing and development. For BLE advertising, I recommened an external USB adapter as the internal adapter on the Raspberry Pi is not powerful enough to send BLE advertisments long range.  
 
 
-import os,time,json,random,asyncio # Importing all the required modules (Windows and Linux modules are different)
-os.system("clear || cls")
-system_type = os.name
-wof_data['system_type'] = system_type
-if system_type == "nt": from bleak import BleakScanner # Windows BLE Package
-if system_type == "posix": from bluepy.btle import Scanner # Linux BLE Package
-if system_type == "posix" and os.geteuid() != 0: print("[!] Wall of Flippers >> WoF requires root privileges to run.\n\t      Reason: Dependency on bluepy library."); exit() # Check if the user is root (Linux)
-while True:
-    if (wof_data['bool_scanning'] == False):
-        wof_data['data_baseFlippers'] = []
-        FlipperUtils.__fancyDisplay__()
-        asyncio.run(FlipDetection.run_detection_async(system_type))
-    time.sleep(0.1) # Don't worry about this - Everything is fine... :P
 
+## Linux Install Guide <a name = "linux_install"></a>
+
+### Arch Linux <a name = "arch_install"></a>
+> Documentation coming soon!
+
+### Nethunter Install <a name = "methunter_install"></a>
+> Documentation coming soon!
+
+### PinePhone Install <a name = "pinephone_install"></a>
+> Documentation coming soon!
+
+
+### Debian Linux <a name = "debian_install"></a>
+> Wall of Flippers on debian linux is currently one of the best ways to run Wall of Flippers. Mostly due to it being stable and having a lot of support for BTLE. To start off, is is highly recommened to follow all instructions we provide unless you know what you are doing. To get started, we need to set up the directory and install the required packages.
+
+### Step 1 (One): Full system upgrade / update
+> Before we continue with the installation, we need to make sure our system is up to date. To do this update through the command line.
+
+	sudo apt-get update && sudo apt-get upgrade -y
+
+### Step 2 (Two): Git Clone and Git Installiation 
+> To start off, we need to clone the repository and install the required packages. To do this, we need to run the following commands in the terminal. However, if you do not have git installed, you can simply install it by running this command (apt package manager only): 
+
+	sudo apt-get install git
+	git clone https://www.github.com/K3YOMI/Wall-of-Flippers
+	cd ./Wall-of-Flippers
+
+### Step 3 (Three): Installing python and pip (python3 / python3-pip)
+> Installing python3 and python3-pip is required to run wall of flippers and installs it's dependencies. The command below will install python3 and python3-pip for you. 
+
+	sudo apt-get install python3 python3-pip
+
+### Step 4 (Four): Installing the required packages (Multiple Ways)
+> Installing the required packets and dependencies can be done in three ways with this install. You can choose to use the terminal with the commands below, use requirements.txt, or you use the easy install script within Wall of Flippers. The choice is up to you depending on your preference. To get started with the terminal way. We will use these commands below.
+
+	sudo apt-get install libglib2.0-dev
+	sudo pip3 install bluepy
+	sudo pip3 install requests
+
+> If you would like to use the requirements.txt file, you can use the following commands below.
+
+	sudo apt-get install libglib2.0-dev
+	sudo pip3 install -r requirements.txt
+
+> If you would like to use the easy install script, you can use the following commands below.
+
+	sudo python3 WallofFlippers.py
+	# You should get a prompt upon startup, press 4 for the easy install and follow the directions and prompts for the install.
+
+### Step 5 (Five): Running Wall of Flippers
+> Once you have finished with all the dependencies and requirements, you can now run Wall of Flippers. To do this, you can run the following command below.
+
+	sudo python3 WallofFlippers.py 
+
+> Please keep note that running Wall of Flippers requires elevated privileges. Hence the `sudo` command. If you do not want to run Wall of Flippers with elevated privileges, you can run the following command below.
+
+	sudo chmod +x WallofFlippers.py
+	./WallofFlippers.py
+
+## Windows Install Guide <a name = "windows_install"></a>
+> Windows is currently not fully supported. However, you can still run Wall of Flippers on Windows. A few missing features like the ability to detect advertisment attacks and ability to send advertisments. However the detection of the Flipper Zero device is still supported. To get started, we will need to clone the repository and install the required packages. To do this, we need to run the following commands in the command prompt. However, if you do not have git installed, you can simply install it by downloading it from the official website.
+
+### Step 1 (One): Git Clone and Git Installiation 
+
+
+	Download Link: https://git-scm.com/downloads
+
+> Once you have downloaded git, you can now run the following commands below.
+
+	git clone https://www.github.com/K3YOMI/Wall-of-Flippers
+	cd ./Wall-of-Flippers
+
+
+### Step 2 (Two): Installing python and pip (python / pip)
+> This step is quite straightforward as we will be installing python and pip. To do this, we will need to download the latest version of python from the official website. Once you have downloaded the installer, you can run it and install python. Please make sure to check the box that says `Add Python to PATH`. This will allow you to run python from the command prompt. Once you have installed python, you can now install the required packages. 
+
+	Download Link: https://www.python.org/downloads/
+
+> Once you have installed python, you can now install the required packages. To do this, we will need to run the following commands below.
+
+	pip install bleak
+	pip install requests
+
+
+> Alternatively, you can use the requirements.txt file to install the required packages. To do this, we will need to run the following commands below.
+
+	pip install -r requirements.txt
+
+> If you would like to use the easy install script, you can use the following commands below.
+
+	python WallofFlippers.py
+	# You should get a prompt upon startup, press 4 for the easy install and follow the directions and prompts for the install.
+
+> If you are having issues with pip being not recognized as a command, please refer to this question below:\
+https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-internal-or-external-command
+
+### Step 3 (Three): Running Wall of Flippers
+> Once you have finished with all the dependencies and requirements, you can now run Wall of Flippers. To do this, you can run the following command below.
+
+	python WallofFlippers.py
+	
+> Please keep note that this is a watered down version of Wall of Flippers. Hence the lack of features. If you would like to run the full version of Wall of Flippers, please refer to the Linux Install Guide above.
+
+
+# Issues and Fixes <a name = "doc_issues_and_fixes"></a>
+> If you encounter any issues or bugs, please report them to us on our github page. We will try our best to fix them as soon as possible. If you would like to contribute to the project, please feel free to make a pull request. We will review it and merge it if it is a good addition to the project. We will be starting a discord server soon for support and development. Please keep an eye out for that. Thank you for your support and we hope you enjoy this project! <3
+
+# Our Statement <a name = "doc_statement"></a>
+> This project isn't the solution to combat the Flipper Zero device or any form of btle attacks. **THIS DOES NOT MITIGATE OR STOP ANYTHING** However, the flipper zero device is a great tool for learning and understanding the inctracies of the cyberworld. Now for the detections for this project, we heavily rely on the advertisments that the Flipper Zero sends out for detection. While a user can do many things to avoid being detected by Wall of Flippers. (Depending if the Identifier method gets worked around) We highly advise using this project for an end all solution. While not all bluetooth attacks are sent from only the flipper, it's a good start to understand the world of bluetooth and the attacks that can be accomplished with simple devices. We hope you enjoy this project and we hope you take the time to learn and build off of this. We are always looking for contributions and new ideas. Thank you for looking at this project and we hope you enjoy it! -k3yomi and emilia0001
+
+
+# Credits and Packages <a name = "doc_credits"></a>
+> This project was made possible by the following people. Please make sure to check them out and support them! <3
+
+| Project Maintainer | Project Contributor | AppleJuice BLE Advertisment Data | Bleak Package | Bluepy Package |
+| --- | --- | --- | --- | --- |
+| [![k3yomi](https://avatars.githubusercontent.com/k3yomi)](https://www.github.com/k3yomi) | [![emilia0001](https://avatars.githubusercontent.com/jbohack)](https://www.github.com/jbohack) | [![emilia0001](https://avatars.githubusercontent.com/ecto-1a)](https://www.github.com/ecto-1a) | [![emilia0001](https://avatars.githubusercontent.com/hbldh)](https://www.github.com/hbldh) | [![emilia0001](https://avatars.githubusercontent.com/IanHarvey)](https://www.github.com/IanHarvey) |
+| k3yomi | emilia0001 | Ecto-1A | hbldh | IanHarvey |
