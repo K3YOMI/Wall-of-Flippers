@@ -186,7 +186,7 @@ class wall_of_flippers:
                 t_packets = 0
                 print("\n\n[!] Wall of Flippers >> These packets may not be related to the Flipper Zero.\n")
                 print(f"[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
-                print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━") 
+                print("-----------------------------------------------------------------------------------------------") 
                 for key in wof_data['forbidden_packets_found']:
                     if ble_spamming_macs.count(key['MAC']) == 0:
                         ble_spamming_macs.append(key['MAC'])
@@ -194,14 +194,14 @@ class wall_of_flippers:
                         if t_packets <= wof_data['max_ble_packets']: # Max amount of packets to display on the screen
                             print(f"{key['Type'].ljust(t_allignment)}\t\t{key['MAC'].ljust(t_allignment)}  {key['PCK'].ljust(t_allignment)}")
                 if int_total_blacklisted_packets > wof_data['ble_threshold']:
-                    print(f"━━━━━━━━━━━━━━━━━━ Bluetooth Low Energy (BLE) Attacks Detected ({int_total_blacklisted_packets} Advertisements) ━━━━━━━━━━━━━━━━━━━━")
+                    print(f"------------------ Bluetooth Low Energy (BLE) Attacks Detected ({int_total_blacklisted_packets} Advertisements) --------------------")
         else:
-            print(f"━━━━━━━━━━━━━━━━━━ BLE Attack Detection is still in development for Windows. ━━━━━━━━━━━━━━━━━━━━") 
+            print(f"------------------ BLE Attack Detection is still in development for Windows. --------------------") 
         # Display flipper statistics
         print(f"\nTotal Online.....................: {int_online_flippers}")
         print(f"Total Offline....................: {int_offline_flippers}")
         print(f"\n\n[FLIPPER]{''.ljust(t_allignment)}[ADDR]{''.ljust(t_allignment)}\t\t[FIRST]{''.ljust(t_allignment)}[LAST]\t{''.ljust(t_allignment)}[RSSI]{''.ljust(t_allignment)}\t[Detection]{''.ljust(t_allignment)}")
-        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        print("----------------------------------------------------------------------------------------------------")
         # Display online flippers
         if int_online_flippers > 0:
             t_live = 0
@@ -270,7 +270,7 @@ class capture_the_flippers:
                 print(f"My Flippers Captuted: {len(table_ctf_compeition_confiugrations['my_collection'])}")
                 print(f"TOP 10 LEADERBOARD\n".center(95))
                 print(f"[RANK]\t[USERNAME]\t[CURRENT SCORE]\t[FLIPPERS CAPTURED]")
-                print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+                print("---------------------------------------------------------------------------------------------------")
                 for player in leaderboard_data:
                     if len(player['name']) > 10:
                         player['name'] = player['name'][:10] + "..."
@@ -278,7 +278,7 @@ class capture_the_flippers:
                 print("\n\n")
                 print(f"YOUR STATS\n".center(95))
                 print(f"[FLIPPER]{''.ljust(7)}[ADDR]{''.ljust(8)}\t\t[Detection]{''.ljust(8)}")
-                print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+                print("---------------------------------------------------------------------------------------------------")
                 for key in table_ctf_compeition_confiugrations['my_collection']:
                     key['flippers'] = json.loads(key['flippers'])
                     if len(key['flippers']) > 0: # If there are more than 2 flippers, then the user has captured a flipper
@@ -324,7 +324,7 @@ class library:
         except ImportError:
             print("[ ] Bluepy is not installed yet")
         print("\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]")
-        print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        print("-------------------------------------------------------------------------------------------------")
         print("\n".join([f"{option['option'].ljust(8)}{option['action'].ljust(34)}{option['description']}" for option in dialogue_options]))
         try:
             str_input = input("\n[?] Wall of Flippers >> ")
@@ -612,7 +612,7 @@ if selection_box == 'capture_the_flippers':
     dialogue_options = wof_data['ctf_directory_options']
     library.ascii_art("Please select an option to continue")
     print(f"\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    print("-------------------------------------------------------------------------------------------------")
     for option in dialogue_options:
         print(f"{option['option'].ljust(8)}{option['action'].ljust(34)}{option['description']}")
     user_input = input("[?] Wall of Flippers >> ")
@@ -687,7 +687,7 @@ if selection_box == 'advertise_bluetooth_packets':
         exit()
     library.ascii_art(f"Please Select an option to continue")
     print(f"\n\n[#]\t[ACTION]")
-    print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    print("---------------------------------------------------------------------------------------------------")
     dialogue_options = wof_data['ble_attack_directory_options'] # Credits for the directory @ECTO-1A (https://github.com/ECTO-1A/AppleJuice)
     for option in dialogue_options:
         print(f"{option['option'].ljust(8)}{option['action'].ljust(34)}")
