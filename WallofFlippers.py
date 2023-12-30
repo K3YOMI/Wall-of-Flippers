@@ -46,7 +46,7 @@ table_ctf_compeition_confiugrations = { # This is not yet complete. expect this 
     "ctf_link": "http://xxx.xxx.xxx.xxx:xx",
     "ctf_username": "YOUR_USERNAME",
     "ctf_password": "YOUR_SECRET_PASSWORD_TO_JOIN",
-    "ctf_key": "YOUR_SECRET_KEY_TO_JOIN",
+    "ctf_key": "YOUR_SECRET_K3Y_TO_JOIN",
     "my_collection": [],
     "temp_collection": [],
 }
@@ -298,8 +298,6 @@ class library:
 
     """
     def __init__():
-        with open('packet_logger.txt', 'w') as all_packets_file:
-            all_packets_file.write("")
         dialogue_options = wof_data['init_directory_options']
         dialogue_options_dict = {option['option']: option['return'] for option in dialogue_options}
         library.ascii_art("Please Select an option to continue")
@@ -346,9 +344,6 @@ class library:
         if t_minutes > 1000:
             t_minutes = ">999"
         return f"{t_minutes}m {t_seconds}s"
-    def t_log_packet(s_table): # This function logs ALL packets to a txt file (Temporarily)
-        with open('packet_logger.txt', 'a') as all_packets_file:
-            all_packets_file.write(f"{json.dumps(s_table, indent=4)}\n")
     def log(s_table): # This function logs the flipper data to Flipper.json
         with open('Flipper.json', 'r') as flipper_file: # Load flipper data from Flipper.json
             flipper_data = json.load(flipper_file)
@@ -408,7 +403,6 @@ class library:
                                 "PCK": indiv_packet,
                                 "MAC": Advertisement_mac,
                             })
-            library.t_log_packet(adv)
             if Advertisement_name.lower().startswith("flipper"):
                 int_recorded = int(time.time())
                 wof_data['found_flippers'] = [flipper for flipper in wof_data['found_flippers'] if Advertisement_mac != flipper['MAC']]
