@@ -498,72 +498,77 @@ class library:
             print("[!] Wall of Flippers >> Error: Type not supported")
         wof_data['bool_isScanning'] = False
     async def detection_async(os):
-        wof_data['bool_isScanning'] = True
-        ble_packets = []
-        if os == "nt": # Windows Detection
-            devices = await BleakScanner.discover()
-            if devices:
-                for device in devices:
-                    Advertisement_name = str(device.name)
-                    Advertisement_addr = str(device.address.lower())
-                    Advertisement_rssi = str(device.rssi)
-                    device.metadata.get("manufacturer_data", "TO_DO_LATER_NO_YET_SUPPORTED")
-                    ble_packets.append({
-                        "Name": Advertisement_name,
-                        "MAC": Advertisement_addr,
-                        "RSSI": Advertisement_rssi,
-                        "PCK": "NOT FOUND",
-                        "UUID": "NOT FOUND",
-                        "Manufacturer": "NOT FOUND",
-                        "Type": "NOT FOUND"
-                    })
-            else:
+        try:
+            wof_data['bool_isScanning'] = True
+            ble_packets = []
+            if os == "nt": # Windows Detection
+                devices = await BleakScanner.discover()
+                if devices:
+                    for device in devices:
+                        Advertisement_name = str(device.name)
+                        Advertisement_addr = str(device.address.lower())
+                        Advertisement_rssi = str(device.rssi)
+                        device.metadata.get("manufacturer_data", "TO_DO_LATER_NO_YET_SUPPORTED")
+                        ble_packets.append({
+                            "Name": Advertisement_name,
+                            "MAC": Advertisement_addr,
+                            "RSSI": Advertisement_rssi,
+                            "PCK": "NOT FOUND",
+                            "UUID": "NOT FOUND",
+                            "Manufacturer": "NOT FOUND",
+                            "Type": "NOT FOUND"
+                        })
+                else:
+                    wof_data['bool_isScanning'] = False
+            elif os == "posix": # Linux Detection
+                scanner = Scanner()
+                devices = scanner.scan(5) # Scan the area for 5 seconds....
+                if devices:
+                    for device in devices:
+                        scan_list = device.getScanData()
+                        device_packets = []
+                        device_name = "NOT FOUND"
+                        device_manufacturer = "NOT FOUND"
+                        device_uuid = "NOT FOUND"
+                        device_type = "NOT FOUND"
+                        device_formatted = []
+                        for scan_list_item in scan_list:
+                            device_formatted.append({"ADTYPE": scan_list_item[0], "Description": scan_list_item[1], "Value": scan_list_item[2]})
+                        for i_data in device_formatted:
+                            if i_data['Description'] == "Complete Local Name":
+                                device_name = i_data['Value']
+                            if i_data['Description'] == "Manufacturer":
+                                device_manufacturer = i_data['Value']
+                            if i_data['Value'] == "00003082-0000-1000-8000-00805f9b34fb": # White Flipper
+                                device_uuid = i_data['Value']
+                                device_type = "White"
+                            if i_data['Value'] == "00003081-0000-1000-8000-00805f9b34fb": # Black Flipper
+                                device_uuid = i_data['Value']
+                                device_type = "Black"
+                            if i_data['Value'] == "00003083-0000-1000-8000-00805f9b34fb": # Transparent Flipper
+                                device_uuid = i_data['Value']
+                                device_type = "Transparent"
+                            device_packets.append(i_data['Value'])
+                        ble_packets.append({
+                            "Name": device_name,
+                            "MAC": device.addr,
+                            "RSSI": device.rssi,
+                            "PCK": device_packets,
+                            "UUID": device_uuid,
+                            "Manufacturer": device_manufacturer,
+                            "Type": device_type
+                        })
+                else:
+                    wof_data['bool_isScanning'] = False
+            else: # Unsupported OS
+                print("[!] Wall of Flippers >> Error: Type not supported")
                 wof_data['bool_isScanning'] = False
-        elif os == "posix": # Linux Detection
-            scanner = Scanner()
-            devices = scanner.scan(5) # Scan the area for 5 seconds....
-            if devices:
-                for device in devices:
-                    scan_list = device.getScanData()
-                    device_packets = []
-                    device_name = "NOT FOUND"
-                    device_manufacturer = "NOT FOUND"
-                    device_uuid = "NOT FOUND"
-                    device_type = "NOT FOUND"
-                    device_formatted = []
-                    for scan_list_item in scan_list:
-                        device_formatted.append({"ADTYPE": scan_list_item[0], "Description": scan_list_item[1], "Value": scan_list_item[2]})
-                    for i_data in device_formatted:
-                        if i_data['Description'] == "Complete Local Name":
-                            device_name = i_data['Value']
-                        if i_data['Description'] == "Manufacturer":
-                            device_manufacturer = i_data['Value']
-                        if i_data['Value'] == "00003082-0000-1000-8000-00805f9b34fb": # White Flipper
-                            device_uuid = i_data['Value']
-                            device_type = "White"
-                        if i_data['Value'] == "00003081-0000-1000-8000-00805f9b34fb": # Black Flipper
-                            device_uuid = i_data['Value']
-                            device_type = "Black"
-                        if i_data['Value'] == "00003083-0000-1000-8000-00805f9b34fb": # Transparent Flipper
-                            device_uuid = i_data['Value']
-                            device_type = "Transparent"
-                        device_packets.append(i_data['Value'])
-                    ble_packets.append({
-                        "Name": device_name,
-                        "MAC": device.addr,
-                        "RSSI": device.rssi,
-                        "PCK": device_packets,
-                        "UUID": device_uuid,
-                        "Manufacturer": device_manufacturer,
-                        "Type": device_type
-                    })
-            else:
-                wof_data['bool_isScanning'] = False
-        else: # Unsupported OS
-            print("[!] Wall of Flippers >> Error: Type not supported")
-            wof_data['bool_isScanning'] = False
-            return None
-        library.sort_packets(ble_packets)
+                return None
+            library.sort_packets(ble_packets)
+        except Exception as error:
+            library.ascii_art("Error: Failed to scan for BLE devices")
+            print("[!] Wall of Flippers >> Error: Failed to scan for BLE devices >> " + str(error))
+            exit()
 os.system("clear || cls")
 wof_data['system_type'] = os.name
 selection_box = library.__init__()
