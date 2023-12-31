@@ -502,7 +502,7 @@ class library:
             wof_data['bool_isScanning'] = True
             ble_packets = []
             if os == "nt": # Windows Detection
-                devices = await BleakScanner.discover()
+                devices = await BleakScanner.discover() # Scan the area for 5 seconds....
                 if devices:
                     for device in devices:
                         Advertisement_name = str(device.name)
@@ -521,7 +521,7 @@ class library:
                 else:
                     wof_data['bool_isScanning'] = False
             elif os == "posix": # Linux Detection
-                scanner = Scanner(type) # hci0 or whatever the bluetooth adapter is
+                scanner = Scanner(type) # Thank you Talking Sasquach for testing this!
                 devices = scanner.scan(5) # Scan the area for 5 seconds....
                 if devices:
                     for device in devices:
@@ -773,7 +773,7 @@ if selection_box == 'advertise_bluetooth_packets':
 if selection_box == 'install_dependencies':
     try:
         library.ascii_art("Welcome to the easy install process! Please read carefully.")
-        linux_dependencies_cmd = ['sudo apt-get install python3-pip', 'sudo apt-get install libglib2.0-dev', 'pip install bluepy', 'pip install requests']
+        linux_dependencies_cmd = ['sudo apt-get install python3-pip', 'sudo apt-get install libglib2.0-dev', 'pip install bluepy', 'pip install requests', 'sudo apt-get install python3-bluez']
         windows_dependencies_cmd = ['pip install bleak', 'pip install requests']
         if wof_data['system_type'] == "nt": # Windows Auto Install
             library.ascii_art("Hmm, I've detected that you are running under Windows!")
