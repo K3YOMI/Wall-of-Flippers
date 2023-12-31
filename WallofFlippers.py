@@ -40,6 +40,7 @@
 
 
 import os
+import sys
 import time
 import asyncio
 import json
@@ -323,6 +324,11 @@ class library:
         except ImportError:
             print("[ ] Requests is not installed yet")
         try:
+            import bluetooth # HTTP Requests
+            print(f"[X] bluetooth is installed")
+        except ImportError:
+            print("[ ] bluetooth is not installed yet")
+        try:
             import bluepy.btle # Linux BLE Package
             print(f"[X] Bluepy is installed")
         except ImportError:
@@ -347,6 +353,8 @@ class library:
         print(s_ascii.replace("[RANDOM_QUOTE]", r_quote))
     def in_ctf(): # This function returns whether or not CTF mode is enabled.
         return table_ctf_compeition_confiugrations['is_enabled'] # Self explanatory
+    def in_venv():
+        return sys.prefix != sys.base_prefix
     def unix2Text(s_raw): # This function converts a unix timestamp to a human readable format.
         current_timestamp = int(time.time())
         t_different = current_timestamp - s_raw
@@ -586,6 +594,26 @@ class library:
             exit()
 os.system("clear || cls")
 wof_data['system_type'] = os.name
+if wof_data['system_type'] == "posix": # Linux Auto Install
+
+
+    if not os.path.exists(".venv/bin/activate"): # Check if the user has setup their virtual environment
+        library.ascii_art("Uh oh, it seems like you have not setup your virtual environment yet!")
+        print("[!] Wall of Flippers >> It seems like you have not setup your virtual environment yet.\n\t      Reason: .venv/bin/activate does not exist.")
+        print("[!] Wall of Flippers >> Would you like to setup your virtual environment now?")
+        user_input_ok = input("[?] Wall of Flippers (Y/N) >> ")
+        if user_input_ok.lower() == "y":
+            os.system("python3 -m venv .venv")
+            print("[!] Wall of Flippers >> Virtual environment setup successfully!")
+            exit()
+    if library.in_venv() == False: # Check if the user is in their virtual environment
+        library.ascii_art("Uh oh, it seems like you are not in your virtual environment!")
+        print("[!] Wall of Flippers >> It seems like you are not in your virtual environment. Please use the following command to enter your virtual environment.")
+        print("\tsource .venv/bin/activate")
+        print("\tor")
+        print("\tbash wof.sh")
+        exit()
+
 selection_box = library.__init__()
 if selection_box == "wall_of_flippers" or selection_box == "capture_the_flippers":
     try:
@@ -789,7 +817,7 @@ if selection_box == 'advertise_bluetooth_packets':
 if selection_box == 'install_dependencies':
     try:
         library.ascii_art("Welcome to the easy install process! Please read carefully.")
-        linux_dependencies_cmd = ['sudo apt-get install python3-pip', 'sudo apt-get install libglib2.0-dev', 'pip install bluepy', 'pip install requests', 'sudo apt-get install python3-bluez']
+        linux_dependencies_cmd = ['sudo apt-get install libglib2.0-dev', 'python3 -m pip install bluepy', 'python3 -m pip install requests', 'python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez#egg=pybluez']
         windows_dependencies_cmd = ['pip install bleak', 'pip install requests']
         if wof_data['system_type'] == "nt": # Windows Auto Install
             library.ascii_art("Hmm, I've detected that you are running under Windows!")
@@ -809,13 +837,6 @@ if selection_box == 'install_dependencies':
             print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\n{json.dumps(linux_dependencies_cmd, indent=4)}")
             user_input_ok = input("[?] Wall of Flippers (Y/N) >> ")
             if user_input_ok.lower() == "y":
-                print(f"[!] Wall of Flippers >> What pip version do you use >> (pip/pip3)")
-                user_input_pip = input("[?] Wall of Flippers (pip/pip3) >> ")
-                linux_dependencies_cmd = [cmd.replace("pip", user_input_pip) for cmd in linux_dependencies_cmd]
-                print(f"[!] Wall of Flippers >> Add '--break-system-packages' to the {user_input_pip} command if you are using a virtual environment? (Y/N)")
-                user_input_pip = input("[?] Wall of Flippers (Y/N) >> ")
-                if user_input_pip.lower() == "y":
-                    linux_dependencies_cmd = [cmd + " --break-system-packages" if "pip" and not "apt-get install" in cmd else cmd for cmd in linux_dependencies_cmd]
                 print(f"[!] Wall of Flippers >> Installing dependencies...")
                 for cmd in linux_dependencies_cmd:
                     os.system(cmd)
