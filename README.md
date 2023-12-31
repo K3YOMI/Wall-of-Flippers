@@ -58,6 +58,7 @@
     	- [PinePhone Install (SOON)](#pinephone_install)
   	- [Windows Install](#windows_install)
 - [Issues and Fixes](#doc_issues_and_fixes)
+- [Common Errors and Fixes](#doc_c_and_e)
 - [Our Statement](#doc_statement)
 - [Credits and Packages](#doc_credits)
 
@@ -134,33 +135,38 @@
 	git clone https://www.github.com/K3YOMI/Wall-of-Flippers
 	cd ./Wall-of-Flippers
 
-### Step 3 (Three): Installing python and pip (python3 / python3-pip)
-> Installing python3 and python3-pip is required to run wall of flippers and installs it's dependencies. The command below will install python3 and python3-pip for you. 
+### Step 3 (Three): Installing python (python3)
+> Installing python3 is required to run wall of flippers and installs it's dependencies. The command below will install python3 for you. 
 
-	sudo apt-get install python3 python3-pip
+	sudo apt-get install python3
 
-### Step 4 (Four): Installing the required packages (Multiple Ways)
+### Step 4 (Four): Setting up and Installing the required packages (Multiple Ways)
 > Installing the required packets and dependencies can be done in three ways with this install. You can choose to use the terminal with the commands below, use requirements.txt, or you use the easy install script within Wall of Flippers. The choice is up to you depending on your preference. To get started with the terminal way. We will use these commands below.
 
 	sudo apt-get install libglib2.0-dev
  	sudo apt-get install python3-bluez
-	sudo pip3 install bluepy
-	sudo pip3 install requests
-
-> If you would like to use the requirements.txt file, you can use the following commands below.
-
-	sudo apt-get install libglib2.0-dev
-	sudo pip3 install -r requirements.txt
-
+	python3 -m venv .venv
+	source .venv/bin/activate
+	################## PACKAGES ########################
+	# requirement.txt method
+	python3 -m pip install -r requirements.txt
+	# command method
+	python3 -m pip install bluepy
+	python3 -m pip install requests
+ 	python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez#egg=pybluez
+	################## PACKAGES ########################
+	deactivate
+	
 > If you would like to use the easy install script, you can use the following commands below.
 
-	sudo python3 WallofFlippers.py
-	# You should get a prompt upon startup, press 4 for the easy install and follow the directions and prompts for the install.
+	bash wof.sh
+	# You should get a prompt upon startup, about setting up a managed environment, feel free to let it do for you. Then once an environemnet is complete run `wof.sh` again
+	and press 4 for the auto install process.
 
 ### Step 5 (Five): Running Wall of Flippers
 > Once you have finished with all the dependencies and requirements, you can now run Wall of Flippers. To do this, you can run the following command below.
 
-	sudo python3 WallofFlippers.py 
+	bash wof.sh
 
 > Please keep note that running Wall of Flippers requires elevated privileges. Hence the `sudo` command. If you do not want to run Wall of Flippers with elevated privileges, you can run the following command below.
 
@@ -214,6 +220,20 @@ https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-interna
 
 # Issues and Fixes <a name = "doc_issues_and_fixes"></a>
 > If you encounter any issues or bugs, please report them to us on our github page. We will try our best to fix them as soon as possible. If you would like to contribute to the project, please feel free to make a pull request. We will review it and merge it if it is a good addition to the project. We will be starting a discord server soon for support and development. Please keep an eye out for that. Thank you for your support and we hope you enjoy this project! <3
+
+
+# Common Errors and Fixes <a name = "doc_c_and_e"></a>
+### No such file or directory /sys/class/bluetooth
+> If the `/sys/class/bluetooth` directory is not present on your system, it may indicate that the Bluetooth subsystem is not properly detected or enabled. To check if you have the right hardware, please run 
+
+	sudo service bluetooth status
+
+> If the status is `dead` you may not have a valid bluetooth chipset or adapter present. If `inactive`, you can enable the service using this command
+
+	sudo service bluetooth restart
+
+
+
 
 # Our Statement <a name = "doc_statement"></a>
 > This project isn't the solution to combat the Flipper Zero device or any form of btle attacks. **THIS DOES NOT MITIGATE OR STOP ANYTHING**!!! However, the flipper zero device is a great tool for learning and understanding the inctracies of the cyberworld. Now for the detections for this project, we heavily rely on the advertisments that the Flipper Zero sends out for detection. While a user can do many things to avoid being detected by Wall of Flippers. (Depending if the Identifier method gets worked around) We highly advise using this project for an end all solution. While not all bluetooth attacks are sent from only the flipper, it's a good start to understand the world of bluetooth and the attacks that can be accomplished with simple devices. We hope you enjoy this project and we hope you take the time to learn and build off of this. We are always looking for contributions and new ideas. Thank you for looking at this project and we hope you enjoy it! -k3yomi and emilia0001
