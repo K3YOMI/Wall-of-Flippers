@@ -30,6 +30,10 @@
     Please keep in mind this is a work in progress and will still continue to get updates
     For Documentation and more information, please visit: https://github.com/K3YOMI/Wall-of-Flippers
 
+
+
+    It's way top unorganized and I'm looking for someone to port everything into seperate files. Perferably 
+    in "./utils". Up to you! :3
     
  """
 
@@ -354,7 +358,7 @@ class library:
         with open('Flipper.json', 'r') as flipper_file: # Load flipper data from Flipper.json
             flipper_data = json.load(flipper_file)
         for s_flipper in flipper_data:
-            if s_flipper["MAC"] == s_table["MAC"]:
+            if s_flipper["MAC"] == s_table["MAC"] and s_flipper["Name"] == s_table["Name"]:
                 s_flipper.update({ # Update the flipper data
                     'RSSI': str(s_table['RSSI']),
                     'Detection Type': s_table['Detection Type'],
