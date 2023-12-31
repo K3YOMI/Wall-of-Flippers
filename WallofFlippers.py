@@ -200,7 +200,7 @@ class wall_of_flippers:
                 if int_total_blacklisted_packets > wof_data['ble_threshold']:
                     print(f"------------------ Bluetooth Low Energy (BLE) Attacks Detected ({int_total_blacklisted_packets} Advertisements) --------------------")
         else:
-            print(f"------------------ BLE Attack Detection is still in development for Windows. --------------------") 
+            print(f"\n------------------  BLE Attack Detection is not available for Windows yet. ------------------")
         # Display flipper statistics
         print(f"\nTotal Online.....................: {int_online_flippers}")
         print(f"Total Offline....................: {int_offline_flippers}")
@@ -506,21 +506,33 @@ class library:
             wof_data['bool_isScanning'] = True
             ble_packets = []
             if os == "nt": # Windows Detection
-                devices = await BleakScanner.discover() # Scan the area for 5 seconds....
+                devices = await BleakScanner.discover()
                 if devices:
                     for device in devices:
                         Advertisement_name = str(device.name)
                         Advertisement_addr = str(device.address.lower())
                         Advertisement_rssi = str(device.rssi)
-                        device.metadata.get("manufacturer_data", "TO_DO_LATER_NO_YET_SUPPORTED")
+                        Advertisment_Data = device.metadata.get('manufacturer_data')
+                        Advertisement_uuid = str(device.metadata.get('uuids'))
+                        device_uuid = "NOT FOUND"
+                        device_type = "NOT FOUND"
+                        if (Advertisement_uuid == "['00003082-0000-1000-8000-00805f9b34fb']"): # White Flipper
+                            device_type = "White"
+                            device_uuid = Advertisement_uuid
+                        if (Advertisement_uuid == "['00003081-0000-1000-8000-00805f9b34fb']"): # Black Flipper
+                            device_type = "Black"
+                            device_uuid = Advertisement_uuid
+                        if (Advertisement_uuid == "['00003083-0000-1000-8000-00805f9b34fb']"): # Transparent Flipper
+                            device_uuid = "Transparent"
+                            device_uuid = Advertisement_uuid
                         ble_packets.append({
                             "Name": Advertisement_name,
                             "MAC": Advertisement_addr,
                             "RSSI": Advertisement_rssi,
                             "PCK": "NOT FOUND",
-                            "UUID": "NOT FOUND",
+                            "UUID": device_uuid,
                             "Manufacturer": "NOT FOUND",
-                            "Type": "NOT FOUND"
+                            "Type": device_type
                         })
                 else:
                     wof_data['bool_isScanning'] = False
@@ -567,7 +579,6 @@ class library:
             else: # Unsupported OS
                 print("[!] Wall of Flippers >> Error: Type not supported")
                 wof_data['bool_isScanning'] = False
-                return None
             library.sort_packets(ble_packets)
         except Exception as error:
             library.ascii_art("Error: Failed to scan for BLE devices")
