@@ -1,2 +1,3 @@
 bluepy; sys_platform == "linux"
 bleak; sys_platform != "linux"
+requests
