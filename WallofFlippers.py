@@ -817,7 +817,7 @@ if selection_box == 'advertise_bluetooth_packets':
 if selection_box == 'install_dependencies':
     try:
         library.ascii_art("Welcome to the easy install process! Please read carefully.")
-        linux_dependencies_cmd = ['sudo apt-get install libglib2.0-dev', 'python3 -m pip install bluepy', 'python3 -m pip install requests', 'python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez#egg=pybluez']
+        linux_dependencies_cmd = ['sudo apt-get install libglib2.0-dev', 'python3 -m pip install bluepy', 'python3 -m pip install requests', 'python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez']
         windows_dependencies_cmd = ['pip install bleak', 'pip install requests']
         if wof_data['system_type'] == "nt": # Windows Auto Install
             library.ascii_art("Hmm, I've detected that you are running under Windows!")
