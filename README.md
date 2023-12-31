@@ -220,10 +220,10 @@ https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-interna
 
 
 
-# Credits and Packages <a name = "doc_credits"></a>
+# Contributors and Credits <a name = "doc_credits"></a>
 > This project was made possible by the following people. Please make sure to check them out and support them! <3
 
 | Project Maintainer | Project Contributor | AppleJuice BLE Advertisment Data |
 | --- | --- | --- |
-| [![k3yomi](https://avatars.githubusercontent.com/k3yomi)](https://www.github.com/k3yomi) | [![emilia0001](https://avatars.githubusercontent.com/jbohack)](https://www.github.com/jbohack) | [![emilia0001](https://avatars.githubusercontent.com/ecto-1a)](https://www.github.com/ecto-1a)
+| ![k3yomi](https://avatars.githubusercontent.com/u/54733885?s=55&v=4) | ![emilia0001](https://avatars.githubusercontent.com/u/37256246?s=55&v=4) | ![ecto-1a](https://avatars.githubusercontent.com/u/112792126?s=55&v=4)
 | k3yomi | emilia0001 | Ecto-1A |
