@@ -44,8 +44,8 @@ import random
 Scanner = None
 table_ctf_compeition_confiugrations = { # This is not yet complete. expect this to come later :3 (Security and cheating is a concern still but will be worked on...)
     "is_enabled": False, 
-    "ctf_link": "http://xxx.xxx.xxx.xxx:xx",
-    "ctf_username": "YOUR_USERNAME",
+    "ctf_link": "http://xxx.xxx.xxx.xx:80", # CTF Host Link
+    "ctf_username": "xxxxxxx",
     "ctf_password": "YOUR_SECRET_PASSWORD_TO_JOIN",
     "ctf_key": "YOUR_SECRET_K3Y_TO_JOIN",
     "my_collection": [],
@@ -497,7 +497,7 @@ class library:
         else: # If the system type is not supported, display an error message
             print("[!] Wall of Flippers >> Error: Type not supported")
         wof_data['bool_isScanning'] = False
-    async def detection_async(os):
+    async def detection_async(os, type=0): # This function scans for BLE devices and sorts the packets.
         try:
             wof_data['bool_isScanning'] = True
             ble_packets = []
@@ -521,7 +521,7 @@ class library:
                 else:
                     wof_data['bool_isScanning'] = False
             elif os == "posix": # Linux Detection
-                scanner = Scanner()
+                scanner = Scanner(type) # hci0 or whatever the bluetooth adapter is
                 devices = scanner.scan(5) # Scan the area for 5 seconds....
                 if devices:
                     for device in devices:
@@ -574,11 +574,11 @@ wof_data['system_type'] = os.name
 selection_box = library.__init__()
 if selection_box == "wall_of_flippers" or selection_box == "capture_the_flippers":
     try:
+        import requests
         if wof_data['system_type'] == "nt":
             from bleak import BleakScanner  # Windows BLE Package
         if wof_data['system_type'] == "posix":
-            from bluepy.btle import Scanner  # Linux BLE Package
-        import requests
+            from bluepy.btle import Scanner 
     except Exception as error:
         library.ascii_art("Error: Failed to import dependencies")
         print(f"[!] Wall of Flippers >> Failed to import dependencies >> {error}")
@@ -589,11 +589,22 @@ if selection_box == 'wall_of_flippers':
         library.ascii_art("I require root privileges to run!")
         print("[!] Wall of Flippers >> I require root privileges to run.\n\t      Reason: Dependency on bluepy library.")
         exit()  # Check if the user is root (Linux)
-    wall_of_flippers.display("Thank you for using Wall of Flippers")
     try:
+        ble_adapters = []
+        if wof_data['system_type'] == "posix":
+            ble_adapters = [adapter for adapter in os.listdir('/sys/class/bluetooth/') if 'hci' in adapter]
+            # make a selection of the bluetooth adapter
+            print("\n\n[#]\t[HCI DEVICE]")
+            print("-------------------------------------------------------------------------------------------------")
+            for adapter in ble_adapters:
+                print(f"{ble_adapters.index(adapter)}".ljust(8) + f"{adapter}".ljust(34))
+            device_hci = input("[?] Wall of Flippers >> ")
+        else:
+            device_hci = 0
+        wall_of_flippers.display("Thank you for using Wall of Flippers")
         while True:
             if not wof_data['bool_isScanning']:
-                asyncio.run(library.detection_async(wof_data['system_type']))
+                asyncio.run(library.detection_async(wof_data['system_type'],device_hci))
             time.sleep(1)
     except KeyboardInterrupt:
         library.ascii_art("Thank you for using Wall of Flippers... Goodbye!")
@@ -652,11 +663,22 @@ if selection_box == 'capture_the_flippers':
                     if http.status_code == 200:  # Success
                         library.ascii_art(f"You have successfully connected to the host - Good luck!")
                         time.sleep(0.4)
+                        ble_adapters = []
+                        if wof_data['system_type'] == "posix":
+                            ble_adapters = [adapter for adapter in os.listdir('/sys/class/bluetooth/') if 'hci' in adapter]
+                            # make a selection of the bluetooth adapter
+                            print("\n\n[#]\t[HCI DEVICE]")
+                            print("-------------------------------------------------------------------------------------------------")
+                            for adapter in ble_adapters:
+                                print(f"{ble_adapters.index(adapter)}".ljust(8) + f"{adapter}".ljust(34))
+                            device_hci = input("[?] Wall of Flippers >> ")
+                        else:
+                            device_hci = 0
                         try: 
                             while True:
                                 if not wof_data['bool_isScanning']:
                                     capture_the_flippers.display("You have successfully connected to the host - Good luck!")
-                                    asyncio.run(library.detection_async(wof_data['system_type']))
+                                    asyncio.run(library.detection_async(wof_data['system_type'],device_hci))
                                 time.sleep(1)  # Don't worry about this - Everything is fine... :P
                         except KeyboardInterrupt:
                             library.ascii_art("Thank you for using Wall of Flippers... Goodbye!")
@@ -677,7 +699,17 @@ if selection_box == 'advertise_bluetooth_packets':
         library.ascii_art("Error: Failed to import dependencies")
         print(f"[!] Wall of Flippers >> Failed to import dependencies >> {error}")
         exit()
-    dev_id = 0
+    ble_adapters = []
+    if wof_data['system_type'] == "posix":
+        ble_adapters = [adapter for adapter in os.listdir('/sys/class/bluetooth/') if 'hci' in adapter]
+        # make a selection of the bluetooth adapter
+        print("\n\n[#]\t[HCI DEVICE]")
+        print("-------------------------------------------------------------------------------------------------")
+        for adapter in ble_adapters:
+            print(f"{ble_adapters.index(adapter)}".ljust(8) + f"{adapter}".ljust(34))
+        dev_id = int(input("[?] Wall of Flippers >> "))
+    else:
+        dev_id = 0
     try:
         sock = bluez.hci_open_dev(dev_id)
         toggle_device(dev_id, True)
