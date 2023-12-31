@@ -79,7 +79,6 @@
 - [x] Auto-install functionality for Debian Linux and Windows
 - [x] Ability to identify potential Bluetooth advertisment attacks
 	- [x] Suspected Advertisment Attacks
-	- [ ] 31+ Byte Advertisment Attacks
 	- [x] ~iOS Crash Advertisment Attack~ (Patched as of the latest iOS update)
 	- [x] iOS Popup advertisment Attacks
 	- [x] Samsung and Andorid BLE Advertisment Attacks
@@ -93,9 +92,11 @@
 	- [x] Username and Key System
 - [x] BLE Advertisments
 	- [x] Ability to send custom BLE advertisments
-- [ ] Hcitool support
+- [x] BLE External / Internal Adapter Support
+	- [x] Linux Supported
+ 	- [ ] Windows Supported 	
 - [ ] Chromium Web Bluetooth Support
-- [ ] Animations (Looking for ascii art artists)
+- [ ] Animations (Looking for ascii artists)
 
 
 
@@ -142,6 +143,7 @@
 > Installing the required packets and dependencies can be done in three ways with this install. You can choose to use the terminal with the commands below, use requirements.txt, or you use the easy install script within Wall of Flippers. The choice is up to you depending on your preference. To get started with the terminal way. We will use these commands below.
 
 	sudo apt-get install libglib2.0-dev
+ 	sudo apt-get install python3-bluez
 	sudo pip3 install bluepy
 	sudo pip3 install requests
 
@@ -221,7 +223,7 @@ https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-interna
 # Credits and Packages <a name = "doc_credits"></a>
 > This project was made possible by the following people. Please make sure to check them out and support them! <3
 
-| Project Maintainer | Project Contributor | AppleJuice BLE Advertisment Data | Bleak Package | Bluepy Package |
-| --- | --- | --- | --- | --- |
-| [![k3yomi](https://avatars.githubusercontent.com/k3yomi)](https://www.github.com/k3yomi) | [![emilia0001](https://avatars.githubusercontent.com/jbohack)](https://www.github.com/jbohack) | [![emilia0001](https://avatars.githubusercontent.com/ecto-1a)](https://www.github.com/ecto-1a) | [![emilia0001](https://avatars.githubusercontent.com/hbldh)](https://www.github.com/hbldh) | [![emilia0001](https://avatars.githubusercontent.com/IanHarvey)](https://www.github.com/IanHarvey) |
-| k3yomi | emilia0001 | Ecto-1A | hbldh | IanHarvey |
+| Project Maintainer | Project Contributor | AppleJuice BLE Advertisment Data |
+| --- | --- | --- |
+| [![k3yomi](https://avatars.githubusercontent.com/k3yomi)](https://www.github.com/k3yomi) | [![emilia0001](https://avatars.githubusercontent.com/jbohack)](https://www.github.com/jbohack) | [![emilia0001](https://avatars.githubusercontent.com/ecto-1a)](https://www.github.com/ecto-1a)
+| k3yomi | emilia0001 | Ecto-1A |
