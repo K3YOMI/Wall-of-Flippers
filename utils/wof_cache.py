@@ -26,10 +26,10 @@
 
 table_ctf_compeition_confiugrations = { # This is not yet complete. expect this to come later :3 (Security and cheating is a concern still but will be worked on...)
     "is_enabled": False, 
-    "ctf_link": "http://192.168.3.14:80", # CTF Host Link
-    "ctf_username": "kiyomi",
+    "ctf_link": "http://xxx.xxx.xxx:80", # CTF Host Link
+    "ctf_username": "xxxxxx",
     "ctf_password": "YOUR_SECRET_PASSWORD_TO_JOIN",
-    "ctf_key": "nukrjd8oex9dm2pvu2zwricqigm4m2gtl0bx26boo4m",
+    "ctf_key": "YOUR_SECRET_PASSWORD_TO_JOIN",
     "my_collection": [],
     "temp_collection": [],
 }
