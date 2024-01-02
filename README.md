@@ -50,16 +50,17 @@
 # Table of Contents
 - [Introduction](#doc_introduction)
 - [Features](#doc_features)
+- [Videos](#doc_videos)
 - [Install Guide](#doc_install)
-  	- [Linux Install](#linux_install)
+  	- [How to install](#install_guides)
     	- [Debian Linux Install](#debian_install)
     	- [Arch Linux Install (SOON)](#arch_install)
     	- [Nethunter Install (SOON)](#methunter_install)
     	- [PinePhone Install (SOON)](#pinephone_install)
-  	- [Windows Install](#windows_install)
+  	    - [Windows Install](#windows_install)
 - [Issues and Fixes](#doc_issues_and_fixes)
 - [Common Errors and Fixes](#doc_c_and_e)
-- [Our Statement](#doc_statement)
+- [Notice](#doc_statement)
 - [Credits and Packages](#doc_credits)
 
 <br><br>
@@ -100,6 +101,25 @@
 - [ ] Animations (Looking for ascii artists)
 
 
+# 🐬 Videos and Articles <a name = "doc_videos"></a>
+
+<table align="center" style="border-collapse: collapse; margin: 0 auto;">
+	<tr align="center">
+		<td align="center">
+			<a href="https://www.youtube.com/watch?v=Pnw-uqd0GFM" style="text-decoration: none;">
+				<img align="center" src='https://i.ytimg.com/vi/Pnw-uqd0GFM/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDEjuLtwBo0n-zRWhAKep7Raon5_Q' width="225" height="155">
+			</a>
+			<h3 align="center">Talking Sasquach - Wall of Flippers Busts Flipper Zero BLE Spammers Red Handed!</h3>
+		</td>
+		<td align="center">
+			<a href="https://www.bleepingcomputer.com/news/security/wall-of-flippers-detects-flipper-zero-bluetooth-spam-attacks/" style="text-decoration: none;">
+				<img align="center" src='https://www.bleepstatic.com/content/hl-images/2023/01/03/flipper-zero.jpg' width="225" height="155", style="border-radius: 50%;">
+			</a>
+			<h3 align="center">BleepingComputer - ‘Wall of Flippers’ detects Flipper Zero Bluetooth spam attacks</h3>
+		</td>
+	</tr>
+</table>
+
 
 
 # 🐬 Installing and Requirements <a name = "doc_install"></a>
@@ -108,19 +128,13 @@
 
 
 
-## Linux Install Guide <a name = "linux_install"></a>
+## How to install <a name = "install_guides"></a>
 
-### Arch Linux <a name = "arch_install"></a>
-> Documentation coming soon!
-
-### Nethunter Install <a name = "methunter_install"></a>
-> Documentation coming soon!
-
-### PinePhone Install <a name = "pinephone_install"></a>
-> Documentation coming soon!
+<details>
+<summary> Debian Linux Install Guide </summary>
 
 
-### Debian Linux <a name = "debian_install"></a>
+### Debian Linux Install Guide <a name = "debian_install"></a>
 > Wall of Flippers on debian linux is currently one of the best ways to run Wall of Flippers. Mostly due to it being stable and having a lot of support for BTLE. To start off, is is highly recommened to follow all instructions we provide unless you know what you are doing. To get started, we need to set up the directory and install the required packages.
 
 ### Step 1 (One): Full system upgrade / update
@@ -173,6 +187,11 @@
 	sudo chmod +x WallofFlippers.py
 	./WallofFlippers.py
 
+</details>
+
+<details>
+<summary> Windows Install Guide </summary>
+
 ## Windows Install Guide <a name = "windows_install"></a>
 > Windows is currently not fully supported. However, you can still run Wall of Flippers on Windows. A few missing features like the ability to detect advertisment attacks and ability to send advertisments. However the detection of the Flipper Zero device is still supported. To get started, we will need to clone the repository and install the required packages. To do this, we need to run the following commands in the command prompt. However, if you do not have git installed, you can simply install it by downloading it from the official website.
 
@@ -218,6 +237,8 @@ https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-interna
 > Please keep note that this is a watered down version of Wall of Flippers. Hence the lack of features. If you would like to run the full version of Wall of Flippers, please refer to the Linux Install Guide above.
 
 
+</details>
+
 # Issues and Fixes <a name = "doc_issues_and_fixes"></a>
 > If you encounter any issues or bugs, please report them to us on our github page. We will try our best to fix them as soon as possible. If you would like to contribute to the project, please feel free to make a pull request. We will review it and merge it if it is a good addition to the project. We will be starting a discord server soon for support and development. Please keep an eye out for that. Thank you for your support and we hope you enjoy this project! <3
 
@@ -235,8 +256,11 @@ https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-interna
 
 
 
-# Our Statement <a name = "doc_statement"></a>
+# Notice <a name = "doc_statement"></a>
 > This project isn't the solution to combat the Flipper Zero device or any form of btle attacks. **THIS DOES NOT MITIGATE OR STOP ANYTHING**!!! However, the flipper zero device is a great tool for learning and understanding the inctracies of the cyberworld. Now for the detections for this project, we heavily rely on the advertisments that the Flipper Zero sends out for detection. While a user can do many things to avoid being detected by Wall of Flippers. (Depending if the Identifier method gets worked around) We highly advise using this project for an end all solution. While not all bluetooth attacks are sent from only the flipper, it's a good start to understand the world of bluetooth and the attacks that can be accomplished with simple devices. We hope you enjoy this project and we hope you take the time to learn and build off of this. We are always looking for contributions and new ideas. Thank you for looking at this project and we hope you enjoy it! -k3yomi and emilia0001
+
+
+
 
 
 
