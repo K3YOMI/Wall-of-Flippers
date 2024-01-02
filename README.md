@@ -99,6 +99,7 @@
  	- [ ] Windows Supported 	
 - [ ] Chromium Web Bluetooth Support
 - [ ] Animations (Looking for ascii artists)
+- [ ] ~Nuclear Fusion Implementation~
 
 
 # 🐬 Videos and Articles <a name = "doc_videos"></a>
