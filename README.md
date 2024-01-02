@@ -54,6 +54,7 @@
 - [Install Guide](#doc_install)
   	- [How to install](#install_guides)
     	- [Debian Linux Install](#debian_install)
+    	- [Fedora Install](#fedora_install)
     	- [Arch Linux Install (SOON)](#arch_install)
     	- [Nethunter Install (SOON)](#methunter_install)
     	- [PinePhone Install (SOON)](#pinephone_install)
@@ -186,6 +187,60 @@
 
 	sudo chmod +x WallofFlippers.py
 	./WallofFlippers.py
+<summary> Fedora Linux Install Guide </summary>
+### Fedora <a name = "fedora_install"></a>
+> To start off, is is highly recommened to follow all instructions we provide unless you know what you are doing. To get started, we need to set up the directory and install the required packages.
+
+### Step 1 (One): Full system upgrade / update
+> Before we continue with the installation, we need to make sure our system is up to date. To do this update through the command line.
+
+	sudo dnf update && sudo dnf upgrade -y
+
+### Step 2 (Two): Git Clone and Git Installiation 
+> To start off, we need to clone the repository and install the required packages. To do this, we need to run the following commands in the terminal. However, if you do not have git installed, you can simply install it by running this command (apt package manager only): 
+
+	sudo dnf install git
+	git clone https://www.github.com/K3YOMI/Wall-of-Flippers
+	cd ./Wall-of-Flippers
+
+### Step 3 (Three): Installing python (python3)
+> Installing python3 is required to run wall of flippers and installs it's dependencies. The command below will install python3 for you. 
+
+	sudo dnf install python3
+
+### Step 4 (Four): Setting up and Installing the required packages (Multiple Ways)
+> Installing the required packets and dependencies can be done in three ways with this install. You can choose to use the terminal with the commands below, use requirements.txt, or you use the easy install script within Wall of Flippers. The choice is up to you depending on your preference. To get started with the terminal way. We will use these commands below.
+
+	sudo dnf install glib2-devel
+ 	sudo dnf install python3-bluez
+	python3 -m venv .venv
+	source .venv/bin/activate
+	################## PACKAGES ########################
+	# requirement.txt method
+	python3 -m pip install -r requirements.txt
+	# command method
+	python3 -m pip install bluepy
+	python3 -m pip install requests
+ 	python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez#egg=pybluez
+	################## PACKAGES ########################
+	deactivate
+
+> If you would like to use the easy install script, you can use the following commands below.
+
+	bash wof.sh
+	# You should get a prompt upon startup, about setting up a managed environment, feel free to let it do for you. Then once an environemnet is complete run `wof.sh` again
+	and press 4 for the auto install process.
+
+### Step 5 (Five): Running Wall of Flippers
+> Once you have finished with all the dependencies and requirements, you can now run Wall of Flippers. To do this, you can run the following command below.
+
+	bash wof.sh
+
+> Please keep note that running Wall of Flippers requires elevated privileges. Hence the `sudo` command. If you do not want to run Wall of Flippers with elevated privileges, you can run the following command below.
+
+	sudo chmod +x WallofFlippers.py
+	./WallofFlippers.py
+
 
 </details>
 
