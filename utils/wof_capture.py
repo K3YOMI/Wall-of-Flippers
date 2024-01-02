@@ -22,6 +22,9 @@
 #                                              /_/   /_/ 
 
 
+# Standard library Imports
+import json
+import requests
 
 
 # Wall of Flippers "library" for important functions and classes :3
@@ -29,15 +32,9 @@ import utils.wof_cache as cache # Wall of Flippers "cache" for important configu
 import utils.wof_library as library # Wall of Flippers "library" for important functions and classes :3
 
 
-# Basic Imports
-import json
-import requests
-
-
-
 def display(str_text):
-    # Display the leaderboard and user's stats
-    library.ascii_art(f"You have successfully connected to the host - Good luck!")
+    """Display the leaderboard and user's stats"""
+    library.ascii_art("You have successfully connected to the host - Good luck!")
     leaderboard_data = []
     total_flippers_found = 0
     headers = {
@@ -61,15 +58,15 @@ def display(str_text):
             # Display global and personal flipper stats
             print(f"\nGlobal Captured: {total_flippers_found}")
             print(f"My Flippers Captuted: {len(cache.table_ctf_compeition_confiugrations['my_collection'])}")
-            print(f"TOP 10 LEADERBOARD\n".center(95))
-            print(f"[RANK]\t[USERNAME]\t[CURRENT SCORE]\t[FLIPPERS CAPTURED]")
+            print("TOP 10 LEADERBOARD\n".center(95))
+            print("[RANK]\t[USERNAME]\t[CURRENT SCORE]\t[FLIPPERS CAPTURED]")
             print("---------------------------------------------------------------------------------------------------")
             for player in leaderboard_data:
                 if len(player['name']) > 10:
                     player['name'] = player['name'][:10] + "..."
                 print(f"{(str(leaderboard_data.index(player)+1)).ljust(8)}{player['name'].ljust(8)}\t{player['score']}\t\t{player['flippers']}")     
             print("\n\n")
-            print(f"YOUR STATS\n".center(95))
+            print("YOUR STATS\n".center(95))
             print(f"[FLIPPER]{''.ljust(7)}[ADDR]{''.ljust(8)}\t\t[Detection]{''.ljust(8)}")
             print("---------------------------------------------------------------------------------------------------")
             for key in cache.table_ctf_compeition_confiugrations['my_collection']:
@@ -83,5 +80,5 @@ def display(str_text):
                         print(f"{flipper['Name'].ljust(8)}\t{flipper['MAC'].ljust(8)}\t{flipper['Detection Type']} ({flipper['Type']})".ljust(8))
                 else:
                     print("You have not captured any flippers yet.".center(100))
-    except Exception as error:
-        print(f"[!] Wall of Flippers >> Failed to connect to the CTF Host >> Possibly Offline??\nError: {error}")
+    except Exception as e:
+        print(f"[!] Wall of Flippers >> Failed to connect to the CTF Host >> Possibly Offline??\nError: {e}")

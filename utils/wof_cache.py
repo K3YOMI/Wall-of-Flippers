@@ -21,8 +21,6 @@
 #    |__/|__/\__,_/_/_/   \____/_/    /_/   /_/_/ .___/ .___/\___/_/  /____/ 
 #                                              /_/   /_/ 
 
-# 
-
 
 table_ctf_compeition_confiugrations = { # This is not yet complete. expect this to come later :3 (Security and cheating is a concern still but will be worked on...)
     "is_enabled": False, 
@@ -102,7 +100,5 @@ wof_data = {
         {"option": "5", "action": "Exit", "description": "....", "return": "exit"},
     ],
     "ascii": open('./ascii/ascii.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),
-    "ascii_ctf": open('./ascii/ascii_ctf.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"), 
-} 
-
-
+    "ascii_ctf": open('./ascii/ascii_ctf.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),
+}
