@@ -127,7 +127,7 @@ def init():
     #Capture The Flippers, Wall of Flippers, etc....
 
     print("\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]")
-    print("-"*97)
+    print("-------------------------------------------------------------------------------------------------")
     print("\n".join([f"{option['option'].ljust(8)}{option['action'].ljust(34)}{option['description']}" for option in dialogue_options]))
     try:
         str_input = input("\n[?] Wall of Flippers >> ")
