@@ -41,13 +41,13 @@ import utils.wof_bleexploitation as ble_exploitation # Wall of Flippers "ble_exp
 Scanner = None # This is the scanner object for the bluepy package (Default = None)
 
 
-def sort_packets(ble_packets):
-    """Sorts the BLE packets"""
-    bool_flipper_discovered = False
-    table_flippers_discovered = []
-    table_latest_discovered = []
-    bool_ctf = library.in_ctf()
-    table_forbidden_packets_list = cache.wof_data['forbidden_packets']
+def sort_packets(ble_packets:list):
+    """Sorts the BLE packets based on the type of packet"""
+    any_flippers_discovered = False
+    flippers_discovered_list = []
+    latest_discovered_list = []
+    is_in_ctf = library.is_in_ctf() # Check if the user is in CTF mode
+    forbidden_packets_list = cache.wof_data['forbidden_packets']
 
     for advertisement in ble_packets:
         advertisement_name = advertisement['Name']
@@ -58,23 +58,21 @@ def sort_packets(ble_packets):
         advertisement_uuid = advertisement['UUID']
         advertisement_blacklist_check = None
 
-        if not bool_ctf:
-            for individual_packet in advertisement_packets:
-                for packet in table_forbidden_packets_list:
-                    bool_similar = all(p1 == p2 or p2 == "_" for p1, p2 in zip(individual_packet, packet['PCK']))
-                    if bool_similar:
-                        int_total_underscores = packet['PCK'].count("_")
-                        int_total_found = sum(p != "_" for p in individual_packet)
-                        int_get_non_underscore = len(packet['PCK']) - int_total_underscores
+        if not is_in_ctf:
+            for advertisement_packet in advertisement_packets:
+                for forbidden_packet in forbidden_packets_list:
+                    if all(p1 == p2 or p2 == "_" for p1, p2 in zip(advertisement_packet, forbidden_packet['PCK'])):
+                        int_get_non_underscore = len(forbidden_packet['PCK'].replace("_", ""))
+                        int_total_found = sum(p != "_" for p in advertisement_packet)
                         if int_total_found >= int_get_non_underscore:
                             cache.wof_data['forbidden_packets_found'].append({
-                                "Type": packet['TYPE'],
-                                "PCK": individual_packet,
+                                "Type": forbidden_packet['TYPE'],
+                                "PCK": advertisement_packet,
                                 "MAC": advertisement_mac,
                             })
-                    if len(individual_packet) > cache.wof_data['min_byte_length']: # If the packet is longer than the minimum byte length, then it is a valid packet we want to log
+                    if len(advertisement_packet) > cache.wof_data['min_byte_length']: # If the packet is longer than the minimum byte length, then it is a valid packet we want to log
                         cache.wof_data['all_packets_found'].append({
-                            "PCK": individual_packet,
+                            "PCK": advertisement_packet,
                             "MAC": advertisement_mac,
                         })
         if advertisement_name.lower().startswith("flipper"):
@@ -94,9 +92,9 @@ def sort_packets(ble_packets):
                 cache.wof_data['found_flippers'].append(t_data)
                 cache.wof_data['live_flippers'].append(t_data["MAC"])
                 library.log(t_data)
-                bool_flipper_discovered = True
-                table_flippers_discovered.append(t_data)
-                table_latest_discovered = t_data
+                any_flippers_discovered = True
+                flippers_discovered_list.append(t_data)
+                latest_discovered_list = t_data
         elif any(advertisement_mac.startswith(addr) for addr in ("80:e1:26", "80:e1:27")): # Credit to @elliotwutingfeng (https://github.com/elliotwutingfeng) for this fix
             int_recorded = int(time.time())
             cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if advertisement_mac != flipper['MAC']]
@@ -114,9 +112,9 @@ def sort_packets(ble_packets):
                 cache.wof_data['found_flippers'].append(t_data)
                 cache.wof_data['live_flippers'].append(t_data["MAC"])
                 library.log(t_data)
-                bool_flipper_discovered = True
-                table_flippers_discovered.append(t_data)
-                table_latest_discovered = t_data
+                any_flippers_discovered = True
+                flippers_discovered_list.append(t_data)
+                latest_discovered_list = t_data
         elif advertisement_uuid != "NOT FOUND":
             int_recorded = int(time.time())
             cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if advertisement_mac != flipper['MAC']]
@@ -134,29 +132,29 @@ def sort_packets(ble_packets):
                 cache.wof_data['found_flippers'].append(t_data)
                 cache.wof_data['live_flippers'].append(t_data["MAC"])
                 library.log(t_data)
-                bool_flipper_discovered = True
-                table_flippers_discovered.append(t_data)
-                table_latest_discovered = t_data
-    if not bool_ctf:
-        if not bool_flipper_discovered:
+                any_flippers_discovered = True
+                flippers_discovered_list.append(t_data)
+                latest_discovered_list = t_data
+    if not is_in_ctf:
+        if not any_flippers_discovered:
             wall_display.display(None)
         else:
-            latest_name = table_latest_discovered['Name']
-            latest_mac = table_latest_discovered['MAC']
+            latest_name = latest_discovered_list['Name']
+            latest_mac = latest_discovered_list['MAC']
             wall_display.display(f"I've found a wild {latest_name} ({latest_mac})")
-    elif bool_ctf:
-        if len(table_flippers_discovered) > 0:
+    elif is_in_ctf:
+        if len(flippers_discovered_list) > 0:
             bool_alreadylogged = False 
             for flippers in cache.table_ctf_compeition_confiugrations['temp_collection']:
-                if flippers == table_flippers_discovered[0]['MAC']:
+                if flippers == flippers_discovered_list[0]['MAC']:
                     bool_alreadylogged = True
             if not bool_alreadylogged:
-                cache.table_ctf_compeition_confiugrations['temp_collection'].append(table_flippers_discovered[0]['MAC'])
+                cache.table_ctf_compeition_confiugrations['temp_collection'].append(flippers_discovered_list[0]['MAC'])
                 http_header = {
                     "username": cache.table_ctf_compeition_confiugrations['ctf_username'],
                     "secret-key": cache.table_ctf_compeition_confiugrations['ctf_key'],
                     "password": cache.table_ctf_compeition_confiugrations['ctf_password'],
-                    "flippers": json.dumps(table_flippers_discovered)
+                    "flippers": json.dumps(flippers_discovered_list)
                 }
                 try:
                     http = requests.post(f"{cache.table_ctf_compeition_confiugrations['ctf_link']}/send-flipper-data", headers=http_header) # This can be exploited on so many levels, but I'll find a better way ehhehe (Just a simple demo)
@@ -165,8 +163,6 @@ def sort_packets(ble_packets):
     else: # If the system type is not supported, display an error message
         print("[!] Wall of Flippers >> Error: Type not supported")
     cache.wof_data['bool_isScanning'] = False
-
-
 
 
 async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 'type' to avoid conflict with built-in functions. Feel free to change it to something more appropriate as I'm not exactly sure what they do
@@ -254,12 +250,9 @@ async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 't
         print("[!] Wall of Flippers >> Error: Failed to scan for BLE devices >> " + str(e))
         exit()
 
+# Start of the program
+print("\033c") # Clear the terminal
 
-
-
-
-
-os.system("clear || cls")
 cache.wof_data['system_type'] = os.name
 if cache.wof_data['system_type'] == "posix": # Linux Auto Install
     if not os.path.exists(".venv/bin/activate"): # Check if the user has setup their virtual environment
@@ -270,7 +263,7 @@ if cache.wof_data['system_type'] == "posix": # Linux Auto Install
             os.system("python3 -m venv .venv")
             print("[!] Wall of Flippers >> Virtual environment setup successfully!")
             exit()
-    if library.in_venv() == False: # Check if the user is in their virtual environment
+    if library.is_in_venv() == False: # Check if the user is in their virtual environment
         library.ascii_art("Uh oh, it seems like you are not in your virtual environment!")
         print("[!] Wall of Flippers >> It seems like you are not in your virtual environment. Please use the following command to enter your virtual environment.")
         print("\tsource .venv/bin/activate")
@@ -341,7 +334,7 @@ if selection_box == 'capture_the_flippers':
                 input_username = input("\n[?] Wall of Flippers >> Username: ")
                 headers = {"username": input_username, "password": PASSWORD}
                 try:
-                    http = requests.post(f"{URL}/create_account", headers=headers)
+                    http = requests.post(f"{URL}/create_account", headers=headers, timeout=5)
                     if http.status_code == 400:  # Already exists
                         response = http.json()
                         library.ascii_art(f"Capture the Flippers >> Error: {response['error']}")
@@ -355,7 +348,7 @@ if selection_box == 'capture_the_flippers':
                         library.ascii_art(
                             f"You can now participate in the hosted Capture the Flippers event: Key = {response['secret-key-created']}")
                         print(f"\n[!] Capture the Flippers >> Your unique key is: {response['secret-key-created']}")
-                        print(f"[!] Capture the Flippers >> Please save this key as you will need it to login.")
+                        print("[!] Capture the Flippers >> Please save this key as you will need it to login.")
                 except Exception as e:
                     print(f"[!] Capture the Flippers >> Error: Failed to connect to the CTF Host >> Create Account Failed\nError: {e}")
             if option['option'] == "2":
