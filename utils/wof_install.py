@@ -34,11 +34,15 @@ import json
 
 def init():
     try:
-        linux_dependencies_cmd = ['sudo apt-get install libglib2.0-dev', 'python3 -m pip install bluepy', 'python3 -m pip install requests', 'python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez']
+        library.ascii_art("Welcome to the easy install process! Please read carefully.")
+        linux_cmd = ["python3 -m pip install distro"]
+        debian_dependencies_cmd = ['sudo apt-get install libglib2.0-dev', 'python3 -m pip install bluepy', 'python3 -m pip install requests', 'python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez']
+        fedora_dependencies_cmd = ['sudo dnf install glib2-devel', 'python3 -m pip install bluepy', 'python3 -m pip install requests', 'python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez']
         windows_dependencies_cmd = ['pip install bleak', 'pip install requests']
-        if cache.wof_data['system_type'] == "nt": # Windows Auto Install
+        system_type = os.name
+        if system_type == "nt": # Windows Auto Install
             library.ascii_art("Hmm, I've detected that you are running under Windows!")
-            print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\n{json.dumps(windows_dependencies_cmd, indent=4)}")
+            print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\\n{json.dumps(windows_dependencies_cmd, indent=4)}")
             user_input_ok = input("[?] Wall of Flippers (Y/N) >> ")
             if user_input_ok.lower() == "y":
                 print(f"[!] Wall of Flippers >> What pip version do you use >> (pip/pip3)")
@@ -49,17 +53,38 @@ def init():
                     os.system(cmd)
                 library.ascii_art("We have successfully installed the dependencies!")
                 print(f"[!] Wall of Flippers >> Dependencies installed successfully!")
-        if cache.wof_data['system_type'] == "posix": # Linux Auto Install
+        elif system_type == "posix": # Linux Auto Install
             library.ascii_art("Hmm, I've detected that you are running under linux!")
-            print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\n{json.dumps(linux_dependencies_cmd, indent=4)}")
-            #print(platform.freedesktop_os_release())
-            user_input_ok = input("[?] Wall of Flippers (Y/N) >> ")
-            if user_input_ok.lower() == "y":
-                print(f"[!] Wall of Flippers >> Installing dependencies...")
-                for cmd in linux_dependencies_cmd:
-                    os.system(cmd)
-                library.ascii_art("We have successfully installed the dependencies!")
-                print("[!] Wall of Flippers >> Dependencies installed successfully!")
+            def get_like_distro():
+                info = platform.freedesktop_os_release()
+                ids = [info["ID"]]
+                if "ID_LIKE" in info:
+                    ids.extend(info["ID_LIKE"].split())
+                return ids
+            distribution_info = get_like_distro()
+            if "fedora" in distribution_info: # Fedora Auto Install
+                library.ascii_art("Hmm, I've detected that you are running under Fedora!")
+                print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\\n{json.dumps(fedora_dependencies_cmd, indent=4)}")
+                user_input_ok = input("[?] Wall of Flippers (Y/N) >> ")
+                if user_input_ok.lower() == "y":
+                    print(f"[!] Wall of Flippers >> Installing dependencies...")
+                    for cmd in fedora_dependencies_cmd:
+                        os.system(cmd)
+                    library.ascii_art("We have successfully installed the dependencies!")
+                    print("[!] Wall of Flippers >> Dependencies installed successfully!")
+            elif "debian" in distribution_info: # Debian Auto Install
+                library.ascii_art("Hmm, I've detected that you are running under Debian!")
+                print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\\n{json.dumps(debian_dependencies_cmd, indent=4)}")
+                user_input_ok = input("[?] Wall of Flippers (Y/N) >> ")
+                if user_input_ok.lower() == "y":
+                    print(f"[!] Wall of Flippers >> Installing dependencies...")
+                    for cmd in debian_dependencies_cmd:
+                        os.system(cmd)
+                    library.ascii_art("We have successfully installed the dependencies!")
+                    print("[!] Wall of Flippers >> Dependencies installed successfully!")
+            else:
+                library.ascii_art("I am unable to detect the current Distro")
+                print(f"[!] Wall of Flippers >> OS undectected - Entering manual override")
     except KeyboardInterrupt:
         library.ascii_art("Thank you for using Wall of Flippers... Goodbye!")
         print("\n[!] Wall of Flippers >> Exiting...")
