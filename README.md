@@ -131,6 +131,8 @@
 
 ## How to install <a name = "install_guides"></a>
 
+</details>
+
 <details>
 <summary> Debian Linux Install Guide </summary>
 
@@ -187,15 +189,17 @@
 
 	sudo chmod +x WallofFlippers.py
 	./WallofFlippers.py
+ </details>
+ <details>
 <summary> Fedora Linux Install Guide </summary>
-### Fedora <a name = "fedora_install"></a>
+	 
+### Fedora Install Guide <a name = "fedora_install"></a>
 > To start off, is is highly recommened to follow all instructions we provide unless you know what you are doing. To get started, we need to set up the directory and install the required packages.
 
 ### Step 1 (One): Full system upgrade / update
 > Before we continue with the installation, we need to make sure our system is up to date. To do this update through the command line.
 
 	sudo dnf update && sudo dnf upgrade -y
-
 ### Step 2 (Two): Git Clone and Git Installiation 
 > To start off, we need to clone the repository and install the required packages. To do this, we need to run the following commands in the terminal. However, if you do not have git installed, you can simply install it by running this command (apt package manager only): 
 
