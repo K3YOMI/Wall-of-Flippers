@@ -56,7 +56,6 @@
     	- [Debian Linux Install](#debian_install)
     	- [Fedora Install](#fedora_install)
     	- [Arch Linux Install (SOON)](#arch_install)
-    	- [Nethunter Install (SOON)](#methunter_install)
     	- [PinePhone Install (SOON)](#pinephone_install)
   	    - [Windows Install](#windows_install)
 - [Issues and Fixes](#doc_issues_and_fixes)
