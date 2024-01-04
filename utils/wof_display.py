@@ -21,8 +21,9 @@
 #    |__/|__/\__,_/_/_/   \____/_/    /_/   /_/_/ .___/ .___/\___/_/  /____/ 
 #                                              /_/   /_/ 
 
-# 
 
+# Standard library Imports
+import json
 
 
 # Wall of Flippers "library" for important functions and classes :3
@@ -30,13 +31,10 @@ import utils.wof_cache as cache # Wall of Flippers "cache" for important configu
 import utils.wof_library as library # Wall of Flippers "library" for important functions and classes :3
 
 
-
-# Basic Imports
-import json
-
 def display(str_text):
+    """displays the data in a nice format"""
     # Load flipper data from Flipper.json
-    with open('Flipper.json', 'r') as flipper_file:
+    with open('Flipper.json', 'r', encoding='utf-8') as flipper_file:
         flipper_data = json.load(flipper_file)
     # Update base_flippers list with flipper data
     cache.wof_data['base_flippers'] = [key for key in flipper_data]
@@ -57,7 +55,7 @@ def display(str_text):
     int_online_flippers = len(cache.wof_data['display_live'])
     int_offline_flippers = len(cache.wof_data['display_offline'])
     # Display ASCII art
-    if str_text == None or str_text == "":
+    if str_text is None or str_text == "":
         library.ascii_art(None)
     else:
         library.ascii_art(str_text)
@@ -85,24 +83,24 @@ def display(str_text):
             # Add a summary if there are too many unique addresses
             if len(addrs) > 5:
                 cache.wof_data['forbidden_packets_found'].append({"MAC": str(len(addrs)) + " Unique Addresses", "PCK": most_common_packet, "Type": "SUSPICIOUS_ADVERTISEMENT"})
-        else: 
-            print(f"Most Common Advertisement........: None")
+        else:
+            print("Most Common Advertisement........: None")
         # Display forbidden packets
         if len(cache.wof_data['forbidden_packets_found']) > 0:
             t_packets = 0
             print("\n\n[!] Wall of Flippers >> These packets may not be related to the Flipper Zero.\n")
-            print(f"[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
-            print("-----------------------------------------------------------------------------------------------") 
+            print("[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
+            print("-----------------------------------------------------------------------------------------------")
             for key in cache.wof_data['forbidden_packets_found']:
                 if ble_spamming_macs.count(key['MAC']) == 0:
                     ble_spamming_macs.append(key['MAC'])
-                    t_packets += 1 
+                    t_packets += 1
                     if t_packets <= cache.wof_data['max_ble_packets']: # Max amount of packets to display on the screen
                         print(f"{key['Type'].ljust(t_allignment)}\t\t{key['MAC'].ljust(t_allignment)}  {key['PCK'].ljust(t_allignment)}")
             if int_total_blacklisted_packets > cache.wof_data['ble_threshold']:
                 print(f"------------------ Bluetooth Low Energy (BLE) Attacks Detected ({int_total_blacklisted_packets} Advertisements) --------------------")
     else:
-        print(f"\n------------------  BLE Attack Detection is not available for Windows yet. ------------------")
+        print("\n------------------  BLE Attack Detection is not available for Windows yet. ------------------")
     # Display flipper statistics
     print(f"\nTotal Online.....................: {int_online_flippers}")
     print(f"Total Offline....................: {int_offline_flippers}")
@@ -117,11 +115,11 @@ def display(str_text):
             t_live += 1
             if t_live <= cache.wof_data['max_online']:
                 key['RSSI'] = str(f"{key['RSSI']} dBm")
-                print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))         
+                print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))
             if t_live > cache.wof_data['max_online']:
                 t_left_over = int_online_flippers - cache.wof_data['max_online']
                 print(f"Too many <online> devices to display. ({t_left_over} devices)".center(100))
-                break 
+                break
     # Display offline flippers
     if int_offline_flippers > 0:
         t_offline = 0
@@ -130,8 +128,8 @@ def display(str_text):
         for key in cache.wof_data['display_offline']:
             t_offline += 1
             if t_offline <= cache.wof_data['max_offline']:
-                key['RSSI'] = str(f"{key['RSSI']} dBm")  
-                print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))                    
+                key['RSSI'] = str(f"{key['RSSI']} dBm")
+                print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))
                 if t_offline > cache.wof_data['max_offline']:
                     t_left_over = int_offline_flippers - cache.wof_data['max_offline']
                     print(f"Too many <offline> devices to display. ({t_left_over} devices)".center(100))
