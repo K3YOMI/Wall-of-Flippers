@@ -23,15 +23,15 @@
 
 
 # Standard library Imports
-import os 
+import os
 import sys
-import random 
-import time 
+import random
+import time
 import json
 
 
 # Wall of Flippers "library" for important functions and classes :3
-import utils.wof_cache as cache # Wall of Flippers "cache" for important configurations and data :3
+import utils.wof_cache as cache # for important configurations and data :3
 
 
 def log(s_table):
@@ -79,23 +79,36 @@ def is_in_venv():
     """Returns True if the user is in a virtual environment, otherwise returns False"""
     return sys.prefix != sys.base_prefix
 
-def ascii_art(custom_text:str = None):
+def print_ascii_art(custom_text:str = None):
     """Displays ASCII art in the terminal with the custom text if provided, otherwise displays a random quote"""
     os.system('cls' if os.name == 'nt' else 'clear')
-    s_ascii_art = cache.wof_data['ascii']
-    if is_in_ctf(): # If the user is in Capture The Flippers mode, then display the Capture The Flippers ASCII art
-        s_ascii_art = cache.wof_data['ascii_ctf']
     r_quote = random.choice(cache.wof_data['dolphin_thinking']) if not custom_text else custom_text
-    print(s_ascii_art.replace("[RANDOM_QUOTE]", r_quote))
+
+    # selecting adequate ASCII art based on the terminal size and if the user is in Capture The Flippers mode
+    print("\033[0;94m")
+    if cache.wof_data['narrow_mode']:
+        print(cache.wof_data['ascii_small'])
+        print(f"\"{r_quote}\"".center(50))
+        print("\033[0m")
+    else:
+        if is_in_ctf(): # If the user is in Capture The Flippers mode, then display the Capture The Flippers ASCII art
+            print(cache.wof_data['ascii_ctf_normal'].replace("[RANDOM_QUOTE]", r_quote))
+        else :
+            print(cache.wof_data['ascii_normal'].replace("[RANDOM_QUOTE]", r_quote))
+        print("\033[0m\n")
 
 def init():
     """Initial Selection Box (Upon starup)
     This init() function allows the user to select what action they would like to preform (cached options stored in utils/wof_cache.py)
     returns: the action the user selected (str)
     """
+    # check terminal size to set narrow mode (false by default)
+    if int(os.popen('tput cols', 'r').read()) < cache.wof_data['narrow_mode_limit']: # if the terminal size is less than *narrow_mode_limit* columns (default: 100)
+        cache.wof_data['narrow_mode'] = True
+
     dialogue_options = cache.wof_data['init_directory_options']
     dialogue_options_dict = {option['option']: option['return'] for option in dialogue_options}
-    ascii_art("Please Select an option to continue")
+    print_ascii_art("Please Select an option to continue")
 
     #Library dependencies check
     #This checks the bleak, bluepy, requests, and bluetooth python packages and libraries
@@ -125,14 +138,22 @@ def init():
 
     #Initial selection box for the user to select what they want to do.
     #Capture The Flippers, Wall of Flippers, etc....
+        
+    if cache.wof_data['narrow_mode']:
+        # dont display the description if the terminal is too narrow
+        print("\n\n[#]\t[ACTION]")
+        print("-"*int(os.popen('tput cols', 'r').read())) # prints "-" (number of columns in the terminal) times
+        print("\n".join([f"{option['option'].ljust(8)}{option['action']}" for option in dialogue_options]))
+    else:
+        print("\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]")
+        print("-"*int(os.popen('tput cols', 'r').read())) # prints "-" (number of columns in the terminal) times
+        print("\n".join([f"{option['option'].ljust(8)}{option['action'].ljust(34)}{option['description']}" for option in dialogue_options]))
 
-    print("\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]")
-    print("-------------------------------------------------------------------------------------------------")
-    print("\n".join([f"{option['option'].ljust(8)}{option['action'].ljust(34)}{option['description']}" for option in dialogue_options]))
+
     try:
         str_input = input("\n[?] Wall of Flippers >> ")
         return dialogue_options_dict.get(str_input)
     except KeyboardInterrupt:
-        ascii_art("Thank you for using Wall of Flippers... Goodbye!")
+        print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
         print("\n[!] Wall of Flippers >> Exiting...")
-        exit()
+        sys.exit()

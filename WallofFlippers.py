@@ -24,18 +24,19 @@
 
 # Standard library Imports
 import os
+import sys
 import time
 import asyncio
 import json
 import random
 
 
-# Wall of Flippers "library" for important functions and classes :3
-import utils.wof_cache as cache # Wall of Flippers "cache" for important configurations and data :3
-import utils.wof_library as library # Wall of Flippers "library" for important functions and classes :3
-import utils.wof_display as wall_display # Wall of Flippers "display" for important functions and classes :3
-import utils.wof_install as installer # Wall of Flippers "install" for important functions and classes :3
-import utils.wof_bleexploitation as ble_exploitation # Wall of Flippers "ble_exploitation" for important functions and classes :3
+# Wall of Flippers Imports
+import utils.wof_cache as cache # for important configurations and data :3
+import utils.wof_library as library # for important functions :3
+import utils.wof_display as wall_display # for important functions :3
+import utils.wof_install as installer # for important functions and classes :3
+import utils.wof_bleexploitation as ble_exploitation # for important functions and classes :3
 
 
 Scanner = None # This is the scanner object for the bluepy package (Default = None)
@@ -246,55 +247,55 @@ async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 't
             cache.wof_data['bool_isScanning'] = False
         sort_packets(ble_packets)
     except Exception as e:
-        library.ascii_art("Error: Failed to scan for BLE devices")
+        library.print_ascii_art("Error: Failed to scan for BLE devices")
         print("[!] Wall of Flippers >> Error: Failed to scan for BLE devices >> " + str(e))
-        exit()
+        sys.exit()
 
 # Start of the program
-print("\033c") # Clear the terminal
+os.system('cls' if os.name == 'nt' else 'clear')
 
 cache.wof_data['system_type'] = os.name
 if cache.wof_data['system_type'] == "posix": # Linux Auto Install
     if not os.path.exists(".venv/bin/activate"): # Check if the user has setup their virtual environment
-        library.ascii_art("Uh oh, it seems like you have not setup your virtual environment yet!")
+        library.print_ascii_art("Uh oh, it seems like you have not setup your virtual environment yet!")
         print("[!] Wall of Flippers >> It seems like you have not setup your virtual environment yet.\n\t      Reason: .venv/bin/activate does not exist.")
         print("[!] Wall of Flippers >> Would you like to setup your virtual environment now?")
         if input("[?] Wall of Flippers (Y/N) >> ").lower() == "y":
             os.system("python3 -m venv .venv")
             print("[!] Wall of Flippers >> Virtual environment setup successfully!")
-            exit()
+            sys.exit()
     if library.is_in_venv() == False: # Check if the user is in their virtual environment
-        library.ascii_art("Uh oh, it seems like you are not in your virtual environment!")
+        library.print_ascii_art("Uh oh, it seems like you are not in your virtual environment!")
         print("[!] Wall of Flippers >> It seems like you are not in your virtual environment. Please use the following command to enter your virtual environment.")
         print("\tsource .venv/bin/activate")
         print("\tor")
         print("\tbash wof.sh")
-        exit()
+        sys.exit()
 selection_box = library.init()
-if selection_box == "wall_of_flippers" or selection_box == "capture_the_flippers":
+if selection_box in ("wall_of_flippers", "capture_the_flippers"):
     try:
         import requests
         if cache.wof_data['system_type'] == "nt":
             from bleak import BleakScanner  # Windows BLE Package
         if cache.wof_data['system_type'] == "posix":
             from bluepy.btle import Scanner 
-    except Exception as e:
-        library.ascii_art("Error: Failed to import dependencies")
+    except ImportError as e:
+        library.print_ascii_art("Error: Failed to import dependencies")
         print(f"[!] Wall of Flippers >> Failed to import dependencies >> {e}")
-        exit()
+        sys.exit()
 if selection_box == 'wall_of_flippers':
     print("[!] Wall of Flippers >> Starting Wall of Flippers")
     if cache.wof_data['system_type'] == "posix" and not os.geteuid() == 0:
-        library.ascii_art("I require root privileges to run!")
+        library.print_ascii_art("I require root privileges to run!")
         print("[!] Wall of Flippers >> I require root privileges to run.\n\t      Reason: Dependency on bluepy library.")
-        exit()  # Check if the user is root (Linux)
+        sys.exit()
     try:
         ble_adapters = []
         if cache.wof_data['system_type'] == "posix":
             ble_adapters = [adapter for adapter in os.listdir('/sys/class/bluetooth/') if 'hci' in adapter]
             # make a selection of the bluetooth adapter
             print("\n\n[#]\t[HCI DEVICE]")
-            print("-------------------------------------------------------------------------------------------------")
+            print("-"*int(os.popen('tput cols', 'r').read()))
             for adapter in ble_adapters:
                 print(f"{ble_adapters.index(adapter)}".ljust(8) + f"{adapter}".ljust(34))
             DEVIC_HCI = input("[?] Wall of Flippers >> ")
@@ -306,22 +307,22 @@ if selection_box == 'wall_of_flippers':
                 asyncio.run(detection_async(cache.wof_data['system_type'],DEVIC_HCI))
             time.sleep(1)
     except KeyboardInterrupt:
-        library.ascii_art("Thank you for using Wall of Flippers... Goodbye!")
+        library.print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
         print("\n[!] Wall of Flippers >> Exiting...")
-        exit()
-if selection_box == 'capture_the_flippers':
+        sys.exit()
+if selection_box == 'capture_the_flippers': # todo: needs to be updated for narrow mode compatibility
     import utils.wof_capture as wall_capture # Wall of Flippers "capture" for important functions and classes :3
     if cache.wof_data['system_type'] == "posix" and os.geteuid() != 0:
-        library.ascii_art("I require root privileges to run!")
+        library.print_ascii_art("I require root privileges to run!")
         print("[!] Wall of Flippers >> I require root privileges to run.\n\t      Reason: Dependency on bluepy library.")
-        exit()  # Check if the user is root (Linux)
+        sys.exit()  # Check if the user is root (Linux)
     cache.table_ctf_compeition_confiugrations['is_enabled'] = True
     URL = cache.table_ctf_compeition_confiugrations['ctf_link']
     PASSWORD = cache.table_ctf_compeition_confiugrations['ctf_password']
     KEY = cache.table_ctf_compeition_confiugrations['ctf_key']
     USERNAME = cache.table_ctf_compeition_confiugrations['ctf_username']
     dialogue_options = cache.wof_data['ctf_directory_options']
-    library.ascii_art("Please select an option to continue")
+    library.print_ascii_art("Please select an option to continue")
     print("\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]")
     print("-------------------------------------------------------------------------------------------------")
     for option in dialogue_options:
@@ -330,22 +331,22 @@ if selection_box == 'capture_the_flippers':
     for option in dialogue_options:
         if user_input == option['option']:
             if option['option'] == "1":
-                library.ascii_art("Please create a username so the host can create an account")
+                library.print_ascii_art("Please create a username so the host can create an account")
                 input_username = input("\n[?] Wall of Flippers >> Username: ")
                 headers = {"username": input_username, "password": PASSWORD}
                 try:
                     http = requests.post(f"{URL}/create_account", headers=headers, timeout=5)
                     if http.status_code == 400:  # Already exists
                         response = http.json()
-                        library.ascii_art(f"Capture the Flippers >> Error: {response['error']}")
+                        library.print_ascii_art(f"Capture the Flippers >> Error: {response['error']}")
                         print(f"\n[!] Capture the Flippers >> Error: {response['error']}")
                     if http.status_code == 403:  # Password Failed
                         response = http.json()
-                        library.ascii_art(f"Capture the Flippers >> Error: {response['error']} {response['message']}")
+                        library.print_ascii_art(f"Capture the Flippers >> Error: {response['error']} {response['message']}")
                         print(f"\n[!] Capture the Flippers >> Error: {response['error']} {response['message']}")
                     if http.status_code == 200:  # Success
                         response = http.json()
-                        library.ascii_art(
+                        library.print_ascii_art(
                             f"You can now participate in the hosted Capture the Flippers event: Key = {response['secret-key-created']}")
                         print(f"\n[!] Capture the Flippers >> Your unique key is: {response['secret-key-created']}")
                         print("[!] Capture the Flippers >> Please save this key as you will need it to login.")
@@ -357,10 +358,10 @@ if selection_box == 'capture_the_flippers':
                     http = requests.post(f"{URL}/login", headers=headers)
                     if http.status_code == 403:  # Authorization Failed
                         response = http.json()
-                        library.ascii_art(f"Capture the Flippers >> Error: {response['error']} {response['message']}")
+                        library.print_ascii_art(f"Capture the Flippers >> Error: {response['error']} {response['message']}")
                         print(f"\n[!] Capture the Flippers >> Error: {response['error']} {response['message']}")
                     if http.status_code == 200:  # Success
-                        library.ascii_art("You have successfully connected to the host - Good luck!")
+                        library.print_ascii_art("You have successfully connected to the host - Good luck!")
                         time.sleep(0.4)
                         ble_adapters = []
                         if cache.wof_data['system_type'] == "posix":
@@ -380,9 +381,9 @@ if selection_box == 'capture_the_flippers':
                                     asyncio.run(detection_async(cache.wof_data['system_type'],DEVIC_HCI))
                                 time.sleep(1)  # Don't worry about this - Everything is fine... :P
                         except KeyboardInterrupt:
-                            library.ascii_art("Thank you for using Wall of Flippers... Goodbye!")
+                            library.print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
                             print("\n[!] Wall of Flippers >> Exiting...")
-                            exit()
+                            sys.exit()
                 except Exception as e:
                     print(f"[!] Capture the Flippers >> Error: Failed to connect to the CTF Host >> Login Failed\nError: {e}")
 
