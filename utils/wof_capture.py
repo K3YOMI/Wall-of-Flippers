@@ -23,6 +23,7 @@
 
 
 # Standard library Imports
+import shutil
 import json
 import requests
 
@@ -34,7 +35,7 @@ import utils.wof_library as library # Wall of Flippers "library" for important f
 
 def display(str_text):
     """Display the leaderboard and user's stats"""
-    library.ascii_art("You have successfully connected to the host - Good luck!")
+    library.print_ascii_art("You have successfully connected to the host - Good luck!")
     leaderboard_data = []
     total_flippers_found = 0
     headers = {
@@ -79,6 +80,6 @@ def display(str_text):
                             flipper['Name'] = flipper['Name'][:15]
                         print(f"{flipper['Name'].ljust(8)}\t{flipper['MAC'].ljust(8)}\t{flipper['Detection Type']} ({flipper['Type']})".ljust(8))
                 else:
-                    print("You have not captured any flippers yet.".center(100))
+                    print("You have not captured any flippers yet.".center(shutil.get_terminal_size().columns))
     except Exception as e:
         print(f"[!] Wall of Flippers >> Failed to connect to the CTF Host >> Possibly Offline??\nError: {e}")
