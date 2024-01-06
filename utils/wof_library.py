@@ -25,6 +25,7 @@
 # Standard library Imports
 import os
 import sys
+import shutil
 import random
 import time
 import json
@@ -103,7 +104,7 @@ def init():
     returns: the action the user selected (str)
     """
     # check terminal size to set narrow mode (false by default)
-    if int(os.popen('tput cols', 'r').read()) < cache.wof_data['narrow_mode_limit']: # if the terminal size is less than *narrow_mode_limit* columns (default: 100)
+    if shutil.get_terminal_size().columns < cache.wof_data['narrow_mode_limit']: # if the terminal size is less than *narrow_mode_limit* columns (default: 100)
         cache.wof_data['narrow_mode'] = True
 
     dialogue_options = cache.wof_data['init_directory_options']
@@ -142,11 +143,11 @@ def init():
     if cache.wof_data['narrow_mode']:
         # dont display the description if the terminal is too narrow
         print("\n\n[#]\t[ACTION]")
-        print("-"*int(os.popen('tput cols', 'r').read())) # prints "-" (number of columns in the terminal) times
+        print("-"*shutil.get_terminal_size().columns) # prints "-" (number of columns in the terminal) times
         print("\n".join([f"{option['option'].ljust(8)}{option['action']}" for option in dialogue_options]))
     else:
         print("\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]")
-        print("-"*int(os.popen('tput cols', 'r').read())) # prints "-" (number of columns in the terminal) times
+        print("-"*shutil.get_terminal_size().columns) # prints "-" (number of columns in the terminal) times
         print("\n".join([f"{option['option'].ljust(8)}{option['action'].ljust(34)}{option['description']}" for option in dialogue_options]))
 
 

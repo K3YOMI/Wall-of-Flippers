@@ -23,6 +23,7 @@
 
 
 # Standard library Imports
+import shutil
 import json
 import requests
 
@@ -79,6 +80,6 @@ def display(str_text):
                             flipper['Name'] = flipper['Name'][:15]
                         print(f"{flipper['Name'].ljust(8)}\t{flipper['MAC'].ljust(8)}\t{flipper['Detection Type']} ({flipper['Type']})".ljust(8))
                 else:
-                    print("You have not captured any flippers yet.".center(int(os.popen('tput cols', 'r').read())))
+                    print("You have not captured any flippers yet.".center(shutil.get_terminal_size().columns))
     except Exception as e:
         print(f"[!] Wall of Flippers >> Failed to connect to the CTF Host >> Possibly Offline??\nError: {e}")

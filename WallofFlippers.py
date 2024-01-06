@@ -25,6 +25,7 @@
 # Standard library Imports
 import os
 import sys
+import shutil
 import time
 import asyncio
 import json
@@ -295,7 +296,7 @@ if selection_box == 'wall_of_flippers':
             ble_adapters = [adapter for adapter in os.listdir('/sys/class/bluetooth/') if 'hci' in adapter]
             # make a selection of the bluetooth adapter
             print("\n\n[#]\t[HCI DEVICE]")
-            print("-"*int(os.popen('tput cols', 'r').read()))
+            print("-"*shutil.get_terminal_size().columns)
             for adapter in ble_adapters:
                 print(f"{ble_adapters.index(adapter)}".ljust(8) + f"{adapter}".ljust(34))
             DEVIC_HCI = input("[?] Wall of Flippers >> ")

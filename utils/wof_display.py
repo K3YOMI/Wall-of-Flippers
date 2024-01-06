@@ -25,6 +25,7 @@
 # Standard library Imports
 import json
 import os
+import shutil
 
 # Wall of Flippers "library" for important functions and classes :3
 import utils.wof_cache as cache # Wall of Flippers "cache" for important configurations and data :3
@@ -60,7 +61,7 @@ def display(custom_text:str=None):
     number_of_flippers_offline = len(cache.wof_data['display_offline'])
 
     # check if the terminal is too small
-    if int(os.popen('tput cols', 'r').read()) < cache.wof_data['narrow_mode_limit']: # if the terminal size is less than *narrow_mode_limit* columns (default: 100)
+    if shutil.get_terminal_size().columns < cache.wof_data['narrow_mode_limit']: # if the terminal size is less than *narrow_mode_limit* columns (default: 100)
         cache.wof_data['narrow_mode'] = True
     else:
         cache.wof_data['narrow_mode'] = False
@@ -133,12 +134,12 @@ def display(custom_text:str=None):
         print("\n\nFlipper, Address, First Seen, Last Seen, RSSI, Detection")
     else:
         print(f"\n\n[FLIPPER]{''.ljust(t_allignment)}[ADDR]{''.ljust(t_allignment)}\t\t[FIRST]{''.ljust(t_allignment)}[LAST]\t{''.ljust(t_allignment)}[RSSI]{''.ljust(t_allignment)}\t[Detection]{''.ljust(t_allignment)}")
-    print("-"*int(os.popen('tput cols', 'r').read()))
+    print("-"*shutil.get_terminal_size().columns)
 
     # Display online flippers if there are any
     if number_of_flippers_online > 0:
         t_live = 0
-        print("(ONLINE DEVICES)".center(int(os.popen('tput cols', 'r').read())))
+        print("(ONLINE DEVICES)".center(shutil.get_terminal_size().columns))
         cache.wof_data['display_live'] = sorted(cache.wof_data['display_live'], key=lambda k: k['unixLastSeen'], reverse=True)
         for key in cache.wof_data['display_live']:
             t_live += 1
@@ -150,13 +151,13 @@ def display(custom_text:str=None):
                     print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))
             if t_live > cache.wof_data['max_online']:
                 t_left_over = number_of_flippers_online - cache.wof_data['max_online']
-                print(f"Too many <online> devices to display. ({t_left_over} devices)".center(int(os.popen('tput cols', 'r').read())))
+                print(f"Too many <online> devices to display. ({t_left_over} devices)".center(shutil.get_terminal_size().columns))
                 break
 
     # Display offline flippers if there are any
     if number_of_flippers_offline > 0:
         t_offline = 0
-        print("\033[2m(OFFLINE DEVICES)".center(int(os.popen('tput cols', 'r').read())))
+        print("\033[2m(OFFLINE DEVICES)".center(shutil.get_terminal_size().columns))
         cache.wof_data['display_offline'] = sorted(cache.wof_data['display_offline'], key=lambda k: k['unixLastSeen'], reverse=True)
         for key in cache.wof_data['display_offline']:
             t_offline += 1
@@ -168,14 +169,14 @@ def display(custom_text:str=None):
                     print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))
                 if t_offline > cache.wof_data['max_offline']:
                     t_left_over = number_of_flippers_offline - cache.wof_data['max_offline']
-                    print(f"Too many <offline> devices to display. ({t_left_over} devices)".center(int(os.popen('tput cols', 'r').read())))
+                    print(f"Too many <offline> devices to display. ({t_left_over} devices)".center(shutil.get_terminal_size().columns))
                     print("\033[0m")
                     break
         print("\033[0m") # reset the text style
 
     # Display message if no devices detected
     if number_of_flippers_offline == 0 and number_of_flippers_online == 0:
-        print("No devices detected, scanning...".center(int(os.popen('tput cols', 'r').read())))
+        print("No devices detected, scanning...".center(shutil.get_terminal_size().columns))
 
     # Reset data for next refresh of the display
     cache.wof_data['display_live'] = []
