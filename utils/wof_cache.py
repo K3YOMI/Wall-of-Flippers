@@ -37,6 +37,8 @@ wof_data = {
     "live_flippers": [],
     "display_live": [],
     "display_offline": [],
+    "narrow_mode": False,
+    "narrow_mode_limit": 100, # Minimum number of columns for narrow mode to kick in
     "forbidden_packets_found": [],
     "all_packets_found": [],
     "max_online": 15, # Max amount of online flippers to display on the screen
@@ -99,6 +101,7 @@ wof_data = {
         {"option": "4", "action": "Auto-Install", "description": "Install dependencies for Wall of Flippers (Windows / (APT) Debian Linux)", "return": "install_dependencies"},
         {"option": "5", "action": "Exit", "description": "....", "return": "exit"},
     ],
-    "ascii": open('./ascii/ascii.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),
-    "ascii_ctf": open('./ascii/ascii_ctf.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),
+    "ascii_normal": open('./ascii/normal.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),
+    "ascii_ctf_normal": open('./ascii/ctf_normal.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),
+    "ascii_small": open('./ascii/small.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),
 }
