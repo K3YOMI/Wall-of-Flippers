@@ -46,7 +46,7 @@ def init():
         # Windows Auto Install
         if system_type == "nt":
             library.print_ascii_art("Hmm, I've detected that you are running under Windows!")
-            print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\\n{json.dumps(windows_dependencies_cmd, indent=4)}")
+            print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\n{json.dumps(windows_dependencies_cmd, indent=4)}")
 
             user_input_ok = input("[?] Wall of Flippers (Y/N) >> ")
             if user_input_ok.lower() == "y":
@@ -74,7 +74,7 @@ def init():
             # Fedora Auto Install
             if "fedora" in distribution_info:
                 library.print_ascii_art("Hmm, I've detected that you are running under Fedora!")
-                print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\\n{json.dumps(fedora_dependencies_cmd, indent=4)}")
+                print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\n{json.dumps(fedora_dependencies_cmd, indent=4)}")
                 user_input_ok = input("[?] Wall of Flippers (Y/N) >> ")
                 if user_input_ok.lower() == "y":
                     print("[!] Wall of Flippers >> Installing dependencies...")
@@ -86,7 +86,7 @@ def init():
             # Debian Auto Install
             elif "debian" in distribution_info:
                 library.print_ascii_art("Hmm, I've detected that you are running under Debian!")
-                print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\\n{json.dumps(debian_dependencies_cmd, indent=4)}")
+                print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\n{json.dumps(debian_dependencies_cmd, indent=4)}")
                 user_input_ok = input("[?] Wall of Flippers (Y/N) >> ")
                 if user_input_ok.lower() == "y":
                     print("[!] Wall of Flippers >> Installing dependencies...")
