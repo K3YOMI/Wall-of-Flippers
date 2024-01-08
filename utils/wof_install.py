@@ -63,14 +63,14 @@ def init():
         elif system_type == "posix":
             library.print_ascii_art("Hmm, I've detected that you are running under linux!")
             def get_like_distro():
-                info = platform.freedesktop_os_release()
-                ids = [info["ID"]]
-                if "ID_LIKE" in info:
-                    ids.extend(info["ID_LIKE"].split())
-                return ids
-
+                os_file = open("/etc/os-release", "r")
+                os_data = os_file.read()
+                os_file.close()
+                os_data = os_data.split("\n")
+                os_data = [data.split("=") for data in os_data]
+                os_data = {data[0]: data[1].replace('"', "") for data in os_data if len(data) == 2}
+                return os_data["ID_LIKE"]
             distribution_info = get_like_distro()
-
             # Fedora Auto Install
             if "fedora" in distribution_info:
                 library.print_ascii_art("Hmm, I've detected that you are running under Fedora!")
