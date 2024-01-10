@@ -29,8 +29,6 @@ import shutil
 import time
 import asyncio
 import json
-import random
-
 
 # Wall of Flippers Imports
 import utils.wof_cache as cache # for important configurations and data :3

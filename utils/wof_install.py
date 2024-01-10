@@ -23,7 +23,6 @@
 
 
 # Standard library Imports
-import platform
 import os
 import sys
 import json
