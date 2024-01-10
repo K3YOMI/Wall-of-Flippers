@@ -253,6 +253,7 @@ async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 't
         sys.exit()
 
 # Start of the program
+library.check_json_file_exist()
 os.system('cls' if os.name == 'nt' else 'clear')
 
 cache.wof_data['system_type'] = os.name

@@ -158,3 +158,9 @@ def init():
         print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
         print("\n[!] Wall of Flippers >> Exiting...")
         sys.exit()
+
+def check_json_file_exist():
+    """Check that Flipper.json file exists. If not creates one with an empty array inside"""
+    if not os.path.isfile("Flipper.json"):
+        with open("Flipper.json", "w") as new_file:
+            json.dump([], new_file)
