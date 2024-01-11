@@ -58,6 +58,7 @@
     	- [Arch Linux Install (SOON)](#arch_install)
     	- [PinePhone Install (SOON)](#pinephone_install)
   	    - [Windows Install](#windows_install)
+		- [Pwnagotchi](#pwnagotchi)
 - [Issues and Fixes](#doc_issues_and_fixes)
 - [Common Errors and Fixes](#doc_c_and_e)
 - [Notice](#doc_statement)
@@ -316,7 +317,7 @@ python3 -m venv .venv && source .venv/bin/activate && pip install -r requirement
 ```
 
 #### Step 3: Systemd daemon
-Create a file in `/etc/systemd/system` and add:
+Create the systemd service in `/etc/systemd/system/wof.service` and add:
 ```
 [Unit]
 Description=WallofFlippers - A simple and easy way to find Flipper Zero Devices and Bluetooth Low Energy Based Attacks
