@@ -159,7 +159,7 @@ def display(custom_text:str=None):
         for key in cache.wof_data['display_offline']:
             t_offline += 1
             if t_offline <= cache.wof_data['max_offline']:
-                key['RSSI'] = str(f"{key['RSSI']} dBm")
+                key['RSSI'] = "Offline"
                 if cache.wof_data['narrow_mode']: # if narrow mode, display in a more compact format
                     print(f"{key['Name']}, {key['MAC']}, {library.unix2text(key['unixFirstSeen'])}, {library.unix2text(key['unixLastSeen'])}, {str(key['RSSI'])}, {key['Detection Type']} ({key['Type']})")
                 else:
