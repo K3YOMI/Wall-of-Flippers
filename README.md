@@ -361,6 +361,9 @@ systemctl status wof
 If you want to see the data of Wall of Flippers on you Pwnagotchi screen, install CyberArtemio's `wof-pwnagotchi-plugin`. Follow the installation steps [here](https://github.com/cyberartemio/wof-pwnagotchi-plugin#-installation).
 
 </details>
+
+# Issues and Fixes <a name = "doc_issues_and_fixes"></a>
+
 > If you encounter any issues or bugs, please report them to us on our github page. We will try our best to fix them as soon as possible. If you would like to contribute to the project, please feel free to make a pull request. We will review it and merge it if it is a good addition to the project. We will be starting a discord server soon for support and development. Please keep an eye out for that. Thank you for your support and we hope you enjoy this project! <3
 
 
