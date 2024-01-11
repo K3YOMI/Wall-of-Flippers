@@ -102,4 +102,5 @@ wof_data = {
     "ascii_normal": open('./ascii/normal.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),
     "ascii_ctf_normal": open('./ascii/ctf_normal.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),
     "ascii_small": open('./ascii/small.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),
+    "no_ui": False # Set to "True" when running in background (no active terminal)
 }

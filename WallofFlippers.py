@@ -165,7 +165,6 @@ def sort_packets(ble_packets:list):
         print("[!] Wall of Flippers >> Error: Type not supported")
     cache.wof_data['bool_isScanning'] = False
 
-
 async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 'type' to avoid conflict with built-in functions. Feel free to change it to something more appropriate as I'm not exactly sure what they do
     """BLE detection"""
     try:
@@ -253,27 +252,6 @@ async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 't
 
 # Start of the program
 library.check_json_file_exist()
-os.system('cls' if os.name == 'nt' else 'clear')
-
-cache.wof_data['system_type'] = os.name
-
-if cache.wof_data['system_type'] == "posix": # Linux Auto Install
-    if not os.path.exists(".venv/bin/activate"): # Check if the user has setup their virtual environment
-        library.print_ascii_art("Uh oh, it seems like you have not setup your virtual environment yet!")
-        print("[!] Wall of Flippers >> It seems like you have not setup your virtual environment yet.\n\t      Reason: .venv/bin/activate does not exist.")
-        print("[!] Wall of Flippers >> Would you like to setup your virtual environment now?")
-        if input("[?] Wall of Flippers (Y/N) >> ").lower() == "y":
-            os.system("python3 -m venv .venv")
-            print("[!] Wall of Flippers >> Virtual environment setup successfully!")
-            sys.exit()
-    if library.is_in_venv() == False: # Check if the user is in their virtual environment
-        library.print_ascii_art("Uh oh, it seems like you are not in your virtual environment!")
-        print("[!] Wall of Flippers >> It seems like you are not in your virtual environment. Please use the following command to enter your virtual environment.")
-        print("\tsource .venv/bin/activate")
-        print("\tor")
-        print("\tbash wof.sh")
-        sys.exit()
-
 # Command args parsing 
 parser = argparse.ArgumentParser(prog = "WallofFlippers.py")
 base_parser = argparse.ArgumentParser(add_help=False)
@@ -283,6 +261,32 @@ wof_parser = subparsers.add_parser("wof", help="Run WoF: scan for nearby online 
 wof_parser.add_argument("-d", "--device", help="Index of HCI device to use for scanning", required=True)
 
 args = parser.parse_args()
+
+cache.wof_data['no_ui'] = args.no_ui
+
+if not cache.wof_data['no_ui']:
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+cache.wof_data['system_type'] = os.name
+
+if cache.wof_data['system_type'] == "posix": # Linux Auto Install
+    if not os.path.exists(".venv/bin/activate"): # Check if the user has setup their virtual environment
+        library.print_ascii_art("Uh oh, it seems like you have not setup your virtual environment yet!")
+        print("[!] Wall of Flippers >> It seems like you have not setup your virtual environment yet.\n\t      Reason: .venv/bin/activate does not exist.")
+        if not cache.wof_data['no_ui']:
+            print("[!] Wall of Flippers >> Would you like to setup your virtual environment now?")
+            if input("[?] Wall of Flippers (Y/N) >> ").lower() == "y":
+                os.system("python3 -m venv .venv")
+                print("[!] Wall of Flippers >> Virtual environment setup successfully!")
+                sys.exit()
+    if library.is_in_venv() == False: # Check if the user is in their virtual environment
+        library.print_ascii_art("Uh oh, it seems like you are not in your virtual environment!")
+        print("[!] Wall of Flippers >> It seems like you are not in your virtual environment. Please use the following command to enter your virtual environment.")
+        print("\tsource .venv/bin/activate")
+        print("\tor")
+        print("\tbash wof.sh")
+        sys.exit()
+
 if args.action == "wof":
     selection_box = "wall_of_flippers"
     device_hci = args.device
@@ -314,7 +318,6 @@ if selection_box == 'wall_of_flippers':
         sys.exit()
     try:
         if device_hci is None: # device_hci is already set if wof is runned using args
-            ble_adapters = []
             if cache.wof_data['system_type'] == "posix":
                 ble_adapters = [adapter for adapter in os.listdir('/sys/class/bluetooth/') if 'hci' in adapter]
                 # make a selection of the bluetooth adapter

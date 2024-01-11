@@ -28,8 +28,7 @@ import shutil
 import utils.wof_cache as cache # Wall of Flippers "cache" for important configurations and data :3
 import utils.wof_library as library # Wall of Flippers "library" for important functions and classes :3
 
-
-def display(custom_text:str=None):
+def __update_screen(custom_text=None):
     """displays the data in a nice format"""
 
     # Load flipper data from Flipper.json
@@ -182,3 +181,12 @@ def display(custom_text:str=None):
     cache.wof_data['all_packets_found'] = []
     cache.wof_data['duplicated_packets'] = []
     cache.wof_data['base_flippers'] = []
+
+def __log(): # TODO: TBD
+    pass
+
+def display(custom_text:str=None):
+    if not cache.wof_data['no_ui']:
+        __update_screen(custom_text=custom_text)
+    else:
+        __log()

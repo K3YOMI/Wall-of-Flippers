@@ -80,7 +80,9 @@ def is_in_venv():
 
 def print_ascii_art(custom_text:str = None):
     """Displays ASCII art in the terminal with the custom text if provided, otherwise displays a random quote"""
-    os.system('cls' if os.name == 'nt' else 'clear')
+    if not cache.wof_data['no_ui']:
+        os.system('cls' if os.name == 'nt' else 'clear')
+    
     r_quote = random.choice(cache.wof_data['dolphin_thinking']) if not custom_text else custom_text
 
     # selecting adequate ASCII art based on the terminal size and if the user is in Capture The Flippers mode
