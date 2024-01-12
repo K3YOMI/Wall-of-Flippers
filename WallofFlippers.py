@@ -336,8 +336,10 @@ if selection_box == 'wall_of_flippers':
                 asyncio.run(detection_async(cache.wof_data['system_type'], device_hci))
             time.sleep(1)
     except KeyboardInterrupt:
-        library.print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
-        print("\n[!] Wall of Flippers >> Exiting...")
+        if not cache.wof_data['no_ui']:
+            library.print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
+            print("\n")
+        print("[!] Wall of Flippers >> Exiting...")
         sys.exit()
 
 if selection_box == 'capture_the_flippers': # todo: needs to be updated for narrow mode compatibility

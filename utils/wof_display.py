@@ -182,8 +182,25 @@ def __update_screen(custom_text=None):
     cache.wof_data['duplicated_packets'] = []
     cache.wof_data['base_flippers'] = []
 
-def __log(): # TODO: TBD
-    pass
+last_log_online_flippers = [] # MAC addresses of Flippers that were online in the last log
+def __log():
+    global last_log_online_flippers
+    online_flippers = [ flipper for flipper in cache.wof_data["found_flippers"] if flipper["MAC"] in cache.wof_data["live_flippers"] and flipper["MAC"] not in last_log_online_flippers ]
+    offline_flippers = [ flipper for flipper in cache.wof_data["found_flippers"] if flipper["MAC"] not in cache.wof_data["live_flippers"] and flipper["MAC"] in last_log_online_flippers ]
+    
+    for flipper in online_flippers:
+        print(f'[!] Wall of Flippers >> {flipper["Name"]} [{flipper["MAC"]}] is online')
+    for flipper in offline_flippers:
+        print(f'[!] Wall of Flippers >> {flipper["Name"]} [{flipper["MAC"]}] is offline')
+
+    cache.wof_data['display_live'] = []
+    cache.wof_data['display_offline'] = []
+    last_log_online_flippers = cache.wof_data['live_flippers']
+    cache.wof_data['live_flippers'] = []
+    cache.wof_data['forbidden_packets_found'] = []
+    cache.wof_data['all_packets_found'] = []
+    cache.wof_data['duplicated_packets'] = []
+    cache.wof_data['base_flippers'] = []
 
 def display(custom_text:str=None):
     if not cache.wof_data['no_ui']:
