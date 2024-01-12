@@ -256,7 +256,7 @@ library.check_json_file_exist()
 parser = argparse.ArgumentParser(prog = "WallofFlippers.py")
 base_parser = argparse.ArgumentParser(add_help=False)
 subparsers = parser.add_subparsers(dest="action", help="Skip interactive ui and just run selected mode")
-parser.add_argument('--no-ui', action="store_true", default=False, help="Disable ui") # TODO: currently not used
+parser.add_argument('--no-ui', action="store_true", default=False, help="Disable ui")
 wof_parser = subparsers.add_parser("wof", help="Run WoF: scan for nearby online flippers", parents=[base_parser])
 wof_parser.add_argument("-d", "--device", help="Index of HCI device to use for scanning", required=True)
 
