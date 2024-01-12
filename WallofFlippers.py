@@ -297,6 +297,7 @@ if args.action == "wof":
 elif args.action is None:
     # If no action is specified, run interactive selection
     selection_box = library.init()
+    device_hci = None
 
 if selection_box in ("wall_of_flippers", "capture_the_flippers"):
     try:
