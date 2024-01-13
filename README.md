@@ -98,6 +98,7 @@
 	- [x] Linux Supported
  	- [ ] Windows Supported 	
 - [ ] Chromium Web Bluetooth Support
+- [ ] iOS/Android Detection (Pairing)
 - [ ] Animations (Looking for ascii artists)
 - [ ] ~Nuclear Fusion Implementation~
 
