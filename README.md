@@ -171,7 +171,7 @@
 	# command method
 	python3 -m pip install bluepy
 	python3 -m pip install requests
- 	python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez#egg=pybluez
+ 	python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez
 	################## PACKAGES ########################
 	deactivate
 	
@@ -226,7 +226,7 @@
 	# command method
 	python3 -m pip install bluepy
 	python3 -m pip install requests
- 	python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez#egg=pybluez
+ 	python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez
 	################## PACKAGES ########################
 	deactivate
 
