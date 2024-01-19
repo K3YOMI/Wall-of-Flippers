@@ -43,10 +43,10 @@
 </div>
 
 # Table of Contents
-- [Introduction](#wall-of-flippers)
-- [Features](#current-features-and-future-updates)
-- [Videos and Articles](#videos-and-articles)
-- [Install Guide](#installing-and-requirements)
+- [Introduction](#-introduction)
+- [Features](#-current-features-and-future-updates)
+- [Videos and Articles](#-videos-and-articles)
+- [Install Guide](#-installing-and-requirements)
   	- [How to install](#how-to-install)
 - [Issues and Fixes](#issues-and-fixes)
 - [Common Errors and Fixes](#common-errors-and-fixes)
@@ -121,11 +121,11 @@
 ## How to install
 
 <details>
-<summary> Debian Linux Install Guide </summary>
+<summary>Debian Linux Install Guide</summary>
 
 ### Debian Linux Install Guide
 
-> Wall of Flippers on debian linux is currently one of the best ways to run Wall of Flippers. Mostly due to it being stable and having a lot of support for BTLE. To start off, is is highly recommened to follow all instructions we provide unless you know what you are doing. To get started, we need to set up the directory and install the required packages.
+> Wall of Flippers on debian linux is currently one of the best ways to run Wall of Flippers. Mostly due to it being stable and having a lot of support for BLE. To start off, is is highly recommened to follow all instructions we provide unless you know what you are doing. To get started, we need to set up the directory and install the required packages.
 
 #### Step 1: Full system upgrade / update
 
@@ -179,9 +179,9 @@ deactivate
 
 ```sh
 bash wof.sh
-# You should get a prompt upon startup, about setting up a managed environment, feel free to let it do for you. Then once an environemnet is complete run `wof.sh` again
-and press 4 for the auto install process.
 ```
+
+> You should get a prompt upon startup, about setting up a managed environment, feel free to let it do for you. Then once an environemnet is complete run `wof.sh` again and press 4 for the auto install process.
 
 #### Step 5: Running Wall of Flippers
 
@@ -259,9 +259,9 @@ deactivate
 
 ```sh
 bash wof.sh
-# You should get a prompt upon startup, about setting up a managed environment, feel free to let it do for you. Then once an environemnet is complete run `wof.sh` again
-and press 4 for the auto install process.
 ```
+
+> You should get a prompt upon startup, about setting up a managed environment, feel free to let it do for you. Then once an environemnet is complete run `wof.sh` again and press 4 for the auto install process.
 
 #### Step 5: Running Wall of Flippers
 
@@ -355,7 +355,9 @@ sudo service bluetooth restart
 
 # Notice
 
-> "This project isn't the solution to combat the Flipper Zero device or any form of btle attacks. **THIS DOES NOT MITIGATE OR STOP ANYTHING**!!! However, the flipper zero device is a great tool for learning and understanding the inctracies of the cyberworld. Now for the detections for this project, we heavily rely on the advertisments that the Flipper Zero sends out for detection. While a user can do many things to avoid being detected by Wall of Flippers. (Depending if the Identifier method gets worked around) We highly advise using this project for an end all solution. While not all bluetooth attacks are sent from only the flipper, it's a good start to understand the world of bluetooth and the attacks that can be accomplished with simple devices. We hope you enjoy this project and we hope you take the time to learn and build off of this. We are always looking for contributions and new ideas. Thank you for looking at this project and we hope you enjoy it!"
+> This project isn't the solution to combat the Flipper Zero device or any form of BLE attacks. **THIS DOES NOT MITIGATE OR STOP ANYTHING**!!! However, the flipper zero device is a great tool for learning and understanding the inctracies of the cyberworld. Now for the detections for this project, we heavily rely on the advertisments that the Flipper Zero sends out for detection. While a user can do many things to avoid being detected by Wall of Flippers. (Depending if the Identifier method gets worked around) We highly advise using this project for an end all solution. While not all bluetooth attacks are sent from only the flipper, it's a good start to understand the world of bluetooth and the attacks that can be accomplished with simple devices.
+> 
+> We hope you enjoy this project and we hope you take the time to learn and build off of this. We are always looking for contributions and new ideas. Thank you for looking at this project and we hope you enjoy it!
 > 
 > *k3yomi and emilia0001*
 
