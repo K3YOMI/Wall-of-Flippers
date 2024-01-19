@@ -371,6 +371,6 @@ sudo service bluetooth restart
 :---: |:---: |:---: |:---: |:---: |:---: |
 [K3YOMI](https://github.com/K3YOMI) |[nescapp](https://github.com/nescapp) |[jbohack](https://github.com/jbohack) |[OnlyNandan](https://github.com/OnlyNandan) |[cyberartemio](https://github.com/cyberartemio) |[AleksaMCode](https://github.com/AleksaMCode) |
 
-[<img alt="elliotwutingfeng" src="https://avatars.githubusercontent.com/u/30223404?v=4&s=117" width="117">](https://github.com/elliotwutingfeng) | [<img alt="ecto-1a" src="https://avatars.githubusercontent.com/u/112792126?s=55&v=4" width="117">](https://github.com/Ecto-1A) |
+[<img alt="elliotwutingfeng" src="https://avatars.githubusercontent.com/u/30223404?v=4&s=117" width="117">](https://github.com/elliotwutingfeng) | [<img alt="ecto-1a" src="https://avatars.githubusercontent.com/u/112792126" width="117">](https://github.com/Ecto-1A) |
 :---: | :---: |
 [elliotwutingfeng](https://github.com/elliotwutingfeng) | [ECTO-1A](https://github.com/ecto-1a) (*AppleJuice*) |
