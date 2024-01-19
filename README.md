@@ -51,7 +51,7 @@
 - [Issues and Fixes](#issues-and-fixes)
 - [Common Errors and Fixes](#common-errors-and-fixes)
 - [Notice](#notice)
-- [Contributors](#contributors)
+- [Contributors and Credits](#contributors-and-credits)
 
 <br />
 <br />
@@ -361,11 +361,16 @@ sudo service bluetooth restart
 > 
 > *k3yomi and emilia0001*
 
-# Contributors
+# Contributors and Credits
 
 > This project was made possible by the following people. Please make sure to check them out and support them! <3
 
-| Project Maintainer | Project Contributor | AppleJuice BLE Advertisment Data |
-| --- | --- | --- |
-| ![k3yomi](https://avatars.githubusercontent.com/u/54733885?s=55&v=4) | ![emilia0001](https://avatars.githubusercontent.com/u/37256246?s=55&v=4) | ![ecto-1a](https://avatars.githubusercontent.com/u/112792126?s=55&v=4)
-| k3yomi | emilia0001 | Ecto-1A |
+<!-- Credits auto generated with https://github.com/mgechev/github-contributors-list -->
+
+[<img alt="K3YOMI" src="https://avatars.githubusercontent.com/u/54733885?v=4&s=117" width="117">](https://github.com/K3YOMI) |[<img alt="nescapp" src="https://avatars.githubusercontent.com/u/97590612?v=4&s=117" width="117">](https://github.com/nescapp) |[<img alt="jbohack" src="https://avatars.githubusercontent.com/u/37256246?v=4&s=117" width="117">](https://github.com/jbohack) |[<img alt="OnlyNandan" src="https://avatars.githubusercontent.com/u/78302872?v=4&s=117" width="117">](https://github.com/OnlyNandan) |[<img alt="cyberartemio" src="https://avatars.githubusercontent.com/u/156206062?v=4&s=117" width="117">](https://github.com/cyberartemio) |[<img alt="AleksaMCode" src="https://avatars.githubusercontent.com/u/23129943?v=4&s=117" width="117">](https://github.com/AleksaMCode) |
+:---: |:---: |:---: |:---: |:---: |:---: |
+[K3YOMI](https://github.com/K3YOMI) |[nescapp](https://github.com/nescapp) |[jbohack](https://github.com/jbohack) |[OnlyNandan](https://github.com/OnlyNandan) |[cyberartemio](https://github.com/cyberartemio) |[AleksaMCode](https://github.com/AleksaMCode) |
+
+[<img alt="elliotwutingfeng" src="https://avatars.githubusercontent.com/u/30223404?v=4&s=117" width="117">](https://github.com/elliotwutingfeng) | [<img alt="ecto-1a" src="https://avatars.githubusercontent.com/u/112792126?s=55&v=4" width="117">](https://github.com/Ecto-1A) |
+:---: | :---: |
+[elliotwutingfeng](https://github.com/elliotwutingfeng) | [ECTO-1A](https://github.com/ecto-1a) (*AppleJuice*) |
