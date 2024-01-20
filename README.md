@@ -99,16 +99,22 @@
 
 <table align="center">
 	<tr align="center">
-		<td align="center" width="50%">
+		<td align="center">
 			<a href="https://www.youtube.com/watch?v=Pnw-uqd0GFM">
 				<img align="center" src="https://i.ytimg.com/vi/Pnw-uqd0GFM/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDEjuLtwBo0n-zRWhAKep7Raon5_Q" height="155" />
 			</a>
-			<h3 align="center">Talking Sasquach - Wall of Flippers Busts Flipper Zero BLE Spammers Red Handed!</h3>
 		</td>
-		<td align="center" width="50%">
+		<td align="center">
 			<a href="https://www.bleepingcomputer.com/news/security/wall-of-flippers-detects-flipper-zero-bluetooth-spam-attacks/">
 				<img align="center" src="https://www.bleepstatic.com/content/hl-images/2023/01/03/flipper-zero.jpg" height="155" />
 			</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<h3 align="center">Talking Sasquach - Wall of Flippers Busts Flipper Zero BLE Spammers Red Handed!</h3>
+		</td>
+		<td>
 			<h3 align="center">BleepingComputer - ‘Wall of Flippers’ detects Flipper Zero Bluetooth spam attacks</h3>
 		</td>
 	</tr>
@@ -378,4 +384,4 @@ AppleJuice BLE Advertisment Data |
 
 # Stargazers over time
 
-[![Stargazers over time](https://starchart.cc/K3YOMI/Wall-of-Flippers.svg?variant=adaptive)](https://starchart.cc/K3YOMI/Wall-of-Flippers)
+[![Stargazers over time](https://starchart.cc/K3YOMI/Wall-of-Flippers.svg?variant=light)](https://starchart.cc/K3YOMI/Wall-of-Flippers)
