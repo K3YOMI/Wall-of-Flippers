@@ -99,23 +99,23 @@
 
 <table align="center">
 	<tr align="center">
-		<td align="center">
+		<td align="center" width="49%">
 			<a href="https://www.youtube.com/watch?v=Pnw-uqd0GFM">
-				<img align="center" src="https://i.ytimg.com/vi/Pnw-uqd0GFM/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDEjuLtwBo0n-zRWhAKep7Raon5_Q" height="155" />
+				<img align="center" src="https://i.ytimg.com/vi/Pnw-uqd0GFM/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDEjuLtwBo0n-zRWhAKep7Raon5_Q" width="225px" />
 			</a>
 		</td>
-		<td align="center">
+		<td align="center" width="49%">
 			<a href="https://www.bleepingcomputer.com/news/security/wall-of-flippers-detects-flipper-zero-bluetooth-spam-attacks/">
-				<img align="center" src="https://www.bleepstatic.com/content/hl-images/2023/01/03/flipper-zero.jpg" height="155" />
+				<img align="center" src="https://www.bleepstatic.com/content/hl-images/2023/01/03/flipper-zero.jpg" width="225px" />
 			</a>
 		</td>
 	</tr>
 	<tr>
-		<td>
-			<h3 align="center">Talking Sasquach - Wall of Flippers Busts Flipper Zero BLE Spammers Red Handed!</h3>
+		<td align="center" width="49%">
+			<p align="center">Talking Sasquach - Wall of Flippers Busts Flipper Zero BLE Spammers Red Handed!</p>
 		</td>
-		<td>
-			<h3 align="center">BleepingComputer - ‘Wall of Flippers’ detects Flipper Zero Bluetooth spam attacks</h3>
+		<td align="center" width="49%">
+			<p align="center">BleepingComputer - ‘Wall of Flippers’ detects Flipper Zero Bluetooth spam attacks</p>
 		</td>
 	</tr>
 </table>
