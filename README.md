@@ -51,9 +51,9 @@
 - [Issues and Fixes](#issues-and-fixes)
 - [Common Errors and Fixes](#common-errors-and-fixes)
 - [Notice](#notice)
-- [Contributors and Credits](#contributors-and-credits)
+- [Contributors](#contributors)
+- [Credits](#credits)
 
-<br />
 <br />
 <br />
 <br />
@@ -99,13 +99,13 @@
 
 <table align="center">
 	<tr align="center">
-		<td align="center">
+		<td align="center" width="50%">
 			<a href="https://www.youtube.com/watch?v=Pnw-uqd0GFM">
 				<img align="center" src="https://i.ytimg.com/vi/Pnw-uqd0GFM/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDEjuLtwBo0n-zRWhAKep7Raon5_Q" height="155" />
 			</a>
 			<h3 align="center">Talking Sasquach - Wall of Flippers Busts Flipper Zero BLE Spammers Red Handed!</h3>
 		</td>
-		<td align="center">
+		<td align="center" width="50%">
 			<a href="https://www.bleepingcomputer.com/news/security/wall-of-flippers-detects-flipper-zero-bluetooth-spam-attacks/">
 				<img align="center" src="https://www.bleepstatic.com/content/hl-images/2023/01/03/flipper-zero.jpg" height="155" />
 			</a>
@@ -125,7 +125,7 @@
 
 ### Debian Linux Install Guide
 
-> Wall of Flippers on debian linux is currently one of the best ways to run Wall of Flippers. Mostly due to it being stable and having a lot of support for BLE. To start off, is is highly recommened to follow all instructions we provide unless you know what you are doing. To get started, we need to set up the directory and install the required packages.
+> Wall of Flippers on debian linux is currently one of the best ways to run Wall of Flippers. Mostly due to it being stable and having a lot of support for BLE. To start off, it is highly recommened to follow all instructions we provide unless you know what you are doing. To get started, we need to set up the directory and install the required packages.
 
 #### Step 1: Full system upgrade / update
 
@@ -315,9 +315,9 @@ pip install -r requirements.txt
 
 ```powershell
 python WallofFlippers.py
-# You should get a prompt upon startup, press 4 for the easy install and follow the directions and prompts for the install.
 ```
-
+> You should get a prompt upon startup, press 4 for the easy install and follow the directions and prompts for the install.
+>
 > If you are having issues with pip being not recognized as a command, please refer to [this](https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-internal-or-external-command) question on Stack Overflow.
 
 #### Step 3: Running Wall of Flippers
@@ -361,16 +361,21 @@ sudo service bluetooth restart
 > 
 > *k3yomi and emilia0001*
 
-# Contributors and Credits
+# Contributors
 
 > This project was made possible by the following people. Please make sure to check them out and support them! <3
 
-<!-- Credits auto generated with https://github.com/mgechev/github-contributors-list -->
+[<img alt="K3YOMI" src="https://avatars.githubusercontent.com/u/54733885?v=4&s=55" width="55">](https://github.com/K3YOMI) |[<img alt="nescapp" src="https://avatars.githubusercontent.com/u/97590612?v=4&s=55" width="55">](https://github.com/nescapp) |[<img alt="jbohack" src="https://avatars.githubusercontent.com/u/37256246?v=4&s=55" width="55">](https://github.com/jbohack) |[<img alt="OnlyNandan" src="https://avatars.githubusercontent.com/u/78302872?v=4&s=55" width="55">](https://github.com/OnlyNandan) |[<img alt="cyberartemio" src="https://avatars.githubusercontent.com/u/156206062?v=4&s=55" width="55">](https://github.com/cyberartemio) |[<img alt="AleksaMCode" src="https://avatars.githubusercontent.com/u/23129943?v=4&s=55" width="55">](https://github.com/AleksaMCode) |[<img alt="elliotwutingfeng" src="https://avatars.githubusercontent.com/u/30223404?v=4&s=55" width="55">](https://github.com/elliotwutingfeng) |
+:---: |:---: |:---: |:---: |:---: |:---: |:---: |
+[K3YOMI](https://github.com/K3YOMI) |[nescapp](https://github.com/nescapp) |[jbohack](https://github.com/jbohack) |[OnlyNandan](https://github.com/OnlyNandan) |[cyberartemio](https://github.com/cyberartemio) |[AleksaMCode](https://github.com/AleksaMCode) |[elliotwutingfeng](https://github.com/elliotwutingfeng) |
 
-[<img alt="K3YOMI" src="https://avatars.githubusercontent.com/u/54733885?v=4&s=117" width="117">](https://github.com/K3YOMI) |[<img alt="nescapp" src="https://avatars.githubusercontent.com/u/97590612?v=4&s=117" width="117">](https://github.com/nescapp) |[<img alt="jbohack" src="https://avatars.githubusercontent.com/u/37256246?v=4&s=117" width="117">](https://github.com/jbohack) |[<img alt="OnlyNandan" src="https://avatars.githubusercontent.com/u/78302872?v=4&s=117" width="117">](https://github.com/OnlyNandan) |[<img alt="cyberartemio" src="https://avatars.githubusercontent.com/u/156206062?v=4&s=117" width="117">](https://github.com/cyberartemio) |[<img alt="AleksaMCode" src="https://avatars.githubusercontent.com/u/23129943?v=4&s=117" width="117">](https://github.com/AleksaMCode) |
-:---: |:---: |:---: |:---: |:---: |:---: |
-[K3YOMI](https://github.com/K3YOMI) |[nescapp](https://github.com/nescapp) |[jbohack](https://github.com/jbohack) |[OnlyNandan](https://github.com/OnlyNandan) |[cyberartemio](https://github.com/cyberartemio) |[AleksaMCode](https://github.com/AleksaMCode) |
+# Credits
 
-[<img alt="elliotwutingfeng" src="https://avatars.githubusercontent.com/u/30223404?v=4&s=117" width="117">](https://github.com/elliotwutingfeng) | [<img alt="ecto-1a" src="https://avatars.githubusercontent.com/u/112792126" width="117">](https://github.com/Ecto-1A) |
-:---: | :---: |
-[elliotwutingfeng](https://github.com/elliotwutingfeng) | [ECTO-1A](https://github.com/ecto-1a) (*AppleJuice*) |
+AppleJuice BLE Advertisment Data |
+:---: |
+[<img alt="ecto-1a" src="https://avatars.githubusercontent.com/u/112792126" width="55">](https://github.com/ECTO-1A) |
+[ECTO-1A](https://github.com/ECTO-1A)|
+
+# Stargazers over time
+
+[![Stargazers over time](https://starchart.cc/K3YOMI/Wall-of-Flippers.svg?variant=adaptive)](https://starchart.cc/K3YOMI/Wall-of-Flippers)
