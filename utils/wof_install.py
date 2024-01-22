@@ -75,8 +75,10 @@ def init():
                 os_data = [data.split("=") for data in os_data]
                 os_data = {data[0]: data[1].replace('"', "") for data in os_data if len(data) == 2}
                 for distro in linux_distro:
+                    name_only = os_data["NAME"].lower().split(" ")[0]
                     if os_data["NAME"].lower() in distro["rolling"]:
                         return [distro["name"], distro['rolling']]
+                return [os_data["NAME"], os_data["NAME"]]
             distribution_info = get_like_distro()
             # Fedora Auto Install
             if "fedora" in distribution_info[0]:
@@ -102,8 +104,8 @@ def init():
                     library.print_ascii_art("We have successfully installed the dependencies!") # todo: add a check to see if the dependencies were really installed successfully
                     print("[!] Wall of Flippers >> Dependencies installed successfully!")
             else:
-                library.print_ascii_art("Hmm, I am unable to detect the current Distro...")
-                print("[!] Wall of Flippers >> OS undectected - Entering manual override")
+                library.print_ascii_art("Hmm, I am unable to provide an automated install for your system.")
+                print("[!] Wall of Flippers >> Please install the dependencies manually.")
 
     except KeyboardInterrupt:
         library.print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
