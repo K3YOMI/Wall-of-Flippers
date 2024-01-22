@@ -104,8 +104,8 @@ def init():
                     library.print_ascii_art("We have successfully installed the dependencies!") # todo: add a check to see if the dependencies were really installed successfully
                     print("[!] Wall of Flippers >> Dependencies installed successfully!")
             else:
-                library.print_ascii_art("Hmm, I am unable to provide an automated install for your system.")
-                print("[!] Wall of Flippers >> Please install the dependencies manually.")
+                library.print_ascii_art(f"Hmm, I am unable to provide an automated install for your system. ({distribution_info[0]})")
+                print(f"[!] Wall of Flippers >> Please install the dependencies manually. ({distribution_info[0]})")
 
     except KeyboardInterrupt:
         library.print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
