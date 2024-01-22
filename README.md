@@ -324,7 +324,8 @@ python3 -m venv .venv && source .venv/bin/activate && pip install -r requirement
 Description=WallofFlippers - A simple and easy way to find Flipper Zero Devices and Bluetooth Low Energy Based Attacks
 
 [Service]
-ExecStart=/root/Wall-of-Flippers/.venv/bin/python /root/Wall-of-Flippers/WallofFlippers.py wof -d 0
+ExecStart=/root/Wall-of-Flippers/.venv/bin/python /root/Wall-of-Flippers/WallofFlippers.py --no-ui wof -d 0
+WorkingDirectory=/root/Wall-of-Flippers/
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=wof
