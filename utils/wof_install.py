@@ -62,6 +62,11 @@ def init():
         # Linux Auto Install
         elif system_type == "posix":
             library.print_ascii_art("Hmm, I've detected that you are running under linux!")
+            linux_distro = [
+                {"name": "debian", "rolling": ["debian", "ubuntu", "kali", "raspbian"]},
+                {"name": "fedora", "rolling": ["fedora"]},
+                {"name": "arch", "rolling": ["arch"]}
+            ]
             def get_like_distro():
                 os_file = open("/etc/os-release", "r")
                 os_data = os_file.read()
@@ -69,10 +74,12 @@ def init():
                 os_data = os_data.split("\n")
                 os_data = [data.split("=") for data in os_data]
                 os_data = {data[0]: data[1].replace('"', "") for data in os_data if len(data) == 2}
-                return os_data["ID_LIKE"]
+                for distro in linux_distro:
+                    if os_data["NAME"].lower() in distro["rolling"]:
+                        return [distro["name"], distro['rolling']]
             distribution_info = get_like_distro()
             # Fedora Auto Install
-            if "fedora" in distribution_info:
+            if "fedora" in distribution_info[0]:
                 library.print_ascii_art("Hmm, I've detected that you are running under Fedora!")
                 print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\n{json.dumps(fedora_dependencies_cmd, indent=4)}")
                 user_input_ok = input("[?] Wall of Flippers (Y/N) >> ")
@@ -84,7 +91,7 @@ def init():
                     print("[!] Wall of Flippers >> Dependencies installed successfully!")
             
             # Debian Auto Install
-            elif "debian" in distribution_info:
+            elif "debian" in distribution_info[0]:
                 library.print_ascii_art("Hmm, I've detected that you are running under Debian!")
                 print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\n{json.dumps(debian_dependencies_cmd, indent=4)}")
                 user_input_ok = input("[?] Wall of Flippers (Y/N) >> ")
