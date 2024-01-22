@@ -76,7 +76,7 @@ def init():
                 os_data = {data[0]: data[1].replace('"', "") for data in os_data if len(data) == 2}
                 for distro in linux_distro:
                     name_only = os_data["NAME"].lower().split(" ")[0]
-                    if os_data["NAME"].lower() in distro["rolling"]:
+                    if name_only in distro["rolling"]:
                         return [distro["name"], distro['rolling']]
                 return [os_data["NAME"], os_data["NAME"]]
             distribution_info = get_like_distro()
