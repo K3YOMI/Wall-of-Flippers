@@ -83,20 +83,20 @@ def print_ascii_art(custom_text:str = None):
     if not cache.wof_data['no_ui']:
         os.system('cls' if os.name == 'nt' else 'clear')
     
-    r_quote = random.choice(cache.wof_data['dolphin_thinking']) if not custom_text else custom_text
+        r_quote = random.choice(cache.wof_data['dolphin_thinking']) if not custom_text else custom_text
 
-    # selecting adequate ASCII art based on the terminal size and if the user is in Capture The Flippers mode
-    print("\033[0;94m")
-    if cache.wof_data['narrow_mode']:
-        print(cache.wof_data['ascii_small'])
-        print(f"\"{r_quote}\"".center(50))
-        print("\033[0m")
-    else:
-        if is_in_ctf(): # If the user is in Capture The Flippers mode, then display the Capture The Flippers ASCII art
-            print(cache.wof_data['ascii_ctf_normal'].replace("[RANDOM_QUOTE]", r_quote))
-        else :
-            print(cache.wof_data['ascii_normal'].replace("[RANDOM_QUOTE]", r_quote))
-        print("\033[0m\n")
+        # selecting adequate ASCII art based on the terminal size and if the user is in Capture The Flippers mode
+        print("\033[0;94m")
+        if cache.wof_data['narrow_mode']:
+            print(cache.wof_data['ascii_small'])
+            print(f"\"{r_quote}\"".center(50))
+            print("\033[0m")
+        else:
+            if is_in_ctf(): # If the user is in Capture The Flippers mode, then display the Capture The Flippers ASCII art
+                print(cache.wof_data['ascii_ctf_normal'].replace("[RANDOM_QUOTE]", r_quote))
+            else :
+                print(cache.wof_data['ascii_normal'].replace("[RANDOM_QUOTE]", r_quote))
+            print("\033[0m\n")
 
 def init():
     """Initial Selection Box (Upon starup)

@@ -203,7 +203,7 @@ async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 't
                 cache.wof_data['bool_isScanning'] = False
         elif os_param == "posix": # Linux Detection
             scanner = Scanner(detection_type) # Thank you Talking Sasquach for testing this!
-            devices = scanner.scan(5) # Scan the area for 5 seconds....
+            devices = scanner.scan(5, passive = True) # Scan the area for 5 seconds....
             if devices:
                 for device in devices:
                     scan_list = device.getScanData()
@@ -246,9 +246,9 @@ async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 't
             cache.wof_data['bool_isScanning'] = False
         sort_packets(ble_packets)
     except Exception as e:
+        cache.wof_data['bool_isScanning'] = False
         library.print_ascii_art("Error: Failed to scan for BLE devices")
         print("[!] Wall of Flippers >> Error: Failed to scan for BLE devices >> " + str(e))
-        sys.exit()
 
 # Start of the program
 library.check_json_file_exist()
@@ -336,9 +336,7 @@ if selection_box == 'wall_of_flippers':
                 asyncio.run(detection_async(cache.wof_data['system_type'], device_hci))
             time.sleep(1)
     except KeyboardInterrupt:
-        if not cache.wof_data['no_ui']:
-            library.print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
-            print("\n")
+        library.print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
         print("[!] Wall of Flippers >> Exiting...")
         sys.exit()
 
