@@ -30,6 +30,11 @@ import time
 import asyncio
 import json
 import random
+import argparse
+
+
+
+
 
 
 # Wall of Flippers Imports
@@ -37,8 +42,6 @@ import utils.wof_cache as cache # for important configurations and data :3
 import utils.wof_library as library # for important functions :3
 import utils.wof_display as wall_display # for important functions :3
 import utils.wof_install as installer # for important functions and classes :3
-import utils.wof_bleexploitation as ble_exploitation # for important functions and classes :3
-
 
 Scanner = None # This is the scanner object for the bluepy package (Default = None)
 
@@ -48,7 +51,6 @@ def sort_packets(ble_packets:list):
     any_flippers_discovered = False
     flippers_discovered_list = []
     latest_discovered_list = []
-    is_in_ctf = library.is_in_ctf() # Check if the user is in CTF mode
     forbidden_packets_list = cache.wof_data['forbidden_packets']
 
     for advertisement in ble_packets:
@@ -59,24 +61,22 @@ def sort_packets(ble_packets:list):
         advertisement_packets = advertisement['PCK']
         advertisement_uuid = advertisement['UUID']
         advertisement_blacklist_check = None
-
-        if not is_in_ctf:
-            for advertisement_packet in advertisement_packets:
-                for forbidden_packet in forbidden_packets_list:
-                    if all(p1 == p2 or p2 == "_" for p1, p2 in zip(advertisement_packet, forbidden_packet['PCK'])):
-                        int_get_non_underscore = len(forbidden_packet['PCK'].replace("_", ""))
-                        int_total_found = sum(p != "_" for p in advertisement_packet)
-                        if int_total_found >= int_get_non_underscore:
-                            cache.wof_data['forbidden_packets_found'].append({
-                                "Type": forbidden_packet['TYPE'],
-                                "PCK": advertisement_packet,
-                                "MAC": advertisement_mac,
-                            })
-                    if len(advertisement_packet) > cache.wof_data['min_byte_length']: # If the packet is longer than the minimum byte length, then it is a valid packet we want to log
-                        cache.wof_data['all_packets_found'].append({
+        for advertisement_packet in advertisement_packets:
+            for forbidden_packet in forbidden_packets_list:
+                if all(p1 == p2 or p2 == "_" for p1, p2 in zip(advertisement_packet, forbidden_packet['PCK'])):
+                    int_get_non_underscore = len(forbidden_packet['PCK'].replace("_", ""))
+                    int_total_found = sum(p != "_" for p in advertisement_packet)
+                    if int_total_found >= int_get_non_underscore:
+                        cache.wof_data['forbidden_packets_found'].append({
+                            "Type": forbidden_packet['TYPE'],
                             "PCK": advertisement_packet,
                             "MAC": advertisement_mac,
                         })
+                if len(advertisement_packet) > cache.wof_data['min_byte_length']: # If the packet is longer than the minimum byte length, then it is a valid packet we want to log
+                    cache.wof_data['all_packets_found'].append({
+                        "PCK": advertisement_packet,
+                        "MAC": advertisement_mac,
+                    })
         if advertisement_name.lower().startswith("flipper"):
             int_recorded = int(time.time())
             cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if advertisement_mac != flipper['MAC']]
@@ -137,36 +137,14 @@ def sort_packets(ble_packets:list):
                 any_flippers_discovered = True
                 flippers_discovered_list.append(t_data)
                 latest_discovered_list = t_data
-    if not is_in_ctf:
-        if not any_flippers_discovered:
-            wall_display.display(None)
-        else:
-            latest_name = latest_discovered_list['Name']
-            latest_mac = latest_discovered_list['MAC']
-            wall_display.display(f"I've found a wild {latest_name} ({latest_mac})")
-    elif is_in_ctf:
-        if len(flippers_discovered_list) > 0:
-            bool_alreadylogged = False 
-            for flippers in cache.table_ctf_compeition_confiugrations['temp_collection']:
-                if flippers == flippers_discovered_list[0]['MAC']:
-                    bool_alreadylogged = True
-            if not bool_alreadylogged:
-                cache.table_ctf_compeition_confiugrations['temp_collection'].append(flippers_discovered_list[0]['MAC'])
-                http_header = {
-                    "username": cache.table_ctf_compeition_confiugrations['ctf_username'],
-                    "secret-key": cache.table_ctf_compeition_confiugrations['ctf_key'],
-                    "password": cache.table_ctf_compeition_confiugrations['ctf_password'],
-                    "flippers": json.dumps(flippers_discovered_list)
-                }
-                try:
-                    http = requests.post(f"{cache.table_ctf_compeition_confiugrations['ctf_link']}/send-flipper-data", headers=http_header) # This can be exploited on so many levels, but I'll find a better way ehhehe (Just a simple demo)
-                except Exception as e:
-                    print(f"[!] Wall of Flippers >> Failed to send flipper data to the CTF Host >> Possibly Offline??\nError: {e}")
-    else: # If the system type is not supported, display an error message
-        print("[!] Wall of Flippers >> Error: Type not supported")
-    cache.wof_data['bool_isScanning'] = False
-
-
+    if not any_flippers_discovered:
+        wall_display.display(None)
+        cache.wof_data['bool_isScanning'] = False
+    else:
+        latest_name = latest_discovered_list['Name']
+        latest_mac = latest_discovered_list['MAC']
+        wall_display.display(f"I've found a wild {latest_name} ({latest_mac})")
+        cache.wof_data['bool_isScanning'] = False   
 async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 'type' to avoid conflict with built-in functions. Feel free to change it to something more appropriate as I'm not exactly sure what they do
     """BLE detection"""
     try:
@@ -273,8 +251,27 @@ if cache.wof_data['system_type'] == "posix": # Linux Auto Install
         print("\tor")
         print("\tbash wof.sh")
         sys.exit()
-selection_box = library.init()
-if selection_box in ("wall_of_flippers", "capture_the_flippers"):
+
+
+parser = argparse.ArgumentParser(description='Wall of Flippers', prog='WallofFlippers.py')
+parser.add_argument('-w', '--wall', action='store_true', help='Wall of Flippers')
+parser.add_argument('-i', '--install', action='store_true', help='Install Wall of Flippers')
+parser.add_argument('-d', '--device', action='store', help='Select a bluetooth device')
+
+args = parser.parse_args()
+
+
+
+if args == None:
+    selection_box = library.init()
+else:
+    if args.wall:
+        selection_box = 'wall_of_flippers'
+    elif args.install:
+        selection_box = 'install_dependencies'
+    else:
+        selection_box = library.init()
+if selection_box == 'wall_of_flippers':
     try:
         import requests
         if cache.wof_data['system_type'] == "nt":
@@ -285,7 +282,6 @@ if selection_box in ("wall_of_flippers", "capture_the_flippers"):
         library.print_ascii_art("Error: Failed to import dependencies")
         print(f"[!] Wall of Flippers >> Failed to import dependencies >> {e}")
         sys.exit()
-if selection_box == 'wall_of_flippers':
     print("[!] Wall of Flippers >> Starting Wall of Flippers")
     if cache.wof_data['system_type'] == "posix" and not os.geteuid() == 0:
         library.print_ascii_art("I require root privileges to run!")
@@ -296,11 +292,14 @@ if selection_box == 'wall_of_flippers':
         if cache.wof_data['system_type'] == "posix":
             ble_adapters = [adapter for adapter in os.listdir('/sys/class/bluetooth/') if 'hci' in adapter]
             # make a selection of the bluetooth adapter
-            print("\n\n[#]\t[HCI DEVICE]")
-            print("-"*shutil.get_terminal_size().columns)
-            for adapter in ble_adapters:
-                print(f"{ble_adapters.index(adapter)}".ljust(8) + f"{adapter}".ljust(34))
-            DEVIC_HCI = input("[?] Wall of Flippers >> ")
+            if args.device == None:
+                print("\n\n[#]\t[HCI DEVICE]")
+                print("-"*shutil.get_terminal_size().columns)
+                for adapter in ble_adapters:
+                    print(f"{ble_adapters.index(adapter)}".ljust(8) + f"{adapter}".ljust(34))
+                DEVIC_HCI = input("[?] Wall of Flippers >> ")
+            else:
+                DEVIC_HCI = args.device
         else:
             DEVIC_HCI = 0
         wall_display.display("Thank you for using Wall of Flippers")
@@ -312,84 +311,5 @@ if selection_box == 'wall_of_flippers':
         library.print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
         print("\n[!] Wall of Flippers >> Exiting...")
         sys.exit()
-if selection_box == 'capture_the_flippers': # todo: needs to be updated for narrow mode compatibility
-    import utils.wof_capture as wall_capture # Wall of Flippers "capture" for important functions and classes :3
-    if cache.wof_data['system_type'] == "posix" and os.geteuid() != 0:
-        library.print_ascii_art("I require root privileges to run!")
-        print("[!] Wall of Flippers >> I require root privileges to run.\n\t      Reason: Dependency on bluepy library.")
-        sys.exit()  # Check if the user is root (Linux)
-    cache.table_ctf_compeition_confiugrations['is_enabled'] = True
-    URL = cache.table_ctf_compeition_confiugrations['ctf_link']
-    PASSWORD = cache.table_ctf_compeition_confiugrations['ctf_password']
-    KEY = cache.table_ctf_compeition_confiugrations['ctf_key']
-    USERNAME = cache.table_ctf_compeition_confiugrations['ctf_username']
-    dialogue_options = cache.wof_data['ctf_directory_options']
-    library.print_ascii_art("Please select an option to continue")
-    print("\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]")
-    print("-------------------------------------------------------------------------------------------------")
-    for option in dialogue_options:
-        print(f"{option['option'].ljust(8)}{option['action'].ljust(34)}{option['description']}")
-    user_input = input("[?] Wall of Flippers >> ")
-    for option in dialogue_options:
-        if user_input == option['option']:
-            if option['option'] == "1":
-                library.print_ascii_art("Please create a username so the host can create an account")
-                input_username = input("\n[?] Wall of Flippers >> Username: ")
-                headers = {"username": input_username, "password": PASSWORD}
-                try:
-                    http = requests.post(f"{URL}/create_account", headers=headers, timeout=5)
-                    if http.status_code == 400:  # Already exists
-                        response = http.json()
-                        library.print_ascii_art(f"Capture the Flippers >> Error: {response['error']}")
-                        print(f"\n[!] Capture the Flippers >> Error: {response['error']}")
-                    if http.status_code == 403:  # Password Failed
-                        response = http.json()
-                        library.print_ascii_art(f"Capture the Flippers >> Error: {response['error']} {response['message']}")
-                        print(f"\n[!] Capture the Flippers >> Error: {response['error']} {response['message']}")
-                    if http.status_code == 200:  # Success
-                        response = http.json()
-                        library.print_ascii_art(
-                            f"You can now participate in the hosted Capture the Flippers event: Key = {response['secret-key-created']}")
-                        print(f"\n[!] Capture the Flippers >> Your unique key is: {response['secret-key-created']}")
-                        print("[!] Capture the Flippers >> Please save this key as you will need it to login.")
-                except Exception as e:
-                    print(f"[!] Capture the Flippers >> Error: Failed to connect to the CTF Host >> Create Account Failed\nError: {e}")
-            if option['option'] == "2":
-                headers = {"username": USERNAME, "secret-key": KEY, "password": PASSWORD}
-                try:
-                    http = requests.post(f"{URL}/login", headers=headers)
-                    if http.status_code == 403:  # Authorization Failed
-                        response = http.json()
-                        library.print_ascii_art(f"Capture the Flippers >> Error: {response['error']} {response['message']}")
-                        print(f"\n[!] Capture the Flippers >> Error: {response['error']} {response['message']}")
-                    if http.status_code == 200:  # Success
-                        library.print_ascii_art("You have successfully connected to the host - Good luck!")
-                        time.sleep(0.4)
-                        ble_adapters = []
-                        if cache.wof_data['system_type'] == "posix":
-                            ble_adapters = [adapter for adapter in os.listdir('/sys/class/bluetooth/') if 'hci' in adapter]
-                            # make a selection of the bluetooth adapter
-                            print("\n\n[#]\t[HCI DEVICE]")
-                            print("-------------------------------------------------------------------------------------------------")
-                            for adapter in ble_adapters:
-                                print(f"{ble_adapters.index(adapter)}".ljust(8) + f"{adapter}".ljust(34))
-                            DEVIC_HCI = input("[?] Wall of Flippers >> ")
-                        else:
-                            DEVIC_HCI = 0
-                        try:
-                            while True:
-                                if not cache.wof_data['bool_isScanning']:
-                                    wall_capture.display("You have successfully connected to the host - Good luck!")
-                                    asyncio.run(detection_async(cache.wof_data['system_type'],DEVIC_HCI))
-                                time.sleep(1)  # Don't worry about this - Everything is fine... :P
-                        except KeyboardInterrupt:
-                            library.print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
-                            print("\n[!] Wall of Flippers >> Exiting...")
-                            sys.exit()
-                except Exception as e:
-                    print(f"[!] Capture the Flippers >> Error: Failed to connect to the CTF Host >> Login Failed\nError: {e}")
-
-if selection_box == 'advertise_bluetooth_packets':
-    ble_exploitation.init()
 if selection_box == 'install_dependencies':
     installer.init()

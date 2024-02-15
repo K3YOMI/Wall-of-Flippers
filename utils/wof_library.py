@@ -72,9 +72,6 @@ def unix2text(unix_timestamp):
         t_minutes = ">999"
     return f"{t_minutes}m {t_seconds}s"
 
-def is_in_ctf():
-    """Returns True if the user is in Capture The Flippers mode, otherwise returns False"""
-    return cache.table_ctf_compeition_confiugrations['is_enabled']
 
 def is_in_venv():
     """Returns True if the user is in a virtual environment, otherwise returns False"""
@@ -84,18 +81,14 @@ def print_ascii_art(custom_text:str = None):
     """Displays ASCII art in the terminal with the custom text if provided, otherwise displays a random quote"""
     os.system('cls' if os.name == 'nt' else 'clear')
     r_quote = random.choice(cache.wof_data['dolphin_thinking']) if not custom_text else custom_text
-
-    # selecting adequate ASCII art based on the terminal size and if the user is in Capture The Flippers mode
+    # selecting adequate ASCII art based on the terminal size and if the user is in narrow mode
     print("\033[0;94m")
     if cache.wof_data['narrow_mode']:
         print(cache.wof_data['ascii_small'])
         print(f"\"{r_quote}\"".center(50))
         print("\033[0m")
     else:
-        if is_in_ctf(): # If the user is in Capture The Flippers mode, then display the Capture The Flippers ASCII art
-            print(cache.wof_data['ascii_ctf_normal'].replace("[RANDOM_QUOTE]", r_quote))
-        else :
-            print(cache.wof_data['ascii_normal'].replace("[RANDOM_QUOTE]", r_quote))
+        print(cache.wof_data['ascii_normal'].replace("[RANDOM_QUOTE]", r_quote))
         print("\033[0m\n")
 
 def init():
@@ -138,7 +131,6 @@ def init():
 
 
     #Initial selection box for the user to select what they want to do.
-    #Capture The Flippers, Wall of Flippers, etc....
         
     if cache.wof_data['narrow_mode']:
         # dont display the description if the terminal is too narrow
