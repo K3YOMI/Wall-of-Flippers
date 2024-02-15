@@ -58,6 +58,7 @@
     	- [Arch Linux Install (SOON)](#arch_install)
     	- [PinePhone Install (SOON)](#pinephone_install)
   	    - [Windows Install](#windows_install)
+- [Headless Usage](#headless_usage)
 - [Issues and Fixes](#doc_issues_and_fixes)
 - [Common Errors and Fixes](#doc_c_and_e)
 - [Notice](#doc_statement)
@@ -81,19 +82,13 @@
 - [x] Auto-install functionality for Debian Linux and Windows
 - [x] Ability to identify potential Bluetooth advertisment attacks
 	- [x] Suspected Advertisment Attacks
-	- [x] ~iOS Crash Advertisment Attack~ (Patched as of the latest iOS update)
+	- [x] ~iOS Crash Advertisment Attack~
 	- [x] iOS Popup advertisment Attacks
 	- [x] Samsung and Andorid BLE Advertisment Attacks
 	- [x] Windows Swift Pair Advertisment Attacks
 	- [x] LoveSpouse Advertisment Attacks (Denial of Pleasure)
-- [ ] Capture the Flippers (CTF) - A simple CTF to collect Flipper Zero devices
-	- [x] Leaderboard
-	- [ ] Hosting Support (Local and Public)
-	- [ ] Ability to add custom challenges
-	- [x] Point System and Scoring
-	- [x] Username and Key System
-- [x] BLE Advertisments
-	- [x] Ability to send custom BLE advertisments
+- [ ] ~Capture the Flippers (CTF)~ - (Removed)
+- [ ] ~BLE Advertisments~ (Removed)
 - [x] BLE External / Internal Adapter Support
 	- [x] Linux Supported
  	- [ ] Windows Supported 	
@@ -299,6 +294,16 @@ https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-interna
 
 </details>
 
+# Headless Usage <a name = "headless_usage"></a>
+> Wall of Flippers now supports the use of a command only interface. Thanks to @cyberartemio for the recommendation. The commands below can be used to automate the use the Wall of Flippers. Whether that be for systemd or just basic general automation. (If you are running/using a virtual environment, make sure to source to be able to use WallofFlippers.py)
+
+	usage: WalloFlippers.py [-h] [-w] [i] [-d DEVICE]
+	options:
+	-h, --help					Help Message
+	-w, --wall 					Wall of Flippers
+	-i, --install				Install Dependencies
+	-d DEVICE, --device DEVICE	A bluetooth device (External/Internal)
+
 # Issues and Fixes <a name = "doc_issues_and_fixes"></a>
 > If you encounter any issues or bugs, please report them to us on our github page. We will try our best to fix them as soon as possible. If you would like to contribute to the project, please feel free to make a pull request. We will review it and merge it if it is a good addition to the project. We will be starting a discord server soon for support and development. Please keep an eye out for that. Thank you for your support and we hope you enjoy this project! <3
 
@@ -318,6 +323,8 @@ https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-interna
 
 # Notice <a name = "doc_statement"></a>
 > This project isn't the solution to combat the Flipper Zero device or any form of btle attacks. **THIS DOES NOT MITIGATE OR STOP ANYTHING**!!! However, the flipper zero device is a great tool for learning and understanding the inctracies of the cyberworld. Now for the detections for this project, we heavily rely on the advertisments that the Flipper Zero sends out for detection. While a user can do many things to avoid being detected by Wall of Flippers. (Depending if the Identifier method gets worked around) We highly advise using this project for an end all solution. While not all bluetooth attacks are sent from only the flipper, it's a good start to understand the world of bluetooth and the attacks that can be accomplished with simple devices. We hope you enjoy this project and we hope you take the time to learn and build off of this. We are always looking for contributions and new ideas. Thank you for looking at this project and we hope you enjoy it! -k3yomi and emilia0001
+
+
 
 
 
