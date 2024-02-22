@@ -83,7 +83,7 @@
 	- [x] Suspected Advertisment Attacks
 	- [x] ~iOS Crash Advertisment Attack~
 	- [x] iOS Popup advertisment Attacks
-	- [x] Samsung and Andorid BLE Advertisment Attacks
+	- [x] Samsung and Android BLE Advertisment Attacks
 	- [x] Windows Swift Pair Advertisment Attacks
 	- [x] LoveSpouse Advertisment Attacks (Denial of Pleasure)
 - [ ] ~Capture the Flippers (CTF)~ - (Removed)
