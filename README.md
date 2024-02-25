@@ -164,7 +164,6 @@
 	python3 -m pip install -r requirements.txt
 	# command method
 	python3 -m pip install bluepy
-	python3 -m pip install requests
  	python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez
 	################## PACKAGES ########################
 	deactivate
@@ -219,7 +218,6 @@
 	python3 -m pip install -r requirements.txt
 	# command method
 	python3 -m pip install bluepy
-	python3 -m pip install requests
  	python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez
 	################## PACKAGES ########################
 	deactivate
@@ -268,7 +266,6 @@
 > Once you have installed python, you can now install the required packages. To do this, we will need to run the following commands below.
 
 	pip install bleak
-	pip install requests
 
 
 > Alternatively, you can use the requirements.txt file to install the required packages. To do this, we will need to run the following commands below.
