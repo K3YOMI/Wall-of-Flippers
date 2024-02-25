@@ -80,8 +80,7 @@ def display(custom_text:str=None):
 
     # Display stats for POSIX systems (Unix-like operating systems)
     if cache.wof_data['system_type'] == "posix":
-        print(f"Latest Forbidden Advertisements..: {number_of_total_blacklisted_packets}")
-        print(f"Latest Advertisements............: {number_of_total_ble_packets}")
+        print(f"Latest Forbidden Advertisements..: {number_of_total_blacklisted_packets}\nLatest Advertisements............: {number_of_total_ble_packets}")
 
         if len(cache.wof_data['all_packets_found']) > 0: # if there are packets found
             packet_counts = {}
@@ -103,8 +102,7 @@ def display(custom_text:str=None):
                 if len(packet['PCK']) > cache.wof_data['max_byte_length']:
                     cache.wof_data['forbidden_packets_found'].append({"MAC": packet['MAC'], "PCK": packet['PCK'], "Type": f"SUSPICIOUS_PACKET (+{cache.wof_data['max_byte_length']} bytes)"})
             if cache.wof_data['narrow_mode']:
-                print(f"Most Common Advertisement........: {most_common_packet}")
-                print(f"({packet_counts[most_common_packet]} packets) ({len(addrs)} unique addresses)")
+                print(f"Most Common Advertisement........: {most_common_packet} ({packet_counts[most_common_packet]} packets) ({len(addrs)} unique addresses)")
             else:
                 print(f"Most Common Advertisement........: {most_common_packet} ({packet_counts[most_common_packet]} packets) ({len(addrs)} unique addresses)")
 
@@ -118,9 +116,8 @@ def display(custom_text:str=None):
         # Display forbidden packets
         if len(cache.wof_data['forbidden_packets_found']) > 0:
             t_packets = 0
-            print("\n\n[!] Wall of Flippers >> These packets may not be related to the Flipper Zero.\n")
-            print("[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
-            print("-----------------------------------------------------------------------------------------------")
+            print("\n\n[!] Wall of Flippers >> These packets may not be related to the Flipper Zero.\n[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
+            print(shutil.get_terminal_size().columns * "-")
             for key in cache.wof_data['forbidden_packets_found']:
                 if ble_spamming_macs.count(key['MAC']) == 0:
                     ble_spamming_macs.append(key['MAC'])
@@ -134,14 +131,12 @@ def display(custom_text:str=None):
         print("\n------------------  BLE Attack Detection is not available for Windows yet. ------------------")
 
     # Display flipper stats
-    print(f"\nTotal Online.....................: {number_of_flippers_online}")
-    print(f"Total Offline....................: {number_of_flippers_offline}")
+    print(f"\nTotal Online.....................: {number_of_flippers_online}\nTotal Offline....................: {number_of_flippers_offline}")
     if cache.wof_data['narrow_mode']:
         print("\n\nFlipper, Address, First Seen, Last Seen, RSSI, Detection")
     else:
         print(f"\n\n[FLIPPER]{''.ljust(t_allignment)}[ADDR]{''.ljust(t_allignment)}\t\t[FIRST]{''.ljust(t_allignment)}[LAST]\t{''.ljust(t_allignment)}[RSSI]{''.ljust(t_allignment)}\t[Detection]{''.ljust(t_allignment)}")
     print("-"*shutil.get_terminal_size().columns)
-
     # Display online flippers if there are any
     if number_of_flippers_online > 0:
         t_live = 0
@@ -173,9 +168,7 @@ def display(custom_text:str=None):
                     print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))
             if t_offline > cache.wof_data['max_offline']:
                 t_left_over = number_of_flippers_offline - cache.wof_data['max_offline']
-                print("\033[0m")
-                print(f"Too many <offline> devices to display. ({t_left_over} devices)")
-                print("\033[0m")
+                print(f"\033[0mToo many <offline> devices to display. ({t_left_over} devices)\033[0m")
                 break
         print("\033[0m") # reset the text style
 

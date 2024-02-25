@@ -238,18 +238,14 @@ cache.wof_data['system_type'] = os.name
 if cache.wof_data['system_type'] == "posix": # Linux Auto Install
     if not os.path.exists(".venv/bin/activate"): # Check if the user has setup their virtual environment
         library.print_ascii_art("Uh oh, it seems like you have not setup your virtual environment yet!")
-        print("[!] Wall of Flippers >> It seems like you have not setup your virtual environment yet.\n\t      Reason: .venv/bin/activate does not exist.")
-        print("[!] Wall of Flippers >> Would you like to setup your virtual environment now?")
+        print("[!] Wall of Flippers >> It seems like you have not setup your virtual environment yet.\n\t      Reason: .venv/bin/activate does not exist.\n[!] Wall of Flippers >> Would you like to setup your virtual environment now?")
         if input("[?] Wall of Flippers (Y/N) >> ").lower() == "y":
             os.system("python3 -m venv .venv")
             print("[!] Wall of Flippers >> Virtual environment setup successfully!")
             sys.exit()
     if library.is_in_venv() == False: # Check if the user is in their virtual environment
         library.print_ascii_art("Uh oh, it seems like you are not in your virtual environment!")
-        print("[!] Wall of Flippers >> It seems like you are not in your virtual environment. Please use the following command to enter your virtual environment.")
-        print("\tsource .venv/bin/activate")
-        print("\tor")
-        print("\tbash wof.sh")
+        print("[!] Wall of Flippers >> It seems like you are not in your virtual environment. Please use the following command to enter your virtual environment.\n\tsource .venv/bin/activate\n\tor\n\tbash wof.sh")
         sys.exit()
 
 
@@ -281,7 +277,6 @@ if selection_box == 'wall_of_flippers':
         library.print_ascii_art("Error: Failed to import dependencies")
         print(f"[!] Wall of Flippers >> Failed to import dependencies >> {e}")
         sys.exit()
-    print("[!] Wall of Flippers >> Starting Wall of Flippers")
     if cache.wof_data['system_type'] == "posix" and not os.geteuid() == 0:
         library.print_ascii_art("I require root privileges to run!")
         print("[!] Wall of Flippers >> I require root privileges to run.\n\t      Reason: Dependency on bluepy library.")
@@ -292,8 +287,7 @@ if selection_box == 'wall_of_flippers':
             ble_adapters = [adapter for adapter in os.listdir('/sys/class/bluetooth/') if 'hci' in adapter]
             # make a selection of the bluetooth adapter
             if args.device == None:
-                print("\n\n[#]\t[HCI DEVICE]")
-                print("-"*shutil.get_terminal_size().columns)
+                print("\n\n[#]\t[HCI DEVICE]\n" + "-" * shutil.get_terminal_size().columns)
                 for adapter in ble_adapters:
                     print(f"{ble_adapters.index(adapter)}".ljust(8) + f"{adapter}".ljust(34))
                 DEVIC_HCI = input("[?] Wall of Flippers >> ")

@@ -84,12 +84,9 @@ def print_ascii_art(custom_text:str = None):
     # selecting adequate ASCII art based on the terminal size and if the user is in narrow mode
     print("\033[0;94m")
     if cache.wof_data['narrow_mode']:
-        print(cache.wof_data['ascii_small'])
-        print(f"\"{r_quote}\"".center(50))
-        print("\033[0m")
+        print(f"{cache.wof_data['ascii_small']}\n\"{r_quote}\"\n".center(50) + "\033[0m")
     else:
-        print(cache.wof_data['ascii_normal'].replace("[RANDOM_QUOTE]", r_quote))
-        print("\033[0m\n")
+        print(f"{cache.wof_data['ascii_normal'].replace('[RANDOM_QUOTE]', r_quote)}\n\033[0m")
 
 def init():
     """Initial Selection Box (Upon starup)
@@ -129,13 +126,9 @@ def init():
         
     if cache.wof_data['narrow_mode']:
         # dont display the description if the terminal is too narrow
-        print("\n\n[#]\t[ACTION]")
-        print("-"*shutil.get_terminal_size().columns) # prints "-" (number of columns in the terminal) times
-        print("\n".join([f"{option['option'].ljust(8)}{option['action']}" for option in dialogue_options]))
+        print("\n\n[#]\t[ACTION]\n" + "-"*shutil.get_terminal_size().columns + "\n" + "\n".join([f"{option['option'].ljust(8)}{option['action']}" for option in dialogue_options]))
     else:
-        print("\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]")
-        print("-"*shutil.get_terminal_size().columns) # prints "-" (number of columns in the terminal) times
-        print("\n".join([f"{option['option'].ljust(8)}{option['action'].ljust(34)}{option['description']}" for option in dialogue_options]))
+        print("\n\n[#]\t[ACTION]\t\t\t  [DESCRIPTION]\n" + "-"*shutil.get_terminal_size().columns + "\n" + "\n".join([f"{option['option'].ljust(8)}{option['action'].ljust(34)}{option['description']}" for option in dialogue_options]))
 
 
     try:
