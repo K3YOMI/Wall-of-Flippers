@@ -92,7 +92,7 @@ def sort_packets(ble_packets:list):
             }
             if advertisement_mac not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']]:
                 cache.wof_data['found_flippers'].append(t_data)
-                cache.wof_data['live_flippers'].append(t_data["MAC"])
+                cache.wof_data['live_flippers'].append(t_data)
                 library.log(t_data)
                 any_flippers_discovered = True
                 flippers_discovered_list.append(t_data)
@@ -112,7 +112,7 @@ def sort_packets(ble_packets:list):
             }
             if advertisement_mac not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']]:
                 cache.wof_data['found_flippers'].append(t_data)
-                cache.wof_data['live_flippers'].append(t_data["MAC"])
+                cache.wof_data['live_flippers'].append(t_data)
                 library.log(t_data)
                 any_flippers_discovered = True
                 flippers_discovered_list.append(t_data)
@@ -132,7 +132,7 @@ def sort_packets(ble_packets:list):
             }
             if advertisement_mac not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']]:
                 cache.wof_data['found_flippers'].append(t_data)
-                cache.wof_data['live_flippers'].append(t_data["MAC"])
+                cache.wof_data['live_flippers'].append(t_data)
                 library.log(t_data)
                 any_flippers_discovered = True
                 flippers_discovered_list.append(t_data)
@@ -273,7 +273,6 @@ else:
         selection_box = library.init()
 if selection_box == 'wall_of_flippers':
     try:
-        import requests
         if cache.wof_data['system_type'] == "nt":
             from bleak import BleakScanner  # Windows BLE Package
         if cache.wof_data['system_type'] == "posix":

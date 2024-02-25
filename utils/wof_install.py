@@ -38,9 +38,9 @@ def init():
         library.print_ascii_art("Welcome to the easy install process! Please read carefully.")
 
         linux_cmd = ["python3 -m pip install distro"]
-        debian_dependencies_cmd = ['sudo apt-get install libglib2.0-dev', 'python3 -m pip install bluepy', 'python3 -m pip install requests', 'python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez']
-        fedora_dependencies_cmd = ['sudo dnf install glib2-devel', 'python3 -m pip install bluepy', 'python3 -m pip install requests', 'python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez']
-        windows_dependencies_cmd = ['pip install bleak', 'pip install requests']
+        debian_dependencies_cmd = ['sudo apt-get install libglib2.0-dev', 'python3 -m pip install bluepy', 'python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez']
+        fedora_dependencies_cmd = ['sudo dnf install glib2-devel', 'python3 -m pip install bluepy', 'python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez']
+        windows_dependencies_cmd = ['pip install bleak']
         system_type = os.name
 
         # Windows Auto Install

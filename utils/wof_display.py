@@ -31,6 +31,11 @@ import shutil
 import utils.wof_cache as cache # Wall of Flippers "cache" for important configurations and data :3
 import utils.wof_library as library # Wall of Flippers "library" for important functions and classes :3
 
+def isLive(mac, string): # Fixed same mac spoofing implementation (Duplicate MACs)
+    for key in cache.wof_data['live_flippers']:
+        if key['MAC'] == mac and key['Name'] == string:
+            return True
+    return False
 
 def display(custom_text:str=None):
     """displays the data in a nice format"""
@@ -44,10 +49,11 @@ def display(custom_text:str=None):
 
     # Categorize flipper data into live and offline flippers
     for key in cache.wof_data['base_flippers']:
-        key['Name'] = key['Name'].replace("Flipper ", "")[:15]
         if 'Type' not in key:  # Add a check for the 'Type' key
             key['Type'] = "Unknown"
-        if key['MAC'] in cache.wof_data['live_flippers']:
+        isOnline = isLive(key['MAC'], key['Name'])
+        key['Name'] = key['Name'].replace("Flipper ", "")[:15]
+        if isOnline: # Fixed same mac spoofing implementation (Duplicate MACs)
             cache.wof_data['display_live'].append(key)
         else:
             cache.wof_data['display_offline'].append(key)

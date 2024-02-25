@@ -105,7 +105,7 @@ def init():
     print_ascii_art("Please Select an option to continue")
 
     #Library dependencies check
-    #This checks the bleak, bluepy, requests, and bluetooth python packages and libraries
+    #This checks the bleak, bluepy, and bluetooth python packages and libraries
     #for Wall of Flippers to work properly.
 
     try:
@@ -118,11 +118,6 @@ def init():
         print("[X] Bluepy is installed")
     except ImportError:
         print("[ ] Bluepy is installed")
-    try:
-        import requests # HTTP Library
-        print("[X] Requests is installed")
-    except ImportError:
-        print("[ ] Requests is installed")
     try:
         import bluetooth # Bluetooth Library
         print("[X] Bluetooth is installed")
