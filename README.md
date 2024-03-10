@@ -151,6 +151,7 @@
 > Installing python3 is required to run wall of flippers and installs it's dependencies. The command below will install python3 for you. 
 
 	sudo apt-get install python3
+ 	sudo apt-get install python-dev
 
 ### Step 4 (Four): Setting up and Installing the required packages (Multiple Ways)
 > Installing the required packets and dependencies can be done in three ways with this install. You can choose to use the terminal with the commands below, use requirements.txt, or you use the easy install script within Wall of Flippers. The choice is up to you depending on your preference. To get started with the terminal way. We will use these commands below.
