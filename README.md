@@ -314,7 +314,8 @@ https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-interna
 
 	sudo service bluetooth restart
 
-
+### pybluez failing to properly install
+> If you're experiencing issues while installing `pybluez`, make sure to install the python-dev package. For further documentation (https://pybluez.readthedocs.io/en/latest/install.html)
 
 
 # Notice <a name = "doc_statement"></a>
