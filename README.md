@@ -60,6 +60,7 @@
 - [Headless Usage](#headless_usage)
 - [Issues and Fixes](#doc_issues_and_fixes)
 - [Common Errors and Fixes](#doc_c_and_e)
+- [Related Projects](#doc_related)
 - [Notice](#doc_statement)
 - [Credits and Packages](#doc_credits)
 
@@ -317,6 +318,12 @@ https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-interna
 
 ### pybluez failing to properly install
 > If you're experiencing issues while installing `pybluez`, make sure to install the python-dev package. For further documentation (https://pybluez.readthedocs.io/en/latest/install.html)
+
+
+# Related Projects <a name = "doc_related"></a>
+**Pwnagotchi plugin**\
+*Written by: cyberartemio*\
+https://github.com/cyberartemio/wof-pwnagotchi-plugin
 
 
 # Notice <a name = "doc_statement"></a>
