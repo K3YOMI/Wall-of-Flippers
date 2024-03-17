@@ -40,14 +40,19 @@
 	</div>
 </div>
 
-
 ---
+
+<h1>🐬 Table of Contents</h1>
+
 <div>
     <img align="right" height="490vh" src="https://github.com/K3YOMI/Wall-of-Flippers/assets/54733885/a146acc6-7786-4406-b818-36a48b29473d">
     <img align="right" height="490vh" src="https://upload.wikimedia.org/wikipedia/commons/3/3d/1_120_transparent.png">
+
 </div>
 
-# Table of Contents
+
+
+
 - [Introduction](#doc_introduction)
 - [Features](#doc_features)
 - [Videos](#doc_videos)
