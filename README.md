@@ -74,7 +74,7 @@
 
 
 # 🐬 Wall of Flippers? <a name = "doc_introduction"></a>
-> Wall of Flippers (WoF) is a python based project involving the discovery of the Flipper Zero device and the identification of potential Bluetooth advertisment attacks. Please keep in mind that these two types of detections may **not** be related. Also the code is quite messy and not up to my standards. Will be updating and cleaning up some code in the future. Feel free to submit pull requests if you would like to contribute!
+> Wall of Flippers (WoF) is a python based project involving the discovery of the Flipper Zero device and the identification of potential Bluetooth advertisement attacks. Please keep in mind that these two types of detections may **not** be related. Also the code is quite messy and not up to my standards. Will be updating and cleaning up some code in the future. Feel free to submit pull requests if you would like to contribute!
 
 
 
@@ -85,15 +85,15 @@
 - [X] Flipper "Identifier" Discovery ( Transparent, White, & Black Flipper Detection)
 - [x] Ability to archive past flipper zero devices discovered
 - [x] Auto-install functionality for Debian Linux and Windows
-- [x] Ability to identify potential Bluetooth advertisment attacks
-	- [x] Suspected Advertisment Attacks
-	- [x] ~iOS Crash Advertisment Attack~
-	- [x] iOS Popup advertisment Attacks
-	- [x] Samsung and Android BLE Advertisment Attacks
-	- [x] Windows Swift Pair Advertisment Attacks
-	- [x] LoveSpouse Advertisment Attacks (Denial of Pleasure)
+- [x] Ability to identify potential Bluetooth Advertisement attacks
+	- [x] Suspected Advertisement Attacks
+	- [x] ~iOS Crash Advertisement Attack~
+	- [x] iOS Popup Advertisement Attacks
+	- [x] Samsung and Android BLE Advertisement Attacks
+	- [x] Windows Swift Pair Advertisement Attacks
+	- [x] LoveSpouse Advertisement Attacks (Denial of Pleasure)
 - [ ] ~Capture the Flippers (CTF)~ - (Removed)
-- [ ] ~BLE Advertisments~ (Removed)
+- [ ] ~BLE Advertisements~ (Removed)
 - [x] BLE External / Internal Adapter Support
 	- [x] Linux Supported
  	- [ ] Windows Supported 	
@@ -126,7 +126,7 @@
 
 # 🐬 Installing and Requirements <a name = "doc_install"></a>
 
-> A few things are required to properly run Wall of Flippers. We Recommend a Raspberry Pi as it's compact and portable! It's also required to have a `chipset` or a USB `adapter` that supports Bluetooth Low Energy. At this current time, there is `limited` support for Wall of Flippers on Windows. Hence we recommend using a linux based operating system as that has been used for testing and development. For BLE advertising, I recommened an external USB adapter as the internal adapter on the Raspberry Pi is not powerful enough to send BLE advertisments long range.  
+> A few things are required to properly run Wall of Flippers. We Recommend a Raspberry Pi as it's compact and portable! It's also required to have a `chipset` or a USB `adapter` that supports Bluetooth Low Energy. At this current time, there is `limited` support for Wall of Flippers on Windows. Hence we recommend using a linux based operating system as that has been used for testing and development. For BLE advertising, I recommened an external USB adapter as the internal adapter on the Raspberry Pi is not powerful enough to send BLE advertisements long range.  
 
 
 
@@ -253,7 +253,7 @@
 <summary> Windows Install Guide </summary>
 
 ## Windows Install Guide <a name = "windows_install"></a>
-> Windows is currently not fully supported. However, you can still run Wall of Flippers on Windows. A few missing features like the ability to detect advertisment attacks and ability to send advertisments. However the detection of the Flipper Zero device is still supported. To get started, we will need to clone the repository and install the required packages. To do this, we need to run the following commands in the command prompt. However, if you do not have git installed, you can simply install it by downloading it from the official website.
+> Windows is currently not fully supported. However, you can still run Wall of Flippers on Windows. A few missing features like the ability to detect advertisement attacks and ability to send advertisements. However the detection of the Flipper Zero device is still supported. To get started, we will need to clone the repository and install the required packages. To do this, we need to run the following commands in the command prompt. However, if you do not have git installed, you can simply install it by downloading it from the official website.
 
 ### Step 1 (One): Git Clone and Git Installiation 
 
@@ -333,7 +333,7 @@ https://github.com/cyberartemio/wof-pwnagotchi-plugin
 
 
 # Notice <a name = "doc_statement"></a>
-> This project isn't the solution to combat the Flipper Zero device or any form of btle attacks. **THIS DOES NOT MITIGATE OR STOP ANYTHING**!!! However, the flipper zero device is a great tool for learning and understanding the inctracies of the cyberworld. Now for the detections for this project, we heavily rely on the advertisments that the Flipper Zero sends out for detection. While a user can do many things to avoid being detected by Wall of Flippers. (Depending if the Identifier method gets worked around) We highly advise using this project for an end all solution. While not all bluetooth attacks are sent from only the flipper, it's a good start to understand the world of bluetooth and the attacks that can be accomplished with simple devices. We hope you enjoy this project and we hope you take the time to learn and build off of this. We are always looking for contributions and new ideas. Thank you for looking at this project and we hope you enjoy it! -k3yomi and emilia0001
+> This project isn't the solution to combat the Flipper Zero device or any form of btle attacks. **THIS DOES NOT MITIGATE OR STOP ANYTHING**!!! However, the flipper zero device is a great tool for learning and understanding the inctracies of the cyberworld. Now for the detections for this project, we heavily rely on the advertisements that the Flipper Zero sends out for detection. While a user can do many things to avoid being detected by Wall of Flippers. (Depending if the Identifier method gets worked around) We highly advise using this project for an end all solution. While not all bluetooth attacks are sent from only the flipper, it's a good start to understand the world of bluetooth and the attacks that can be accomplished with simple devices. We hope you enjoy this project and we hope you take the time to learn and build off of this. We are always looking for contributions and new ideas. Thank you for looking at this project and we hope you enjoy it! -k3yomi and emilia0001
 
 
 
@@ -345,7 +345,7 @@ https://github.com/cyberartemio/wof-pwnagotchi-plugin
 # Contributors and Credits <a name = "doc_credits"></a>
 > This project was made possible by the following people. Please make sure to check them out and support them! <3
 
-| Project Maintainer | Project Contributor | AppleJuice BLE Advertisment Data |
+| Project Maintainer | Project Contributor | AppleJuice BLE Advertisement Data |
 | --- | --- | --- |
 | ![k3yomi](https://avatars.githubusercontent.com/u/54733885?s=55&v=4) | ![emilia0001](https://avatars.githubusercontent.com/u/37256246?s=55&v=4) | ![ecto-1a](https://avatars.githubusercontent.com/u/112792126?s=55&v=4)
 | k3yomi | emilia0001 | Ecto-1A |
