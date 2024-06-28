@@ -327,9 +327,15 @@ https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-interna
 
 
 # Related Projects <a name = "doc_related"></a>
+> A list of repositories that have integrated Wall of Flippers (WoF) into their projects.
+
 **Pwnagotchi plugin**\
 *Written by: cyberartemio*\
 https://github.com/cyberartemio/wof-pwnagotchi-plugin
+
+**Evil-M5Core2**\
+*Written by: 7h30th3r0n3*\
+https://github.com/7h30th3r0n3/Evil-M5Core2
 
 
 # Notice <a name = "doc_statement"></a>
