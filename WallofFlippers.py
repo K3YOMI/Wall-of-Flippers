@@ -77,7 +77,7 @@ def sort_packets(ble_packets:list):
                         "PCK": advertisement_packet,
                         "MAC": advertisement_mac,
                     })
-        if advertisement_name.lower().startswith("flipper"):
+        if advertisement_name.lower().startswith("flipper") and advertisement_uuid != "NOT FOUND":
             int_recorded = int(time.time())
             cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if advertisement_mac != flipper['MAC']]
             t_data = {
@@ -97,7 +97,7 @@ def sort_packets(ble_packets:list):
                 any_flippers_discovered = True
                 flippers_discovered_list.append(t_data)
                 latest_discovered_list = t_data
-        elif any(advertisement_mac.startswith(addr) for addr in ("80:e1:26", "80:e1:27")): # Credit to @elliotwutingfeng (https://github.com/elliotwutingfeng) for this fix
+        elif any(advertisement_mac.startswith(addr) for addr in ("80:e1:26", "80:e1:27")) and advertisement_uuid != "NOT FOUND": # Credit to @elliotwutingfeng (https://github.com/elliotwutingfeng) for this fix
             int_recorded = int(time.time())
             cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if advertisement_mac != flipper['MAC']]
             t_data = {
