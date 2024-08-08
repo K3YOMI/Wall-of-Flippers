@@ -228,7 +228,8 @@ async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 't
     except Exception as e:
         library.print_ascii_art("Error: Failed to scan for BLE devices")
         print("[!] Wall of Flippers >> Error: Failed to scan for BLE devices >> " + str(e))
-        sys.exit()
+        #sys.exit()
+        cache.wof_data['bool_isScanning'] = False
 
 # Start of the program
 library.check_json_file_exist()
