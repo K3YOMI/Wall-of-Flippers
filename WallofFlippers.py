@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
 #                               YAao,                            
-#                                 Y8888b,                        Created By: Kiyomi + Emilia (jbohack)
-#                               ,oA8888888b,                     Emilia: https://ko-fi.com/emilia0001
-#                         ,aaad8888888888888888bo,               Kiyomi: https://ko-fi.com/k3yomi
+#                                 Y8888b,                        Created By: Kiyomi
+#                               ,oA8888888b,                     Kiyomi: https://ko-fi.com/k3yomi
+#                         ,aaad8888888888888888bo,               
 #                      ,d888888888888888888888888888b,               
 #                    ,888888888888888888888888888888888b,            
 #                   d8888888888888888888888888888888888888,                   
