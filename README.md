@@ -21,6 +21,7 @@
 					</a>
 					<h3 align="center">k3yomi (Project Maintainer)</h3>
 				</td>
+				<!---
 				<td align="center">
 					<a href="https://ko-fi.com/emilia0001" style="text-decoration: none;">
 						<img align="center" src='https://avatars.githubusercontent.com/u/37256246?s=55&v=4' width="55" height="55", style="border-radius: 50%;">
@@ -28,6 +29,7 @@
 					</a>
 					<h3 align="center">Emilia (jbohack) (Contributor)</h3>
 				</td>
+				--->
 			</tr>
 		</table>
 		<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/K3YOMI/Wall-of-Flippers">
@@ -339,7 +341,7 @@ https://github.com/7h30th3r0n3/Evil-M5Core2
 
 
 # Notice <a name = "doc_statement"></a>
-> This project isn't the solution to combat the Flipper Zero device or any form of btle attacks. **THIS DOES NOT MITIGATE OR STOP ANYTHING**!!! However, the flipper zero device is a great tool for learning and understanding the inctracies of the cyberworld. Now for the detections for this project, we heavily rely on the advertisements that the Flipper Zero sends out for detection. While a user can do many things to avoid being detected by Wall of Flippers. (Depending if the Identifier method gets worked around) We highly advise using this project for an end all solution. While not all bluetooth attacks are sent from only the flipper, it's a good start to understand the world of bluetooth and the attacks that can be accomplished with simple devices. We hope you enjoy this project and we hope you take the time to learn and build off of this. We are always looking for contributions and new ideas. Thank you for looking at this project and we hope you enjoy it! -k3yomi and emilia0001
+> This project isn't the solution to combat the Flipper Zero device or any form of btle attacks. **THIS DOES NOT MITIGATE OR STOP ANYTHING**!!! However, the flipper zero device is a great tool for learning and understanding the inctracies of the cyberworld. Now for the detections for this project, we heavily rely on the advertisements that the Flipper Zero sends out for detection. While a user can do many things to avoid being detected by Wall of Flippers. (Depending if the Identifier method gets worked around) We highly advise using this project for an end all solution. While not all bluetooth attacks are sent from only the flipper, it's a good start to understand the world of bluetooth and the attacks that can be accomplished with simple devices. We hope you enjoy this project and we hope you take the time to learn and build off of this. We are always looking for contributions and new ideas. Thank you for looking at this project and we hope you enjoy it! -k3yomi
 
 
 
@@ -352,6 +354,6 @@ https://github.com/7h30th3r0n3/Evil-M5Core2
 > This project was made possible by the following people. Please make sure to check them out and support them! <3
 
 | Project Maintainer | Project Contributor | AppleJuice BLE Advertisement Data |
-| --- | --- | --- |
-| ![k3yomi](https://avatars.githubusercontent.com/u/54733885?s=55&v=4) | ![emilia0001](https://avatars.githubusercontent.com/u/37256246?s=55&v=4) | ![ecto-1a](https://avatars.githubusercontent.com/u/112792126?s=55&v=4)
-| k3yomi | emilia0001 | Ecto-1A |
+| --- | --- |
+| ![k3yomi](https://avatars.githubusercontent.com/u/54733885?s=55&v=4) | ![ecto-1a](https://avatars.githubusercontent.com/u/112792126?s=55&v=4)
+| k3yomi | Ecto-1A |
