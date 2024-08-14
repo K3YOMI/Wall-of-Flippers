@@ -47,7 +47,7 @@
 <h1>🐬 Table of Contents</h1>
 
 <div>
-    <img align="right" height="490vh" src="https://github.com/K3YOMI/Wall-of-Flippers/assets/54733885/a146acc6-7786-4406-b818-36a48b29473d">
+    <img align="right" height="490vh" src="https://github.com/user-attachments/assets/c4d3225b-15de-4983-8343-39adef19b0b2">
     <img align="right" height="490vh" src="https://upload.wikimedia.org/wikipedia/commons/3/3d/1_120_transparent.png">
 
 </div>
@@ -180,7 +180,7 @@
 
 	bash wof.sh
 	# You should get a prompt upon startup, about setting up a managed environment, feel free to let it do for you. Then once an environemnet is complete run `wof.sh` again
-	and press 4 for the auto install process.
+	and use the auto install option to install the dependencies.
 
 ### Step 5 (Five): Running Wall of Flippers
 > Once you have finished with all the dependencies and requirements, you can now run Wall of Flippers. To do this, you can run the following command below.
@@ -235,7 +235,7 @@
 
 	bash wof.sh
 	# You should get a prompt upon startup, about setting up a managed environment, feel free to let it do for you. Then once an environemnet is complete run `wof.sh` again
-	and press 4 for the auto install process.
+	and use the auto install option to install the dependencies.
 
 ### Step 5 (Five): Running Wall of Flippers
 > Once you have finished with all the dependencies and requirements, you can now run Wall of Flippers. To do this, you can run the following command below.
@@ -284,7 +284,7 @@
 > If you would like to use the easy install script, you can use the following commands below.
 
 	python WallofFlippers.py
-	# You should get a prompt upon startup, press 4 for the easy install and follow the directions and prompts for the install.
+	# You should get a prompt upon startup, use the auto install option to install the dependencies. for the easy install and follow the directions and prompts for the install.
 
 > If you are having issues with pip being not recognized as a command, please refer to this question below:\
 https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-internal-or-external-command
