@@ -322,7 +322,7 @@ if selection_box == 'wall_of_flippers':
         if (cache.wof_data['toggle_adveriser']) and (cache.wof_data['system_type'] == "posix"): # Start the BLE Advertiser if the user has it enabled
             sock = bluez.hci_open_dev(int(DEVIC_HCI))
             toggle_device(int(DEVIC_HCI), True)
-        wall_display.display(f"Thank you for using Wall of Flippers. Advertising is set to {cache.wof_data['toggle_adveriser']}")
+        wall_display.display(f"Thank you for using Wall of Flippers!")
         while True:
             time.sleep(1)
             if (cache.wof_data['toggle_adveriser']) and (cache.wof_data['system_type'] == "posix"): # Start the BLE Advertiser if the user has it enabled

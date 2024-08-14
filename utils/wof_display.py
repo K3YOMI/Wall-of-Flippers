@@ -132,7 +132,7 @@ def display(custom_text:str=None):
         print("\n------------------  BLE Attack Detection is not available for Windows yet. ------------------")
     # Display flipper stats
     print(f"Total Online.....................: {number_of_flippers_online}\nTotal Offline....................: {number_of_flippers_offline}")
-    print(f"Volume Collected.................: ${number_of_flippers_online + number_of_flippers_offline * cache.wof_data['flipper_volume_price']:,}")
+    print(f"Volume Collected.................: ${number_of_flippers_online + number_of_flippers_offline * cache.wof_data['flipper_volume_price']}")
     print(f"WoF Instances Nearby.............: {(cache.wof_data['nearbyWof'])}")
     if cache.wof_data['narrow_mode']:
         print("\n\nFlipper, Address, First Seen, Last Seen, RSSI, Detection")
