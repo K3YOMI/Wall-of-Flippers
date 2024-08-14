@@ -93,15 +93,15 @@
 	- [x] Samsung and Android BLE Advertisement Attacks
 	- [x] Windows Swift Pair Advertisement Attacks
 	- [x] LoveSpouse Advertisement Attacks (Denial of Pleasure)
-- [ ] ~Capture the Flippers (CTF)~ - (Removed)
-- [ ] ~BLE Advertisements~ (Removed)
+- [x] BLE Advertiser (Detect other WoF Instances)
+	- [x] Custom Name Implementation
+- [x] Badge Mode (Less fancy stats)
 - [x] BLE External / Internal Adapter Support
 	- [x] Linux Supported
  	- [ ] Windows Supported 	
 - [ ] Chromium Web Bluetooth Support
 - [ ] iOS/Android Detection (Pairing)
 - [ ] Animations (Looking for ascii artists)
-- [ ] ~Nuclear Fusion Implementation~
 
 
 # 🐬 Videos and Articles <a name = "doc_videos"></a>
@@ -307,6 +307,8 @@ https://stackoverflow.com/questions/23708898/pip-is-not-recognized-as-an-interna
 	-h, --help					Help Message
 	-w, --wall 					Wall of Flippers
 	-i, --install				Install Dependencies
+	-b, --badgemode				Toggle Badge Mode
+	-a, --advertise				Advertise WoF Exsistance (OFF=Default)
 	-d DEVICE, --device DEVICE	A bluetooth device (External/Internal)
 
 # Issues and Fixes <a name = "doc_issues_and_fixes"></a>

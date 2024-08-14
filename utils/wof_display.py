@@ -88,62 +88,56 @@ def display(custom_text:str=None):
 
     # Display stats for POSIX systems (Unix-like operating systems)
     if cache.wof_data['system_type'] == "posix":
-        print(f"Latest Forbidden Advertisements..: {number_of_total_blacklisted_packets}\nLatest Advertisements............: {number_of_total_ble_packets}")
-
-        if len(cache.wof_data['all_packets_found']) > 0: # if there are packets found
-            packet_counts = {}
-            addrs = []
-
-            # Count occurrences of each packet
-            for packet in cache.wof_data['all_packets_found']:
-                packet_value = packet['PCK']
-                packet_counts[packet_value] = packet_counts.get(packet_value, 0) + 1
-
-            # Find the most common packet
-            most_common_packet = max(packet_counts, key=packet_counts.get)
-
-            # Find unique addresses for the most common packet
-            for packet in cache.wof_data['all_packets_found']:
-                if packet['PCK'] == most_common_packet:
-                    if packet['MAC'] not in addrs:
-                        addrs.append(packet['MAC'])
-                if len(packet['PCK']) > cache.wof_data['max_byte_length']:
-                    cache.wof_data['forbidden_packets_found'].append({"MAC": packet['MAC'], "PCK": packet['PCK'], "Type": f"SUSPICIOUS_PACKET (+{cache.wof_data['max_byte_length']} bytes)"})
-            if cache.wof_data['narrow_mode']:
-                print(f"Most Common Advertisement........: {most_common_packet} ({packet_counts[most_common_packet]} packets) ({len(addrs)} unique addresses)")
-            else:
-                print(f"Most Common Advertisement........: {most_common_packet} ({packet_counts[most_common_packet]} packets) ({len(addrs)} unique addresses)")
-
-
-            # Add a summary if there are too many unique addresses
-            if len(addrs) > 5:
-                cache.wof_data['forbidden_packets_found'].append({"MAC": str(len(addrs)) + " Unique Addresses", "PCK": most_common_packet, "Type": "SUSPICIOUS_ADVERTISEMENT"})
-        else: # if there are no packets found
-            print("Most Common Advertisement........: None")
-
-        # Display forbidden packets
-        if len(cache.wof_data['forbidden_packets_found']) > 0:
-            t_packets = 0
-            print("\n\n[!] Wall of Flippers >> These packets may not be related to the Flipper Zero.\n[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
-            print(shutil.get_terminal_size().columns * "-")
-            for key in cache.wof_data['forbidden_packets_found']:
-                if ble_spamming_macs.count(key['MAC']) == 0:
-                    ble_spamming_macs.append(key['MAC'])
-                    t_packets += 1
-                    if t_packets <= cache.wof_data['max_ble_packets']: # Max amount of packets to display on the screen
-                        print(f"{key['Type'].ljust(t_allignment)}\t\t{key['MAC'].ljust(t_allignment)}  {key['PCK'].ljust(t_allignment)}")
-            if number_of_total_blacklisted_packets > cache.wof_data['ble_threshold']:
-                print(f"------------------ Bluetooth Low Energy (BLE) Attacks Detected ({number_of_total_blacklisted_packets} Advertisements) --------------------")
-
+        if not cache.wof_data['badge_mode']:
+            print(f"Latest Forbidden Advertisements..: {number_of_total_blacklisted_packets}\nLatest Advertisements............: {number_of_total_ble_packets}")
+            if len(cache.wof_data['all_packets_found']) > 0: # if there are packets found
+                packet_counts = {}
+                addrs = []
+                # Count occurrences of each packet
+                for packet in cache.wof_data['all_packets_found']:
+                    packet_value = packet['PCK']
+                    packet_counts[packet_value] = packet_counts.get(packet_value, 0) + 1
+                # Find the most common packet
+                most_common_packet = max(packet_counts, key=packet_counts.get)
+                # Find unique addresses for the most common packet
+                for packet in cache.wof_data['all_packets_found']:
+                    if packet['PCK'] == most_common_packet:
+                        if packet['MAC'] not in addrs:
+                            addrs.append(packet['MAC'])
+                    if len(packet['PCK']) > cache.wof_data['max_byte_length']:
+                        cache.wof_data['forbidden_packets_found'].append({"MAC": packet['MAC'], "PCK": packet['PCK'], "Type": f"SUSPICIOUS_PACKET (+{cache.wof_data['max_byte_length']} bytes)"})
+                if cache.wof_data['narrow_mode']:
+                    print(f"Most Common Advertisement........: {most_common_packet} ({packet_counts[most_common_packet]} packets) ({len(addrs)} unique addresses)")
+                else:
+                    print(f"Most Common Advertisement........: {most_common_packet} ({packet_counts[most_common_packet]} packets) ({len(addrs)} unique addresses)")
+                # Add a summary if there are too many unique addresses
+                if len(addrs) > 5:
+                    cache.wof_data['forbidden_packets_found'].append({"MAC": str(len(addrs)) + " Unique Addresses", "PCK": most_common_packet, "Type": "SUSPICIOUS_ADVERTISEMENT"})
+            else: # if there are no packets found
+                print("Most Common Advertisement........: None")
+            # Display forbidden packets
+            if len(cache.wof_data['forbidden_packets_found']) > 0:
+                t_packets = 0
+                print("\n\n[!] Wall of Flippers >> These packets may not be related to the Flipper Zero.\n[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
+                print(shutil.get_terminal_size().columns * "-")
+                for key in cache.wof_data['forbidden_packets_found']:
+                    if ble_spamming_macs.count(key['MAC']) == 0:
+                        ble_spamming_macs.append(key['MAC'])
+                        t_packets += 1
+                        if t_packets <= cache.wof_data['max_ble_packets']: # Max amount of packets to display on the screen
+                            print(f"{key['Type'].ljust(t_allignment)}\t\t{key['MAC'].ljust(t_allignment)}  {key['PCK'].ljust(t_allignment)}")
+                if number_of_total_blacklisted_packets > cache.wof_data['ble_threshold']:
+                    print(f"------------------ Bluetooth Low Energy (BLE) Attacks Detected ({number_of_total_blacklisted_packets} Advertisements) --------------------")
     else: # if the system is not POSIX (Windows)
         print("\n------------------  BLE Attack Detection is not available for Windows yet. ------------------")
-
     # Display flipper stats
-    print(f"\nTotal Online.....................: {number_of_flippers_online}\nTotal Offline....................: {number_of_flippers_offline}")
+    print(f"Total Online.....................: {number_of_flippers_online}\nTotal Offline....................: {number_of_flippers_offline}")
+    print(f"Volume Collected.................: ${number_of_flippers_online + number_of_flippers_offline * cache.wof_data['flipper_volume_price']:,}")
+    print(f"WoF Instances Nearby.............: {(cache.wof_data['nearbyWof'])}")
     if cache.wof_data['narrow_mode']:
         print("\n\nFlipper, Address, First Seen, Last Seen, RSSI, Detection")
     else:
-        print(f"\n\n[FLIPPER]{''.ljust(t_allignment)}[ADDR]{''.ljust(t_allignment)}\t\t[FIRST]{''.ljust(t_allignment)}[LAST]\t{''.ljust(t_allignment)}[RSSI]{''.ljust(t_allignment)}\t[Detection]{''.ljust(t_allignment)}")
+        print(f"\n\n[FLIPPER]{''.ljust(t_allignment)}[ADDR]{''.ljust(t_allignment)}\t\t[FIRST]{''.ljust(t_allignment)}[LAST]{''.ljust(t_allignment)}[RSSI]\t[DETECTION]")
     print("-"*shutil.get_terminal_size().columns)
     # Display online flippers if there are any
     if number_of_flippers_online > 0:
@@ -156,28 +150,29 @@ def display(custom_text:str=None):
                 if cache.wof_data['narrow_mode']: # if narrow mode, display in a more compact format
                     print(f"{key['Name']}, {key['MAC']}, {library.unix2text(key['unixFirstSeen'])}, {library.unix2text(key['unixLastSeen'])}, {str(key['RSSI'])}, {key['Detection Type']} ({key['Type']})")
                 else:
-                    print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))
+                    print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2text(key['unixLastSeen']).ljust(t_allignment)}     {str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))
             if t_live > cache.wof_data['max_online']:
                 t_left_over = number_of_flippers_online - cache.wof_data['max_online']
                 print(f"Too many <online> devices to display. ({t_left_over} devices)")
                 break
     # Display offline flippers if there are any
     if number_of_flippers_offline > 0:
-        t_offline = 0
-        print("\033[2m".center(shutil.get_terminal_size().columns))
-        cache.wof_data['display_offline'] = sorted(cache.wof_data['display_offline'], key=lambda k: k['unixLastSeen'], reverse=True)
-        for key in cache.wof_data['display_offline']:
-            t_offline += 1
-            if t_offline <= cache.wof_data['max_offline']:
-                key['RSSI'] = "Offline"
-                if cache.wof_data['narrow_mode']: # if narrow mode, display in a more compact format
-                    print(f"{key['Name']}, {key['MAC']}, {library.unix2text(key['unixFirstSeen'])}, {library.unix2text(key['unixLastSeen'])}, {str(key['RSSI'])}, {key['Detection Type']} ({key['Type']})")
-                else:
-                    print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2text(key['unixLastSeen']).ljust(t_allignment)}\t{str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))
-            if t_offline > cache.wof_data['max_offline']:
-                t_left_over = number_of_flippers_offline - cache.wof_data['max_offline']
-                print(f"\033[0mToo many <offline> devices to display. ({t_left_over} devices)\033[0m")
-                break
+        if not cache.wof_data['badge_mode']:
+            t_offline = 0
+            print("\033[2m".center(shutil.get_terminal_size().columns))
+            cache.wof_data['display_offline'] = sorted(cache.wof_data['display_offline'], key=lambda k: k['unixLastSeen'], reverse=True)
+            for key in cache.wof_data['display_offline']:
+                t_offline += 1
+                if t_offline <= cache.wof_data['max_offline']:
+                    key['RSSI'] = "Offline"
+                    if cache.wof_data['narrow_mode']: # if narrow mode, display in a more compact format
+                        print(f"{key['Name']}, {key['MAC']}, {library.unix2text(key['unixFirstSeen'])}, {library.unix2text(key['unixLastSeen'])}, {str(key['RSSI'])}, {key['Detection Type']} ({key['Type']})")
+                    else:
+                       print(f"{key['Name'].ljust(t_allignment)}\t{key['MAC'].ljust(t_allignment)}\t{library.unix2text(key['unixFirstSeen']).ljust(t_allignment)}\t{library.unix2text(key['unixLastSeen']).ljust(t_allignment)}     {str(key['RSSI']).ljust(t_allignment)}\t{key['Detection Type']} ({key['Type']})".ljust(t_allignment))
+                if t_offline > cache.wof_data['max_offline']:
+                    t_left_over = number_of_flippers_offline - cache.wof_data['max_offline']
+                    print(f"\033[0mToo many <offline> devices to display. ({t_left_over} devices)\033[0m")
+                    break
         print("\033[0m") # reset the text style
 
     # Display message if no devices detected
@@ -192,3 +187,4 @@ def display(custom_text:str=None):
     cache.wof_data['all_packets_found'] = []
     cache.wof_data['duplicated_packets'] = []
     cache.wof_data['base_flippers'] = []
+    cache.wof_data['nearbyWof'] = []

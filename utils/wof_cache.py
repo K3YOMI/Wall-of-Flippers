@@ -20,7 +20,7 @@
 #    | |/ |/ / /_/ / / /  / /_/ / __/  / __/ / / / /_/ / /_/ /  __/ /  (__  )
 #    |__/|__/\__,_/_/_/   \____/_/    /_/   /_/_/ .___/ .___/\___/_/  /____/
 #                                              /_/   /_/
-
+import random
 
 wof_data = {
     "found_flippers": [],
@@ -29,17 +29,24 @@ wof_data = {
     "display_live": [],
     "display_offline": [],
     "narrow_mode": False,
+    "badge_mode": False,
+    "toggle_adveriser": False,
     "narrow_mode_limit": 100, # Minimum number of columns for narrow mode to kick in
+    "flipper_volume_price": 169, # Flipper Zero Price
     "forbidden_packets_found": [],
     "all_packets_found": [],
+    "nearbyWof": [],
     "max_online": 15, # Max amount of online flippers to display on the screen
     "max_offline": 15, # Max amount of offline flippers to display on the screen
     "max_ble_packets": 10, # Max amount of BLE packets to display on the screen
     "min_byte_length": 3, # Minimum amount of bytes for a packet to be considered valid
     "max_byte_length": 450, # Maximum amount of bytes to be considred suspicious
-    "ble_threshold": 25, # Amount of forbidden packets to be considered a BLE attack
+    "ble_threshold": 25, # Amount of forbidden packets to be csonsidered a BLE attack
     "bool_isScanning": False, 
     "system_type": None,
+    "wof_advertiser": (0x1e, 0xff, 0x2c, 0x22, 0x22, 0x22, 0x22, 0x22),
+    "wof_advertiserName": f"WoF-{random.randint(1000, 9999)}",
+    "wof_advertiserRaw": "2c2222222222",
     "forbidden_packets": [ # Not complete and feel free to add more ("_" = Random Value)
         {"PCK": "4c000719010_2055_______________", "TYPE": "BLE_APPLE_DEVICE_POPUP_CLOSE"},
         {"PCK": "4c000f05c00____________________", "TYPE": "BLE_APPLE_ACTION_MODAL_LONG"},

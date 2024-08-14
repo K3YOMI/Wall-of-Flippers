@@ -52,6 +52,7 @@ def sort_packets(ble_packets:list):
     flippers_discovered_list = []
     latest_discovered_list = []
     forbidden_packets_list = cache.wof_data['forbidden_packets']
+    wof_advertiserRaw = cache.wof_data['wof_advertiserRaw']
 
     for advertisement in ble_packets:
         advertisement_name = advertisement['Name']
@@ -77,9 +78,13 @@ def sort_packets(ble_packets:list):
                         "PCK": advertisement_packet,
                         "MAC": advertisement_mac,
                     })
-        if advertisement_name.lower().startswith("flipper") and advertisement_uuid != "NOT FOUND":
+        for advertisement_packet in advertisement_packets:
+            if str(advertisement_packet).startswith(wof_advertiserRaw):
+                decodedAdvertiser = bytes.fromhex(advertisement_packet.replace(wof_advertiserRaw, "")).decode('utf-8').replace("\x00", "")
+                cache.wof_data['nearbyWof'].append(decodedAdvertiser)
+        if advertisement_name.lower().startswith("flipper") and advertisement_uuid != "NOT FOUND": # Name Detection
             int_recorded = int(time.time())
-            cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if advertisement_mac != flipper['MAC']]
+            cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if advertisement_mac != flipper['MAC']] 
             t_data = {
                 "Name": advertisement_name,
                 "RSSI": advertisement_rssi,
@@ -90,14 +95,14 @@ def sort_packets(ble_packets:list):
                 "Type": advertisement_type,
                 "UUID": advertisement_uuid,
             }
-            if advertisement_mac not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']]:
+            if advertisement_mac not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']] and advertisement_name not in [flipper['Name'] for flipper in cache.wof_data['found_flippers']]:
                 cache.wof_data['found_flippers'].append(t_data)
                 cache.wof_data['live_flippers'].append(t_data)
                 library.log(t_data)
                 any_flippers_discovered = True
                 flippers_discovered_list.append(t_data)
                 latest_discovered_list = t_data
-        elif any(advertisement_mac.startswith(addr) for addr in ("80:e1:26", "80:e1:27")) and advertisement_uuid != "NOT FOUND": # Credit to @elliotwutingfeng (https://github.com/elliotwutingfeng) for this fix
+        elif any(advertisement_mac.startswith(addr) for addr in ("80:e1:26", "80:e1:27")) and advertisement_uuid != "NOT FOUND": # Credit to @elliotwutingfeng (https://github.com/elliotwutingfeng) for this fix (MAC Address Detection)
             int_recorded = int(time.time())
             cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if advertisement_mac != flipper['MAC']]
             t_data = {
@@ -110,14 +115,14 @@ def sort_packets(ble_packets:list):
                 "Type": advertisement_type,
                 "UUID": advertisement_uuid,
             }
-            if advertisement_mac not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']]:
+            if advertisement_mac not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']] and advertisement_name not in [flipper['Name'] for flipper in cache.wof_data['found_flippers']]:
                 cache.wof_data['found_flippers'].append(t_data)
                 cache.wof_data['live_flippers'].append(t_data)
                 library.log(t_data)
                 any_flippers_discovered = True
                 flippers_discovered_list.append(t_data)
                 latest_discovered_list = t_data
-        elif advertisement_uuid != "NOT FOUND":
+        elif advertisement_uuid != "NOT FOUND": # UUID Detection
             int_recorded = int(time.time())
             cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if advertisement_mac != flipper['MAC']]
             t_data = {
@@ -130,7 +135,7 @@ def sort_packets(ble_packets:list):
                 "UUID": advertisement_uuid,
                 "Type": advertisement_type
             }
-            if advertisement_mac not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']]:
+            if advertisement_mac not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']] and advertisement_name not in [flipper['Name'] for flipper in cache.wof_data['found_flippers']]:
                 cache.wof_data['found_flippers'].append(t_data)
                 cache.wof_data['live_flippers'].append(t_data)
                 library.log(t_data)
@@ -162,13 +167,16 @@ async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 't
                     device_uuid = "NOT FOUND"
                     device_type = "NOT FOUND"
                     if (advertisement_uuid == "['00003082-0000-1000-8000-00805f9b34fb']"): # White Flipper
-                        device_type = "White"
+                        device_type = "W"
                         device_uuid = advertisement_uuid
                     if (advertisement_uuid == "['00003081-0000-1000-8000-00805f9b34fb']"): # Black Flipper
-                        device_type = "Black"
+                        device_type = "B"
                         device_uuid = advertisement_uuid
                     if (advertisement_uuid == "['00003083-0000-1000-8000-00805f9b34fb']"): # Transparent Flipper
-                        device_uuid = "Transparent"
+                        device_uuid = "T"
+                        device_uuid = advertisement_uuid
+                    if (advertisement_uuid == "['00001812-0000-1000-8000-00805f9b34fb']"): # BT Controller
+                        device_uuid = "BT"
                         device_uuid = advertisement_uuid
                     ble_packets.append({
                         "Name": advertisement_name,
@@ -202,13 +210,16 @@ async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 't
                             device_manufacturer = i_data['Value']
                         if i_data['Value'] == "00003082-0000-1000-8000-00805f9b34fb": # White Flipper
                             device_uuid = i_data['Value']
-                            device_type = "White"
+                            device_type = "W"
                         if i_data['Value'] == "00003081-0000-1000-8000-00805f9b34fb": # Black Flipper
                             device_uuid = i_data['Value']
-                            device_type = "Black"
+                            device_type = "B"
                         if i_data['Value'] == "00003083-0000-1000-8000-00805f9b34fb": # Transparent Flipper
                             device_uuid = i_data['Value']
-                            device_type = "Transparent"
+                            device_type = "T"
+                        if i_data['Value'] == "00001812-0000-1000-8000-00805f9b34fb": # BT Controller
+                            device_uuid = i_data['Value']
+                            device_type = "BT"
                         device_packets.append(i_data['Value'])
                     ble_packets.append({
                         "Name": device_name,
@@ -254,6 +265,9 @@ parser = argparse.ArgumentParser(description='Wall of Flippers', prog='WallofFli
 parser.add_argument('-w', '--wall', action='store_true', help='Wall of Flippers')
 parser.add_argument('-i', '--install', action='store_true', help='Install Wall of Flippers')
 parser.add_argument('-d', '--device', action='store', help='Select a bluetooth device')
+parser.add_argument('-b', '--badgemode', action='store_true', help='Toggle Badge Mode')
+parser.add_argument('-a', '--advertise', action='store_true', help='Advertise WoF Exsistance (OFF=Default)')
+
 
 args = parser.parse_args()
 
@@ -262,6 +276,10 @@ args = parser.parse_args()
 if args == None:
     selection_box = library.init()
 else:
+    if args.badgemode:
+        cache.wof_data['badge_mode'] = not cache.wof_data['badge_mode']
+    if args.advertise:
+        cache.wof_data['toggle_adveriser'] = not cache.wof_data['toggle_adveriser'] 
     if args.wall:
         selection_box = 'wall_of_flippers'
     elif args.install:
@@ -274,6 +292,9 @@ if selection_box == 'wall_of_flippers':
             from bleak import BleakScanner  # Windows BLE Package
         if cache.wof_data['system_type'] == "posix":
             from bluepy.btle import Scanner 
+            if (cache.wof_data['toggle_adveriser']):
+                from utils.bluetooth_utils import toggle_device, start_le_advertising, stop_le_advertising
+                import bluetooth._bluetooth as bluez
     except ImportError as e:
         library.print_ascii_art("Error: Failed to import dependencies")
         print(f"[!] Wall of Flippers >> Failed to import dependencies >> {e}")
@@ -296,11 +317,30 @@ if selection_box == 'wall_of_flippers':
                 DEVIC_HCI = args.device
         else:
             DEVIC_HCI = 0
-        wall_display.display("Thank you for using Wall of Flippers")
+        if (DEVIC_HCI == ""): # If the user does not select a device, default to 0
+            DEVIC_HCI = 0
+        if (cache.wof_data['toggle_adveriser']) and (cache.wof_data['system_type'] == "posix"): # Start the BLE Advertiser if the user has it enabled
+            sock = bluez.hci_open_dev(int(DEVIC_HCI))
+            toggle_device(int(DEVIC_HCI), True)
+        wall_display.display(f"Thank you for using Wall of Flippers. Advertising is set to {cache.wof_data['toggle_adveriser']}")
         while True:
+            time.sleep(1)
+            if (cache.wof_data['toggle_adveriser']) and (cache.wof_data['system_type'] == "posix"): # Start the BLE Advertiser if the user has it enabled
+                for i in range (0, 10):
+                    advertisementData = cache.wof_data['wof_advertiser']
+                    advertismentName = tuple(cache.wof_data['wof_advertiserName'] .encode()) # Convert the advertiser name to bytes
+                    advertisementData += advertismentName
+                    advertisementData += (0x00,) * (31 - len(advertisementData)) # Padding
+                    if len(advertisementData) > 31:
+                        print("[!] Wall of Flippers >> Error: Advertisement data is too long; change the wof_advertiserName in utils/wof_cache.py")
+                        sys.exit()
+                    to_hex = lambda data: ''.join(f"{i:02x}" for i in advertisementData)
+                    data_hex = to_hex(advertisementData)
+                    start_le_advertising(sock, adv_type=0x03, data=advertisementData)
+                    time.sleep(0.1)
+                    stop_le_advertising(sock)
             if not cache.wof_data['bool_isScanning']:
                 asyncio.run(detection_async(cache.wof_data['system_type'],DEVIC_HCI))
-            time.sleep(1)
     except KeyboardInterrupt:
         library.print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
         print("\n[!] Wall of Flippers >> Exiting...")

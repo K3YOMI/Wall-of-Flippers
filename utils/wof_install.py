@@ -37,6 +37,7 @@ def init():
         library.print_ascii_art("Welcome to the easy install process! Please read carefully.")
 
         linux_cmd = ["python3 -m pip install distro"]
+        arch_cmd = ["python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez", "python3 -m pip install bluepy"]
         debian_dependencies_cmd = ['sudo apt-get install libglib2.0-dev', 'python3 -m pip install bluepy', 'python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez']
         fedora_dependencies_cmd = ['sudo dnf install glib2-devel', 'python3 -m pip install bluepy', 'python3 -m pip install git+https://github.com/pybluez/pybluez.git#egg=pybluez']
         windows_dependencies_cmd = ['pip install bleak']
@@ -90,7 +91,16 @@ def init():
                         os.system(cmd)
                     library.print_ascii_art("We have successfully installed the dependencies!") # todo: add a check to see if the dependencies were really installed successfully
                     print("[!] Wall of Flippers >> Dependencies installed successfully!")
-            
+            if "arch" in distribution_info[0]:
+                library.print_ascii_art("Hmm, I've detected that you are running under Arch!")
+                print(f"[!] Wall of Flippers >> Would it be okay if we ran these commands on your system?\n{json.dumps(arch_cmd, indent=4)}")
+                user_input_ok = input("[?] Wall of Flippers (Y/N) >> ")
+                if user_input_ok.lower() == "y":
+                    print("[!] Wall of Flippers >> Installing dependencies...")
+                    for cmd in arch_cmd:
+                        os.system(cmd)
+                    library.print_ascii_art("We have successfully installed the dependencies!")
+                    print("[!] Wall of Flippers >> Dependencies installed successfully!")
             # Debian Auto Install
             elif "debian" in distribution_info[0]:
                 library.print_ascii_art("Hmm, I've detected that you are running under Debian!")

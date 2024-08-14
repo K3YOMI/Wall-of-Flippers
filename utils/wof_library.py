@@ -68,7 +68,14 @@ def unix2text(unix_timestamp):
     t_different = current_timestamp - unix_timestamp
     t_minutes, t_seconds = divmod(t_different, 60)
     if t_minutes > 1000:
-        t_minutes = ">999"
+        t_hours, t_minutes = divmod(t_minutes, 60)
+        if (t_hours > 24):
+            t_days, t_hours = divmod(t_hours, 24)
+            if (t_days > 1000):
+                t_years, t_days = divmod(t_days, 365)
+                return f"1Year+"
+            return f"{t_days}d {t_hours}h"
+        return f"{t_hours}h {t_minutes}m"
     return f"{t_minutes}m {t_seconds}s"
 
 
@@ -85,7 +92,14 @@ def print_ascii_art(custom_text:str = None):
     if cache.wof_data['narrow_mode']:
         print(f"{cache.wof_data['ascii_small']}\n\"{r_quote}\"\n".center(50) + "\033[0m")
     else:
-        print(f"{cache.wof_data['ascii_normal'].replace('[RANDOM_QUOTE]', r_quote)}\n\033[0m")
+        ascii_art = cache.wof_data['ascii_normal']
+
+        if cache.wof_data['badge_mode']:
+           # shorten ascii art by 10 lines
+            ascii_art = "\n".join(ascii_art.split("\n")[:-7])
+            print(f"{ascii_art.replace('[RANDOM_QUOTE]', r_quote)}\n\033[0m")
+        else:
+            print(f"{ascii_art.replace('[RANDOM_QUOTE]', r_quote)}\n\033[0m")
 
 def init():
     """Initial Selection Box (Upon starup)
