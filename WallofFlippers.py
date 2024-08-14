@@ -175,9 +175,9 @@ async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 't
                     if (advertisement_uuid == "['00003083-0000-1000-8000-00805f9b34fb']"): # Transparent Flipper
                         device_uuid = "T"
                         device_uuid = advertisement_uuid
-                    if (advertisement_uuid == "['00001812-0000-1000-8000-00805f9b34fb']"): # BT Controller
-                        device_uuid = "BT"
-                        device_uuid = advertisement_uuid
+                    #if (advertisement_uuid == "['00001812-0000-1000-8000-00805f9b34fb']"): # BT Controller
+                    #    device_uuid = "BT"
+                    #    device_uuid = advertisement_uuid
                     ble_packets.append({
                         "Name": advertisement_name,
                         "MAC": advertisement_addr,
@@ -217,9 +217,9 @@ async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 't
                         if i_data['Value'] == "00003083-0000-1000-8000-00805f9b34fb": # Transparent Flipper
                             device_uuid = i_data['Value']
                             device_type = "T"
-                        if i_data['Value'] == "00001812-0000-1000-8000-00805f9b34fb": # BT Controller
-                            device_uuid = i_data['Value']
-                            device_type = "BT"
+                        #if i_data['Value'] == "00001812-0000-1000-8000-00805f9b34fb": # BT Controller
+                        #    device_uuid = i_data['Value']
+                        #    device_type = "BT"
                         device_packets.append(i_data['Value'])
                     ble_packets.append({
                         "Name": device_name,
