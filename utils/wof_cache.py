@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
 #                               YAao,                            
-#                                 Y8888b,                        Created By: Kiyomi
+#                                 Y8888b,                        Created By: Kiyomi & Emilia (jbohack)
 #                               ,oA8888888b,                     Kiyomi: https://ko-fi.com/k3yomi
-#                         ,aaad8888888888888888bo,               
+#                         ,aaad8888888888888888bo,               Emilia: https://ko-fi.com/emilia0001
 #                      ,d888888888888888888888888888b,               
 #                    ,888888888888888888888888888888888b,            
 #                   d8888888888888888888888888888888888888,                   
@@ -67,11 +67,8 @@ wof_data = {
         "Don't be a skid!!!!!!",
         "discord.gg/squachtopia",
         "Hack the planet!",
-        "Apple finally fixed their BLE crashsploit",
-        "I just noticed how intimidating this ascii art is...",
-        "Wall of Flippers - something something something",
 	    "Now headless with commands, WallofFlippers.py -h",
-        "We removed a lot of features because - it's useless now!",
+        "Nyaaaaaa"
     ],
     "init_directory_options": [ # Main Menu Options
         {"option": "1", "action": "Wall of Flippers", "description": "Wall of Flippers (Default)", "return": "wall_of_flippers"},

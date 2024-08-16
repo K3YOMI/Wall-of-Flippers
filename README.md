@@ -21,15 +21,13 @@
 					</a>
 					<h3 align="center">k3yomi (Project Maintainer)</h3>
 				</td>
-				<!---
 				<td align="center">
 					<a href="https://ko-fi.com/emilia0001" style="text-decoration: none;">
 						<img align="center" src='https://avatars.githubusercontent.com/u/37256246?s=55&v=4' width="55" height="55", style="border-radius: 50%;">
 						<img align="center" src='https://ko-fi.com/img/githubbutton_sm.svg'>
 					</a>
-					<h3 align="center">Emilia (jbohack) (Contributor)</h3>
+					<h3 align="center">Emilia (Contributor)</h3>
 				</td>
-				--->
 			</tr>
 		</table>
 		<img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/K3YOMI/Wall-of-Flippers">
