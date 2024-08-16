@@ -5,7 +5,6 @@
 
 
 
-
 <h1 style='font-size: 65px'; align="center">Wall of Flippers</h1>
 
 <div align="center">
@@ -23,10 +22,10 @@
 				</td>
 				<td align="center">
 					<a href="https://ko-fi.com/emilia0001" style="text-decoration: none;">
-						<img align="center" src='https://avatars.githubusercontent.com/u/37256246?s=55&v=4' width="55" height="55", style="border-radius: 50%;">
+						<img align="center" src='https://github.com/user-attachments/assets/f5f0ea5e-0a72-484b-a4b5-300cecafd14d' width="55" height="55", style="border-radius: 50%;">
 						<img align="center" src='https://ko-fi.com/img/githubbutton_sm.svg'>
 					</a>
-					<h3 align="center">Emilia (Contributor)</h3>
+					<h3 align="center">Emilia (Head Contributor)</h3>
 				</td>
 			</tr>
 		</table>
