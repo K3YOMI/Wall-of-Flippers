@@ -42,6 +42,7 @@ import utils.wof_cache as cache # for important configurations and data :3
 import utils.wof_library as library # for important functions :3
 import utils.wof_display as wall_display # for important functions :3
 import utils.wof_install as installer # for important functions and classes :3
+import utils.wof_blechat as blechat # for important functions and classes :3
 
 Scanner = None # This is the scanner object for the bluepy package (Default = None)
 
@@ -304,21 +305,7 @@ if selection_box == 'wall_of_flippers':
         print("[!] Wall of Flippers >> I require root privileges to run.\n\t      Reason: Dependency on bluepy library.")
         sys.exit()
     try:
-        ble_adapters = []
-        if cache.wof_data['system_type'] == "posix":
-            ble_adapters = [adapter for adapter in os.listdir('/sys/class/bluetooth/') if 'hci' in adapter]
-            # make a selection of the bluetooth adapter
-            if args.device == None:
-                print("\n\n[#]\t[HCI DEVICE]\n" + "-" * shutil.get_terminal_size().columns)
-                for adapter in ble_adapters:
-                    print(f"{ble_adapters.index(adapter)}".ljust(8) + f"{adapter}".ljust(34))
-                DEVIC_HCI = input("[?] Wall of Flippers >> ")
-            else:
-                DEVIC_HCI = args.device
-        else:
-            DEVIC_HCI = 0
-        if (DEVIC_HCI == ""): # If the user does not select a device, default to 0
-            DEVIC_HCI = 0
+        DEVIC_HCI = library.adapter2Selection(args.device)
         if (cache.wof_data['toggle_adveriser']) and (cache.wof_data['system_type'] == "posix"): # Start the BLE Advertiser if the user has it enabled
             sock = bluez.hci_open_dev(int(DEVIC_HCI))
             toggle_device(int(DEVIC_HCI), True)
@@ -340,10 +327,20 @@ if selection_box == 'wall_of_flippers':
                     time.sleep(0.1)
                     stop_le_advertising(sock)
             if not cache.wof_data['bool_isScanning']:
-                asyncio.run(detection_async(cache.wof_data['system_type'],DEVIC_HCI))
+                asyncio.run(detection_async(cache.wof_data['system_type'], DEVIC_HCI))
     except KeyboardInterrupt:
         library.print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
         print("\n[!] Wall of Flippers >> Exiting...")
         sys.exit()
 if selection_box == 'install_dependencies':
     installer.init()
+if selection_box == 'wall_of_talking':
+    if cache.wof_data['system_type'] == "posix" and not os.geteuid() == 0:
+        library.print_ascii_art("I require root privileges to run!")
+        print("[!] Wall of Flippers >> I require root privileges to run.\n\t      Reason: Dependency on bluepy library.")
+        sys.exit()
+    if cache.wof_data['system_type'] != "posix":
+        library.print_ascii_art("Error: BLE Chat is not supported on this OS")
+        print("[!] Wall of Flippers >> Error: BLE Chat is not supported on this OS")
+        sys.exit()
+    blechat.init()

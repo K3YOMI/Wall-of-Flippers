@@ -28,6 +28,7 @@ wof_data = {
     "live_flippers": [],
     "display_live": [],
     "display_offline": [],
+    "cachedMessages": [],
     "narrow_mode": False,
     "badge_mode": False,
     "toggle_adveriser": False,
@@ -44,9 +45,18 @@ wof_data = {
     "ble_threshold": 25, # Amount of forbidden packets to be csonsidered a BLE attack
     "bool_isScanning": False, 
     "system_type": None,
+
+    # Advertiser (Ignore this cute thing)
     "wof_advertiser": (0x1e, 0xff, 0x2c, 0x22, 0x22, 0x22, 0x22, 0x22),
     "wof_advertiserName": f"WoF-{random.randint(1000, 9999)}",
     "wof_advertiserRaw": "2c2222222222",
+
+
+    # BLE Chat (Because im bored)
+    "wof_blechatAdvertiser": (0x1e, 0xff, 0x2c, 0x22, 0x22, 0x24, 0x24, 0x24),
+    "wof_bleAdvertiserRaw": "2c2222242424",
+    "wof_displayName": "WoF-Guest",
+
     "forbidden_packets": [ # Not complete and feel free to add more ("_" = Random Value)
         {"PCK": "4c000719010_2055_______________", "TYPE": "BLE_APPLE_DEVICE_POPUP_CLOSE"},
         {"PCK": "4c000f05c00____________________", "TYPE": "BLE_APPLE_ACTION_MODAL_LONG"},
@@ -72,8 +82,9 @@ wof_data = {
     ],
     "init_directory_options": [ # Main Menu Options
         {"option": "1", "action": "Wall of Flippers", "description": "Wall of Flippers (Default)", "return": "wall_of_flippers"},
-        {"option": "2", "action": "Auto-Install", "description": "Install dependencies for Wall of Flippers (Windows / (APT) Debian Linux)", "return": "install_dependencies"},
-        {"option": "3", "action": "Exit", "description": "....", "return": "exit"},
+        {"option": "2", "action": "BLE Chat", "description": "Chat with others using BLE", "return": "wall_of_talking"},
+        {"option": "3", "action": "Auto-Install", "description": "Install dependencies for Wall of Flippers (Windows / (APT) Debian Linux)", "return": "install_dependencies"},
+        {"option": "4", "action": "Exit", "description": "....", "return": "exit"},
     ],
     "ascii_normal": open('./ascii/normal.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),
     "ascii_small": open('./ascii/small.txt', 'r', encoding="utf-8").read().encode("ascii", "ignore").decode("ascii"),

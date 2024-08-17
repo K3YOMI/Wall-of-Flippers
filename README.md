@@ -92,6 +92,7 @@
 	- [x] LoveSpouse Advertisement Attacks (Denial of Pleasure)
 - [x] BLE Advertiser (Detect other WoF Instances)
 	- [x] Custom Name Implementation
+	- [x] BLE Chat
 - [x] Badge Mode (Less fancy stats)
 - [x] BLE External / Internal Adapter Support
 	- [x] Linux Supported

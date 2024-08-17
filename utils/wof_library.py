@@ -79,6 +79,24 @@ def unix2text(unix_timestamp):
     return f"{t_minutes}m {t_seconds}s"
 
 
+def adapter2Selection(deviceArgs=None):
+    ble_adapters = []
+    if cache.wof_data['system_type'] == "posix":
+        ble_adapters = [adapter for adapter in os.listdir('/sys/class/bluetooth/') if 'hci' in adapter]
+        # make a selection of the bluetooth adapter
+        if deviceArgs == None:
+            print("\n\n[#]\t[HCI DEVICE]\n" + "-" * shutil.get_terminal_size().columns)
+            for adapter in ble_adapters:
+                print(f"{ble_adapters.index(adapter)}".ljust(8) + f"{adapter}".ljust(34))
+            DEVIC_HCI = input("[?] Wall of Flippers >> ")
+        else:
+            DEVIC_HCI = deviceArgs
+    else:
+        DEVIC_HCI = 0
+    if (DEVIC_HCI == ""): # If the user does not select a device, default to 0
+        DEVIC_HCI = 0
+    return DEVIC_HCI
+
 def is_in_venv():
     """Returns True if the user is in a virtual environment, otherwise returns False"""
     return sys.prefix != sys.base_prefix
