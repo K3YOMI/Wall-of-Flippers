@@ -132,18 +132,24 @@ def flipper2Validation(data:list, os:str): # Validates incoming flippers/ble pac
     device_mac = "UNK"
     device_rssi = data.rssi
     isFlipper = False
+    keyFound = False
     detectionType = "Unknown"
-    """ Validate the flippers """
     if os == "nt":
         device_mac = str(data.address.lower())
         device_name = str(data.name)
         advertisment_data = data.metadata.get('manufacturer_data')
-        advertisement_uuid = str(data.metadata.get('uuids'))
+        advertisement_uuid = str(data.metadata.get('uuids')).replace("['", "").replace("']", "")
         for key, value in cache.wof_data['flipper_types'].items():
             if key in advertisement_uuid:
                 device_uuid = advertisement_uuid
                 device_color = value
-        device_packets = [str(advertisment_data)]
+                device_packets = ["06", device_name, device_uuid, "00"]
+                keyFound = True
+        if not keyFound:
+            if advertisement_uuid.startswith("0000308") and advertisement_uuid.endswith("0000-1000-8000-00805f9b34fb"):
+                device_uuid = advertisement_uuid
+                device_color = "SPF"
+                device_packets = ["06", device_name, device_uuid, "00"]
     if os == "posix":
         device_mac = data.addr.lower()
         scan_list = data.getScanData()
@@ -158,17 +164,23 @@ def flipper2Validation(data:list, os:str): # Validates incoming flippers/ble pac
                 if i_data['Value'] == key:
                     device_uuid = i_data['Value']
                     device_color = value
+                    keyFound = True
+            if not keyFound:
+                if i_data['Value'].startswith("0000308") and i_data['Value'].endswith("0000-1000-8000-00805f9b34fb"):
+                    device_uuid = i_data['Value']
+                    device_color = "SPF"
             device_packets.append(i_data['Value'])
-    if device_uuid != "UNK":
-        if device_name.lower().startswith("flipper"):
-            isFlipper = True
-            detectionType = "Name"
-        elif device_mac.startswith(("80:e1:26", "80:e1:27")):
-            detectionType = "Address"
-            isFlipper = True
-        else:
-            detectionType = "Identifier"
-            isFlipper = True
+    if device_uuid != "UNK" and len(device_packets) == 4:
+        if device_packets[0] == "06" and device_packets[1] == device_name and device_packets[2] == device_uuid and device_packets[3] == "00":
+            if device_name.lower().startswith("flipper"):
+                isFlipper = True
+                detectionType = "Name"
+            elif device_mac.startswith(("80:e1:26", "80:e1:27")):
+                detectionType = "Address"
+                isFlipper = True
+            else:
+                detectionType = "Identifier"
+                isFlipper = True
     device_information.append({
         "name": device_name,
         "address": device_mac,
