@@ -81,6 +81,7 @@
 - [X] Flipper Name Discovery
 - [X] Flipper Address Discovery
 - [X] Flipper "Identifier" Discovery ( Transparent, White, & Black Flipper Detection)
+	- [ ] Spoof Detection (Coming Soon)
 - [x] Ability to archive past flipper zero devices discovered
 - [x] Auto-install functionality for Debian Linux and Windows
 - [x] Ability to identify potential Bluetooth Advertisement attacks
@@ -90,6 +91,8 @@
 	- [x] Samsung and Android BLE Advertisement Attacks
 	- [x] Windows Swift Pair Advertisement Attacks
 	- [x] LoveSpouse Advertisement Attacks (Denial of Pleasure)
+ 	- [x] BT Settings Flood
+	- [x] Bluetooth Remote Detection 
 - [x] BLE Advertiser (Detect other WoF Instances)
 	- [x] Custom Name Implementation
 	- [x] BLE Chat
