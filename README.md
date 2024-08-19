@@ -128,7 +128,7 @@
 
 # 🐬 Installing and Requirements <a name = "doc_install"></a>
 
-> A few things are required to properly run Wall of Flippers. We Recommend a Raspberry Pi as it's compact and portable! It's also required to have a `chipset` or a USB `adapter` that supports Bluetooth Low Energy. At this current time, there is `limited` support for Wall of Flippers on Windows. Hence we recommend using a linux based operating system as that has been used for testing and development. For BLE advertising, I recommened an external USB adapter as the internal adapter on the Raspberry Pi is not powerful enough to send BLE advertisements long range.  
+> A few things are required to properly run Wall of Flippers. We Recommend a Raspberry Pi as it's compact and portable! It's also required to have a `chipset` or a USB `adapter` that supports Bluetooth Low Energy. At this current time, there is `limited` support for Wall of Flippers on Windows. Hence we recommend using a linux based operating system as that has been used for testing and development. For BLE advertising, I recommened an external USB adapter as the internal ble on the Raspberry Pi is not powerful enough to send BLE advertisements long range.  
 
 
 
@@ -255,7 +255,7 @@
 <summary> Windows Install Guide </summary>
 
 ## Windows Install Guide <a name = "windows_install"></a>
-> Windows is currently not fully supported. However, you can still run Wall of Flippers on Windows. A few missing features like the ability to detect advertisement attacks and ability to send advertisements. However the detection of the Flipper Zero device is still supported. To get started, we will need to clone the repository and install the required packages. To do this, we need to run the following commands in the command prompt. However, if you do not have git installed, you can simply install it by downloading it from the official website.
+> Windows is currently not fully supported. However, you can still run Wall of Flippers on Windows. A few missing features like the ability to detect advertisement attacks and ability to send advertisements. You also miss out on validation features to ensure that you won't have spoofed flipper data. However the detection of the Flipper Zero device is still supported. To get started, we will need to clone the repository and install the required packages. To do this, we need to run the following commands in the command prompt. However, if you do not have git installed, you can simply install it by downloading it from the official website.
 
 ### Step 1 (One): Git Clone and Git Installiation 
 
