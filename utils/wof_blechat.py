@@ -36,13 +36,13 @@ import threading
 import utils.wof_cache as cache # Wall of Flippers "cache" for important configurations and data :3
 import utils.wof_library as library # Wall of Flippers "library" for important functions and classes :3
 
-def chect2Limit(string, limit=6):
+def chect2Limit(string:str, limit:int):
     if len(string) > limit:
         print(f"[!] Wall of Flippers >> {string} is too long! Please enter a name with {limit} characters or less.")
         return False
     return True
 
-def send_traffic(sock, start, stop):
+def send_traffic(sock:int, start:object, stop:object):
     try: 
         displayName = cache.wof_data['wof_displayName'] + "::" # :: = Splitter
         totalCharsLeft = 31 - len(displayName) - len(cache.wof_data['wof_bleAdvertiserRaw'])
@@ -87,7 +87,7 @@ def sort_traffic(ble_packets:list):
                 if any(i['message'] == decodedDisplayMessage for i in cache.wof_data['cachedMessages']) and any(i['displayName'] == decodedDisplayName for i in cache.wof_data['cachedMessages']):
                     continue
                 cache.wof_data['cachedMessages'].append({"displayName": decodedDisplayName, "message": decodedDisplayMessage, "time": int(time.time())})
-async def read_traffic(sock, Scanner):
+async def read_traffic(sock:int, Scanner:object):
     cache.wof_data['bool_isScanning'] = True
     ble_packets = []
     scanner = Scanner(sock) # Thank you Talking Sasquach for testing this!

@@ -56,8 +56,13 @@ wof_data = {
     "wof_blechatAdvertiser": (0x1e, 0xff, 0x2c, 0x22, 0x22, 0x24, 0x24, 0x24),
     "wof_bleAdvertiserRaw": "2c2222242424",
     "wof_displayName": "WoF-Guest",
-
+    "flipper_types": {
+        "00003082-0000-1000-8000-00805f9b34fb": "W", # White
+        "00003081-0000-1000-8000-00805f9b34fb": "B", # Black
+        "00003083-0000-1000-8000-00805f9b34fb": "T", # Transparent
+    },
     "forbidden_packets": [ # Not complete and feel free to add more ("_" = Random Value)
+        {"PCK": "00001812-0000-1000-8000-00805f9b34fb", "TYPE": "BLE_HUMAN_INTERFACE_DEVICE"},
         {"PCK": "4c000719010_2055_______________", "TYPE": "BLE_APPLE_DEVICE_POPUP_CLOSE"},
         {"PCK": "4c000f05c00____________________", "TYPE": "BLE_APPLE_ACTION_MODAL_LONG"},
         {"PCK": "4c00071907_____________________", "TYPE": "BLE_APPLE_DEVICE_CONNECT"},
@@ -78,7 +83,8 @@ wof_data = {
         "discord.gg/squachtopia",
         "Hack the planet!",
 	    "Now headless with commands, WallofFlippers.py -h",
-        "Nyaaaaaa"
+        "Nyaaaaaa",
+        "Linecon + BT Settings Flood = Fixed"
     ],
     "init_directory_options": [ # Main Menu Options
         {"option": "1", "action": "Wall of Flippers", "description": "Wall of Flippers (Default)", "return": "wall_of_flippers"},

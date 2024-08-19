@@ -47,200 +47,48 @@ import utils.wof_blechat as blechat # for important functions and classes :3
 Scanner = None # This is the scanner object for the bluepy package (Default = None)
 
 
-def sort_packets(ble_packets:list):
-    """Sorts the BLE packets based on the type of packet"""
-    any_flippers_discovered = False
-    flippers_discovered_list = []
-    latest_discovered_list = []
-    forbidden_packets_list = cache.wof_data['forbidden_packets']
-    wof_advertiserRaw = cache.wof_data['wof_advertiserRaw']
+parser = argparse.ArgumentParser(description='Wall of Flippers', prog='WallofFlippers.py')
+parser.add_argument('-w', '--wall', action='store_true', help='Wall of Flippers')
+parser.add_argument('-i', '--install', action='store_true', help='Install Wall of Flippers')
+parser.add_argument('-d', '--device', action='store', help='Select a bluetooth device')
+parser.add_argument('-b', '--badgemode', action='store_true', help='Toggle Badge Mode')
+parser.add_argument('-a', '--advertise', action='store_true', help='Advertise WoF Exsistance (OFF=Default)')
+args = parser.parse_args()
 
-    for advertisement in ble_packets:
-        advertisement_name = advertisement['Name']
-        advertisement_type = advertisement['Type']
-        advertisement_rssi = advertisement['RSSI']
-        advertisement_mac = advertisement['MAC']
-        advertisement_packets = advertisement['PCK']
-        advertisement_uuid = advertisement['UUID']
-        advertisement_blacklist_check = None
-        for advertisement_packet in advertisement_packets:
-            for forbidden_packet in forbidden_packets_list:
-                if all(p1 == p2 or p2 == "_" for p1, p2 in zip(advertisement_packet, forbidden_packet['PCK'])):
-                    int_get_non_underscore = len(forbidden_packet['PCK'].replace("_", ""))
-                    int_total_found = sum(p != "_" for p in advertisement_packet)
-                    if int_total_found >= int_get_non_underscore:
-                        cache.wof_data['forbidden_packets_found'].append({
-                            "Type": forbidden_packet['TYPE'],
-                            "PCK": advertisement_packet,
-                            "MAC": advertisement_mac,
-                        })
-                if len(advertisement_packet) > cache.wof_data['min_byte_length']: # If the packet is longer than the minimum byte length, then it is a valid packet we want to log
-                    cache.wof_data['all_packets_found'].append({
-                        "PCK": advertisement_packet,
-                        "MAC": advertisement_mac,
-                    })
-        for advertisement_packet in advertisement_packets:
-            if str(advertisement_packet).startswith(wof_advertiserRaw):
-                decodedAdvertiser = bytes.fromhex(advertisement_packet.replace(wof_advertiserRaw, "")).decode('utf-8').replace("\x00", "")
-                cache.wof_data['nearbyWof'].append(decodedAdvertiser)
-        if advertisement_name.lower().startswith("flipper") and advertisement_uuid != "NOT FOUND": # Name Detection
-            int_recorded = int(time.time())
-            cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if advertisement_mac != flipper['MAC']] 
-            t_data = {
-                "Name": advertisement_name,
-                "RSSI": advertisement_rssi,
-                "MAC": advertisement_mac,
-                "Detection Type": "Name",
-                "unixLastSeen": int_recorded,
-                "unixFirstSeen": int_recorded,
-                "Type": advertisement_type,
-                "UUID": advertisement_uuid,
-            }
-            if advertisement_mac not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']] and advertisement_name not in [flipper['Name'] for flipper in cache.wof_data['found_flippers']]:
-                cache.wof_data['found_flippers'].append(t_data)
-                cache.wof_data['live_flippers'].append(t_data)
-                library.log(t_data)
-                any_flippers_discovered = True
-                flippers_discovered_list.append(t_data)
-                latest_discovered_list = t_data
-        elif any(advertisement_mac.startswith(addr) for addr in ("80:e1:26", "80:e1:27")) and advertisement_uuid != "NOT FOUND": # Credit to @elliotwutingfeng (https://github.com/elliotwutingfeng) for this fix (MAC Address Detection)
-            int_recorded = int(time.time())
-            cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if advertisement_mac != flipper['MAC']]
-            t_data = {
-                "Name": advertisement_name,
-                "RSSI": advertisement_rssi,
-                "MAC": advertisement_mac,
-                "Detection Type": "Address",
-                "unixLastSeen": int_recorded,
-                "unixFirstSeen": int_recorded,
-                "Type": advertisement_type,
-                "UUID": advertisement_uuid,
-            }
-            if advertisement_mac not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']] and advertisement_name not in [flipper['Name'] for flipper in cache.wof_data['found_flippers']]:
-                cache.wof_data['found_flippers'].append(t_data)
-                cache.wof_data['live_flippers'].append(t_data)
-                library.log(t_data)
-                any_flippers_discovered = True
-                flippers_discovered_list.append(t_data)
-                latest_discovered_list = t_data
-        elif advertisement_uuid != "NOT FOUND": # UUID Detection
-            int_recorded = int(time.time())
-            cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if advertisement_mac != flipper['MAC']]
-            t_data = {
-                "Name": advertisement_name,
-                "RSSI": advertisement_rssi,
-                "MAC": advertisement_mac,
-                "Detection Type": "Identifier",
-                "unixLastSeen": int_recorded,
-                "unixFirstSeen": int_recorded,
-                "UUID": advertisement_uuid,
-                "Type": advertisement_type
-            }
-            if advertisement_mac not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']] and advertisement_name not in [flipper['Name'] for flipper in cache.wof_data['found_flippers']]:
-                cache.wof_data['found_flippers'].append(t_data)
-                cache.wof_data['live_flippers'].append(t_data)
-                library.log(t_data)
-                any_flippers_discovered = True
-                flippers_discovered_list.append(t_data)
-                latest_discovered_list = t_data
-    if not any_flippers_discovered:
-        wall_display.display(None)
-        cache.wof_data['bool_isScanning'] = False
-    else:
-        latest_name = latest_discovered_list['Name']
-        latest_mac = latest_discovered_list['MAC']
-        wall_display.display(f"I've found a wild {latest_name} ({latest_mac})")
-        cache.wof_data['bool_isScanning'] = False   
-async def detection_async(os_param:str, detection_type=0): # renamed 'os' and 'type' to avoid conflict with built-in functions. Feel free to change it to something more appropriate as I'm not exactly sure what they do
-    """BLE detection"""
+async def detection_async(os_param:str, detection_type=0):
     try:
         cache.wof_data['bool_isScanning'] = True
         ble_packets = []
+        if (os_param != "nt") and (os_param != "posix"): 
+            library.print_ascii_art("Error: Unsupported OS")
+            print("[!] Wall of Flippers >> Error: Unsupported OS")
+            sys.exit()
         if os_param == "nt": # Windows Detection
             devices = await BleakScanner.discover()
-            if devices:
+            if devices: # If devices are found
                 for device in devices:
-                    advertisement_name = str(device.name)
-                    advertisement_addr = str(device.address.lower())
-                    advertisement_rssi = str(device.rssi)
-                    advertisment_data = device.metadata.get('manufacturer_data')
-                    advertisement_uuid = str(device.metadata.get('uuids'))
-                    device_uuid = "NOT FOUND"
-                    device_type = "NOT FOUND"
-                    if (advertisement_uuid == "['00003082-0000-1000-8000-00805f9b34fb']"): # White Flipper
-                        device_type = "W"
-                        device_uuid = advertisement_uuid
-                    if (advertisement_uuid == "['00003081-0000-1000-8000-00805f9b34fb']"): # Black Flipper
-                        device_type = "B"
-                        device_uuid = advertisement_uuid
-                    if (advertisement_uuid == "['00003083-0000-1000-8000-00805f9b34fb']"): # Transparent Flipper
-                        device_uuid = "T"
-                        device_uuid = advertisement_uuid
-                    #if (advertisement_uuid == "['00001812-0000-1000-8000-00805f9b34fb']"): # BT Controller
-                    #    device_uuid = "BT"
-                    #    device_uuid = advertisement_uuid
-                    ble_packets.append({
-                        "Name": advertisement_name,
-                        "MAC": advertisement_addr,
-                        "RSSI": advertisement_rssi,
-                        "PCK": "NOT FOUND",
-                        "UUID": device_uuid,
-                        "Manufacturer": "NOT FOUND",
-                        "Type": device_type
-                    })
-            else:
-                cache.wof_data['bool_isScanning'] = False
-        elif os_param == "posix": # Linux Detection
+                    device_info = library.flipper2Validation(device, os_param)
+                    ble_packets.append(device_info)
+        if os_param == "posix": # Linux Detection
             scanner = Scanner(detection_type) # Thank you Talking Sasquach for testing this!
             devices = scanner.scan(5) # Scan the area for 5 seconds....
-            if devices:
+            ble_packets = []
+            if devices: # If devices are found
                 for device in devices:
-                    scan_list = device.getScanData()
-                    device_packets = []
-                    device_name = "NOT FOUND"
-                    device_manufacturer = "NOT FOUND"
-                    device_uuid = "NOT FOUND"
-                    device_type = "NOT FOUND"
-                    device_formatted = []
-                    for scan_list_item in scan_list:
-                        device_formatted.append({"ADTYPE": scan_list_item[0], "Description": scan_list_item[1], "Value": scan_list_item[2]})
-                    for i_data in device_formatted:
-                        if i_data['Description'] == "Complete Local Name":
-                            device_name = i_data['Value']
-                        if i_data['Description'] == "Manufacturer":
-                            device_manufacturer = i_data['Value']
-                        if i_data['Value'] == "00003082-0000-1000-8000-00805f9b34fb": # White Flipper
-                            device_uuid = i_data['Value']
-                            device_type = "W"
-                        if i_data['Value'] == "00003081-0000-1000-8000-00805f9b34fb": # Black Flipper
-                            device_uuid = i_data['Value']
-                            device_type = "B"
-                        if i_data['Value'] == "00003083-0000-1000-8000-00805f9b34fb": # Transparent Flipper
-                            device_uuid = i_data['Value']
-                            device_type = "T"
-                        #if i_data['Value'] == "00001812-0000-1000-8000-00805f9b34fb": # BT Controller
-                        #    device_uuid = i_data['Value']
-                        #    device_type = "BT"
-                        device_packets.append(i_data['Value'])
-                    ble_packets.append({
-                        "Name": device_name,
-                        "MAC": device.addr,
-                        "RSSI": device.rssi,
-                        "PCK": device_packets,
-                        "UUID": device_uuid,
-                        "Manufacturer": device_manufacturer,
-                        "Type": device_type
-                    })
-            else:
-                cache.wof_data['bool_isScanning'] = False
-        else: # Unsupported OS
-            print("[!] Wall of Flippers >> Error: Type not supported")
+                    device_info = library.flipper2Validation(device, os_param)
+                    ble_packets.append(device_info)
+        any_flippers_discovered, flippers_discovered_list, latest_discovered_list = library.ble2Sort(ble_packets)
+        if not any_flippers_discovered:
+            wall_display.display(None)
             cache.wof_data['bool_isScanning'] = False
-        sort_packets(ble_packets)
+        else:
+            latest_name = latest_discovered_list['Name']
+            latest_mac = latest_discovered_list['MAC']
+            wall_display.display(f"I've found a wild {latest_name} ({latest_mac})")
+            cache.wof_data['bool_isScanning'] = False
     except Exception as e:
         library.print_ascii_art("Error: Failed to scan for BLE devices")
         print("[!] Wall of Flippers >> Error: Failed to scan for BLE devices >> " + str(e))
-        #sys.exit()
         cache.wof_data['bool_isScanning'] = False
 
 # Start of the program
@@ -260,18 +108,6 @@ if cache.wof_data['system_type'] == "posix": # Linux Auto Install
         library.print_ascii_art("Uh oh, it seems like you are not in your virtual environment!")
         print("[!] Wall of Flippers >> It seems like you are not in your virtual environment. Please use the following command to enter your virtual environment.\n\tsource .venv/bin/activate\n\tor\n\tbash wof.sh")
         sys.exit()
-
-
-parser = argparse.ArgumentParser(description='Wall of Flippers', prog='WallofFlippers.py')
-parser.add_argument('-w', '--wall', action='store_true', help='Wall of Flippers')
-parser.add_argument('-i', '--install', action='store_true', help='Install Wall of Flippers')
-parser.add_argument('-d', '--device', action='store', help='Select a bluetooth device')
-parser.add_argument('-b', '--badgemode', action='store_true', help='Toggle Badge Mode')
-parser.add_argument('-a', '--advertise', action='store_true', help='Advertise WoF Exsistance (OFF=Default)')
-
-
-args = parser.parse_args()
-
 
 
 if args == None:

@@ -30,7 +30,7 @@ import shutil
 import utils.wof_cache as cache # Wall of Flippers "cache" for important configurations and data :3
 import utils.wof_library as library # Wall of Flippers "library" for important functions and classes :3
 
-def isLive(mac, string): # Fixed same mac spoofing implementation (Duplicate MACs)
+def isLive(mac:str, string:str): # Fixed same mac spoofing implementation (Duplicate MACs)
     for key in cache.wof_data['live_flippers']:
         if key['MAC'] == mac and key['Name'] == string:
             return True
