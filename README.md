@@ -100,6 +100,9 @@
 - [x] BLE External / Internal Adapter Support
 	- [x] Linux Supported
  	- [ ] Windows Supported 	
+- [x] Ratelimiting (New Connections)
+	- [x] Linux Supported
+	- [x] Windows Supported (Limited)
 - [ ] Chromium Web Bluetooth Support
 - [ ] iOS/Android Detection (Pairing)
 - [ ] Animations (Looking for ascii artists)
