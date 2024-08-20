@@ -83,8 +83,17 @@ def ble2Sort(packets:list): # Sorts BLE packets and updates the list/cache
     any_flippers_discovered = False
     flippers_discovered_list = []
     latest_discovered_list = []
+    suspiciousFlippers = []
     forbidden_packets_list = cache.wof_data['forbidden_packets']
     wof_advertiserRaw = cache.wof_data['wof_advertiserRaw']
+    totalFlippersFound = (advertisement[0]["flipper"] for advertisement in packets)
+    totalNewFound = 0
+    totalNewFound = sum(1 for advertisement in packets if advertisement[0]["flipper"] and not any(flipper['MAC'] == advertisement[0]["address"] for flipper in cache.wof_data['base_flippers']))
+    totalNewFoundArray = [advertisement[0] for advertisement in packets if advertisement[0]["flipper"] and not any(flipper['MAC'] == advertisement[0]["address"] for flipper in cache.wof_data['base_flippers'])]
+    for advertisement in totalNewFoundArray: suspiciousFlippers.append(advertisement["address"])
+    if (totalNewFound >= cache.wof_data['max_flippers_ratelimited'] and not cache.wof_data['is_ratelimited']):
+        cache.wof_data['is_ratelimited'] = True 
+        cache.wof_data['last_ratelimit'] = int(time.time()) + cache.wof_data['ratelimit_seconds']
     for advertisement in packets:
         advertisement = advertisement[0]
         adv_name = advertisement["name"]
@@ -96,6 +105,7 @@ def ble2Sort(packets:list): # Sorts BLE packets and updates the list/cache
         adv_isFlipper = advertisement["flipper"]
         adv_detection = advertisement["detection"]
         adv_blacklisted = None
+        if adv_address in suspiciousFlippers and cache.wof_data['is_ratelimited']: adv_isFlipper = False # If the flipper is in the suspicious list, mark it down as not a flipper
         for packet in adv_packets:
             for forbidden_packet in forbidden_packets_list:
                 if all(p1 == p2 or p2 == "_" for p1, p2 in zip(packet, forbidden_packet['PCK'])):
@@ -112,14 +122,16 @@ def ble2Sort(packets:list): # Sorts BLE packets and updates the list/cache
             int_recorded = int(time.time())
             cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if adv_address != flipper['MAC']] 
             t_data = {"Name": adv_name,"RSSI": adv_rssi,"MAC": adv_address,"Detection Type": adv_detection,"unixLastSeen": int_recorded,"unixFirstSeen": int_recorded,"Type": adv_type,"UUID": adv_uuid}
-            if adv_address not in [flipper['MAC'] for flipper in cache.wof_data['found_flippers']] and adv_name not in [flipper['Name'] for flipper in cache.wof_data['found_flippers']]:
+            if not any(flipper['MAC'] == adv_address and flipper['Name'] == adv_name for flipper in cache.wof_data['found_flippers']): # if the flipper is not in the list, add it
                 cache.wof_data['found_flippers'].append(t_data)
                 cache.wof_data['live_flippers'].append(t_data)
                 log(t_data)
                 any_flippers_discovered = True
                 flippers_discovered_list.append(t_data)
                 latest_discovered_list = t_data
-    return any_flippers_discovered, flippers_discovered_list, latest_discovered_list
+    if (cache.wof_data['last_ratelimit'] < int(time.time())) and cache.wof_data['is_ratelimited']:
+        cache.wof_data['is_ratelimited'] = False
+    return any_flippers_discovered, flippers_discovered_list, latest_discovered_list, totalNewFound, cache.wof_data['is_ratelimited']
 
 def flipper2Validation(data:list, os:str): # Validates incoming flippers/ble packets
     device_packets = []
@@ -191,7 +203,7 @@ def flipper2Validation(data:list, os:str): # Validates incoming flippers/ble pac
         "color": device_color,
         "genericdata": device_formatted,
         "detection": detectionType,
-        "flipper": isFlipper,
+        "flipper": isFlipper
     })
     return device_information
 

@@ -21,8 +21,12 @@
 #    |__/|__/\__,_/_/_/   \____/_/    /_/   /_/_/ .___/ .___/\___/_/  /____/
 #                                              /_/   /_/
 import random
+import time 
 
 wof_data = {
+    # Generic Cache (ignore unless you want persistent cache data, refer to -h for more info)
+    "bool_isScanning": False, 
+    "system_type": None,
     "found_flippers": [],
     "base_flippers": [],
     "live_flippers": [],
@@ -32,35 +36,40 @@ wof_data = {
     "narrow_mode": False,
     "badge_mode": False,
     "toggle_adveriser": False,
-    "narrow_mode_limit": 100, # Minimum number of columns for narrow mode to kick in
-    "flipper_volume_price": 169, # Flipper Zero Price
     "forbidden_packets_found": [],
     "all_packets_found": [],
     "nearbyWof": [],
+
+    # Display Settings and Price Calculation
+    "narrow_mode_limit": 100, # Minimum number of columns for narrow mode to kick in
     "max_online": 15, # Max amount of online flippers to display on the screen
     "max_offline": 15, # Max amount of offline flippers to display on the screen
-    "max_ble_packets": 10, # Max amount of BLE packets to display on the screen
-    "min_byte_length": 3, # Minimum amount of bytes for a packet to be considered valid
-    "max_byte_length": 450, # Maximum amount of bytes to be considred suspicious
-    "ble_threshold": 25, # Amount of forbidden packets to be csonsidered a BLE attack
-    "bool_isScanning": False, 
-    "system_type": None,
+    "flipper_volume_price": 169, # Flipper Zero Price
 
-    # Advertiser (Ignore this cute thing)
+    # Ratelimiting for flippers (Prevent Unauthorized Spammers)
+    "max_flippers_ratelimited": 3, # Max amount of flippers to be displayed in x seconds
+    "ratelimit_seconds": 5, # Amount of seconds to ratelimit flippers
+    "last_ratelimit": time.time(), # Last time ratelimited
+    "is_ratelimited": False, # Ratelimiting flag
+
+    # Advertising Data (Broadcast to others your using Wall of Flippers)
     "wof_advertiser": (0x1e, 0xff, 0x2c, 0x22, 0x22, 0x22, 0x22, 0x22),
     "wof_advertiserName": f"WoF-{random.randint(1000, 9999)}",
     "wof_advertiserRaw": "2c2222222222",
 
-
-    # BLE Chat (Because im bored)
+    # BLE Chat Settings (Modify if you want to change the BLE Chat Advertiser)
     "wof_blechatAdvertiser": (0x1e, 0xff, 0x2c, 0x22, 0x22, 0x24, 0x24, 0x24),
     "wof_bleAdvertiserRaw": "2c2222242424",
     "wof_displayName": "WoF-Guest",
+
+    # BLE Service UUIDs to detect flippers
     "flipper_types": {
-        "00003082-0000-1000-8000-00805f9b34fb": "W", # White
         "00003081-0000-1000-8000-00805f9b34fb": "B", # Black
+        "00003082-0000-1000-8000-00805f9b34fb": "W", # White
         "00003083-0000-1000-8000-00805f9b34fb": "T", # Transparent
     },
+
+    # BLE Spamming Detections and Settings
     "forbidden_packets": [ # Not complete and feel free to add more ("_" = Random Value)
         {"PCK": "00001812-0000-1000-8000-00805f9b34fb", "TYPE": "BLE_HUMAN_INTERFACE_DEVICE"},
         {"PCK": "4c000719010_2055_______________", "TYPE": "BLE_APPLE_DEVICE_POPUP_CLOSE"},
@@ -73,6 +82,12 @@ wof_data = {
         {"PCK": "0600030080_____________________", "TYPE": "BLE_WINDOWS_SWIFT_PAIR_SHORT"},
         {"PCK": "ff006db643ce97fe427c___________", "TYPE": "BLE_LOVE_TOYS_SHORT_DISTANCE"},
     ],
+    "max_ble_packets": 10, # Max amount of BLE packets to display on the screen
+    "min_byte_length": 3, # Minimum amount of bytes for a packet to be considered valid
+    "max_byte_length": 450, # Maximum amount of bytes to be considred suspicious
+    "ble_threshold": 25, # Amount of forbidden packets to be csonsidered a BLE attack
+
+    # Selections and Quotes + Ascii Art
     "dolphin_thinking": [ # Random quotes for the dolphin to say
         "Let's hunt some flippers", 
         "Ya'll like war driving flippers?", 

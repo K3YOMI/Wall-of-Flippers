@@ -186,5 +186,4 @@ def display(custom_text:str=None):
     cache.wof_data['forbidden_packets_found'] = []
     cache.wof_data['all_packets_found'] = []
     cache.wof_data['duplicated_packets'] = []
-    cache.wof_data['base_flippers'] = []
     cache.wof_data['nearbyWof'] = []

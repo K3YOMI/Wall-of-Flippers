@@ -77,11 +77,25 @@ async def detection_async(os_param:str, detection_type=0):
                 for device in devices:
                     device_info = library.flipper2Validation(device, os_param)
                     ble_packets.append(device_info)
-        any_flippers_discovered, flippers_discovered_list, latest_discovered_list = library.ble2Sort(ble_packets)
+        any_flippers_discovered, flippers_discovered_list, latest_discovered_list, total_new, ratelimited = library.ble2Sort(ble_packets)
         if not any_flippers_discovered:
-            wall_display.display(None)
+            if ratelimited == True:
+                ratelimit_time = cache.wof_data['last_ratelimit'] - time.time()
+                if (ratelimit_time < 0):
+                    ratelimit_time = 0
+                wall_display.display(f"Haulting logs for {int(ratelimit_time)} seconds due to {str(total_new)}+ flippers | Possible Spoofing")
+            else:
+                wall_display.display(None)
             cache.wof_data['bool_isScanning'] = False
+            return
         else:
+            if ratelimited == True:
+                ratelimit_time = cache.wof_data['last_ratelimit'] - time.time()
+                if (ratelimit_time < 0):
+                    ratelimit_time = 0
+                wall_display.display(f"Haulting logs for {int(ratelimit_time)} seconds due to {str(total_new)}+ flippers | Possible Spoofing")
+                cache.wof_data['bool_isScanning'] = False
+                return
             latest_name = latest_discovered_list['Name']
             latest_mac = latest_discovered_list['MAC']
             wall_display.display(f"I've found a wild {latest_name} ({latest_mac})")
