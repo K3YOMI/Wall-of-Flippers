@@ -52,7 +52,7 @@ wof_data = {
     "last_ratelimit": time.time(), # Last time ratelimited
     "is_ratelimited": False, # Ratelimiting flag
 
-    # Advertising Data (Broadcast to others your using Wall of Flippers)
+    # Advertising Data (Broadcast to others you're using Wall of Flippers)
     "wof_advertiser": (0x1e, 0xff, 0x2c, 0x22, 0x22, 0x22, 0x22, 0x22),
     "wof_advertiserName": f"WoF-{random.randint(1000, 9999)}",
     "wof_advertiserRaw": "2c2222222222",
