@@ -99,7 +99,8 @@ wof_data = {
         "Hack the planet!",
 	    "Now headless with commands, WallofFlippers.py -h",
         "Nyaaaaaa",
-        "Linecon + BT Settings Flood = Fixed"
+        "Linecon + BT Settings Flood = Fixed",
+        "Please do not put your flipper in wet damp areas."
     ],
     "init_directory_options": [ # Main Menu Options
         {"option": "1", "action": "Wall of Flippers", "description": "Wall of Flippers (Default)", "return": "wall_of_flippers"},
