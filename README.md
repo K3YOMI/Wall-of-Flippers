@@ -21,11 +21,11 @@
 					<h3 align="center">k3yomi (Project Maintainer)</h3>
 				</td>
 				<td align="center">
-					<a href="https://ko-fi.com/emilia0001" style="text-decoration: none;">
+					<a href="https://ko-fi.com/jbohack" style="text-decoration: none;">
 						<img align="center" src='https://github.com/user-attachments/assets/f5f0ea5e-0a72-484b-a4b5-300cecafd14d' width="55" height="55", style="border-radius: 50%;">
 						<img align="center" src='https://ko-fi.com/img/githubbutton_sm.svg'>
 					</a>
-					<h3 align="center">Emilia (Head Contributor)</h3>
+					<h3 align="center">Jbohack (Head Contributor)</h3>
 				</td>
 			</tr>
 		</table>
