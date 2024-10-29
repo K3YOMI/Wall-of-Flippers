@@ -72,7 +72,7 @@
 
 
 # 🐬 Wall of Flippers? <a name = "doc_introduction"></a>
-> Wall of Flippers (WoF) is a python based project involving the discovery of the Flipper Zero device and the identification of potential Bluetooth advertisement attacks. Please keep in mind that these two types of detections may **not** be related. Also the code is quite messy and not up to my standards. Will be updating and cleaning up some code in the future. Feel free to submit pull requests if you would like to contribute!
+> Wall of Flippers (WoF) is a python based project involving the discovery of the Flipper Zero device and the identification of potential Bluetooth advertisement attacks. Please keep in mind that these two types of detections may **not** be related. Feel free to submit pull requests if you would like to contribute!
 
 
 
