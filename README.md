@@ -25,7 +25,7 @@
 						<img align="center" src='https://github.com/user-attachments/assets/f5f0ea5e-0a72-484b-a4b5-300cecafd14d' width="55" height="55", style="border-radius: 50%;">
 						<img align="center" src='https://ko-fi.com/img/githubbutton_sm.svg'>
 					</a>
-					<h3 align="center">Jbohack (Head Contributor)</h3>
+					<h3 align="center">Jbohack (Contributor)</h3>
 				</td>
 			</tr>
 		</table>
@@ -108,7 +108,7 @@
 - [ ] Animations (Looking for ascii artists)
 
 
-# 🐬 Videos and Articles <a name = "doc_videos"></a>
+# 🐬 Articles <a name = "doc_videos"></a>
 
 <table align="center" style="border-collapse: collapse; margin: 0 auto;">
 	<tr align="center">
@@ -118,6 +118,12 @@
 			</a>
 			<h3 align="center">Talking Sasquach - Wall of Flippers Busts Flipper Zero BLE Spammers Red Handed!</h3>
 		</td>
+		<!---
+  			Secret funny message: DD91Ongfy3xfw2sswX55y3FfATopOnonOn5ewX55y3FfySokynxfyT9h
+			Idk, I heard this was base64 but with a twist :3
+			Now go on a scavenger hunt and you'll find the hidden message
+			This will not only help you understand the details, but it will provide you a lot of context. Idk what im saying. lol
+		--->
 		<td align="center">
 			<a href="https://www.bleepingcomputer.com/news/security/wall-of-flippers-detects-flipper-zero-bluetooth-spam-attacks/" style="text-decoration: none;">
 				<img align="center" src='https://www.bleepstatic.com/content/hl-images/2023/01/03/flipper-zero.jpg' width="225" height="155", style="border-radius: 50%;">
