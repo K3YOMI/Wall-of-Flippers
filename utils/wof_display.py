@@ -118,14 +118,15 @@ def display(custom_text:str=None):
             # Display forbidden packets
             if len(cache.wof_data['forbidden_packets_found']) > 0:
                 t_packets = 0
-                print("\n\n[!] Wall of Flippers >> These packets may not be related to the Flipper Zero.\n[NAME]\t\t\t\t\t[ADDR]\t\t   [PACKET]")
+                print("\n\n[!] Wall of Flippers >> These packets may not be related to the Flipper Zero.\n[NAME]\t\t\t\t\t[RSSI]\t[ADDR]\t\t   [PACKET]")
                 print(shutil.get_terminal_size().columns * "-")
                 for key in cache.wof_data['forbidden_packets_found']:
                     if ble_spamming_macs.count(key['MAC']) == 0:
                         ble_spamming_macs.append(key['MAC'])
                         t_packets += 1
                         if t_packets <= cache.wof_data['max_ble_packets']: # Max amount of packets to display on the screen
-                            print(f"{key['Type'].ljust(t_allignment)}\t\t{key['MAC'].ljust(t_allignment)}  {key['PCK'].ljust(t_allignment)}")
+                            rssi_value = str(key.get('RSSI', 'N/A'))
+                            print(f"{key['Type'].ljust(t_allignment)}\t\t{rssi_value.ljust(t_allignment)}{key['MAC'].ljust(t_allignment)}  {str(key['PCK']).ljust(t_allignment)}")
                 if number_of_total_blacklisted_packets > cache.wof_data['ble_threshold']:
                     print(f"------------------ Bluetooth Low Energy (BLE) Attacks Detected ({number_of_total_blacklisted_packets} Advertisements) --------------------")
     else: # if the system is not POSIX (Windows)
