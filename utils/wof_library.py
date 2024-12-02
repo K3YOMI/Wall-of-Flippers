@@ -112,7 +112,7 @@ def ble2Sort(packets:list): # Sorts BLE packets and updates the list/cache
                     int_get_non_underscore = len(forbidden_packet['PCK'].replace("_", ""))
                     int_total_found = sum(p != "_" for p in packet)
                     if int_total_found >= int_get_non_underscore:
-                        cache.wof_data['forbidden_packets_found'].append({"Type": forbidden_packet['TYPE'],"PCK": packet,"MAC": adv_address})
+                        cache.wof_data['forbidden_packets_found'].append({"Type": forbidden_packet['TYPE'],"PCK": packet,"MAC": adv_address, "RSSI": adv_rssi})
                 if len(packet) > cache.wof_data['min_byte_length']: # If the packet is longer than the minimum byte length, then it is a valid packet we want to log
                     cache.wof_data['all_packets_found'].append({"PCK": packet,"MAC": adv_address})
             if str(packet).startswith(wof_advertiserRaw):
