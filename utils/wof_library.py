@@ -57,7 +57,7 @@ def log(s_table:dict): # Logs data to the log file (utils/wof_log.txt)
             "unixLastSeen": s_table['unixLastSeen'],
             "unixFirstSeen": s_table['unixFirstSeen'],
             "Type": s_table['Type'],
-            "UUID": s_table['UUID'],
+            "UID": s_table['UID'],
         })
     with open('Flipper.json', 'w', encoding='utf-8') as flipper_file: # Save the flipper data to Flipper.json
         json.dump(flipper_data, flipper_file, indent=4)     
@@ -101,7 +101,7 @@ def ble2Sort(packets:list): # Sorts BLE packets and updates the list/cache
         adv_rssi = advertisement["rssi"]
         adv_address = advertisement["address"]
         adv_packets = advertisement["packets"]
-        adv_uuid = advertisement["uuid"]
+        adv_uid = advertisement["uid"]
         adv_isFlipper = advertisement["flipper"]
         adv_detection = advertisement["detection"]
         adv_blacklisted = None
@@ -121,7 +121,7 @@ def ble2Sort(packets:list): # Sorts BLE packets and updates the list/cache
         if adv_isFlipper: # if flipper is set to true :3
             int_recorded = int(time.time())
             cache.wof_data['found_flippers'] = [flipper for flipper in cache.wof_data['found_flippers'] if adv_address != flipper['MAC']] 
-            t_data = {"Name": adv_name,"RSSI": adv_rssi,"MAC": adv_address,"Detection Type": adv_detection,"unixLastSeen": int_recorded,"unixFirstSeen": int_recorded,"Type": adv_type,"UUID": adv_uuid}
+            t_data = {"Name": adv_name,"RSSI": adv_rssi,"MAC": adv_address,"Detection Type": adv_detection,"unixLastSeen": int_recorded,"unixFirstSeen": int_recorded,"Type": adv_type,"UID": adv_uid}
             if not any(flipper['MAC'] == adv_address and flipper['Name'] == adv_name for flipper in cache.wof_data['found_flippers']): # if the flipper is not in the list, add it
                 cache.wof_data['found_flippers'].append(t_data)
                 cache.wof_data['live_flippers'].append(t_data)
@@ -138,7 +138,7 @@ def flipper2Validation(data:list, os:str): # Validates incoming flippers/ble pac
     device_information = []
     device_name = "UNK"
     device_manufacturer = "UNK"
-    device_uuid = "UNK"
+    device_uid = "UNK"
     device_color = "UNK"
     device_formatted = []
     device_mac = "UNK"
@@ -150,18 +150,18 @@ def flipper2Validation(data:list, os:str): # Validates incoming flippers/ble pac
         device_mac = str(data.address.lower())
         device_name = str(data.name)
         advertisment_data = data.metadata.get('manufacturer_data')
-        advertisement_uuid = str(data.metadata.get('uuids')).replace("['", "").replace("']", "")
+        advertisement_uid = str(data.metadata.get('uids')).replace("['", "").replace("']", "")
         for key, value in cache.wof_data['flipper_types'].items():
-            if key in advertisement_uuid:
-                device_uuid = advertisement_uuid
+            if key in advertisement_uid:
+                device_uid = advertisement_uid
                 device_color = value
-                device_packets = ["06", device_name, device_uuid, "00"]
+                device_packets = ["06", device_name, device_uid, "00"]
                 keyFound = True
         if not keyFound:
-            if advertisement_uuid.startswith("0000308") and advertisement_uuid.endswith("0000-1000-8000-00805f9b34fb"):
-                device_uuid = advertisement_uuid
+            if advertisement_uid.startswith("0000308") and advertisement_uid.endswith("0000-1000-8000-00805f9b34fb"):
+                device_uid = advertisement_uid
                 device_color = "SPF"
-                device_packets = ["06", device_name, device_uuid, "00"]
+                device_packets = ["06", device_name, device_uid, "00"]
     if os == "posix":
         device_mac = data.addr.lower()
         scan_list = data.getScanData()
@@ -174,16 +174,16 @@ def flipper2Validation(data:list, os:str): # Validates incoming flippers/ble pac
                 device_manufacturer = i_data['Value']
             for key, value in cache.wof_data['flipper_types'].items():
                 if i_data['Value'] == key:
-                    device_uuid = i_data['Value']
+                    device_uid = i_data['Value']
                     device_color = value
                     keyFound = True
             if not keyFound:
                 if i_data['Value'].startswith("0000308") and i_data['Value'].endswith("0000-1000-8000-00805f9b34fb"):
-                    device_uuid = i_data['Value']
+                    device_uid = i_data['Value']
                     device_color = "SPF"
             device_packets.append(i_data['Value'])
-    if device_uuid != "UNK" and len(device_packets) == 4:
-        if device_packets[0] == "06" and device_packets[1] == device_name and device_packets[2] == device_uuid and device_packets[3] == "00":
+    if device_uid != "UNK" and len(device_packets) == 4:
+        if device_packets[0] == "06" and device_packets[1] == device_name and device_packets[2] == device_uid and device_packets[3] == "00":
             if device_name.lower().startswith("flipper"):
                 isFlipper = True
                 detectionType = "Name"
@@ -198,7 +198,7 @@ def flipper2Validation(data:list, os:str): # Validates incoming flippers/ble pac
         "address": device_mac,
         "rssi": device_rssi,
         "packets": device_packets,
-        "uuid": device_uuid,
+        "uid": device_uid,
         "manufacturer": device_manufacturer,
         "color": device_color,
         "genericdata": device_formatted,

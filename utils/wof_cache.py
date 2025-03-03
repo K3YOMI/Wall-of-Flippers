@@ -62,7 +62,7 @@ wof_data = {
     "wof_bleAdvertiserRaw": "2c2222242424",
     "wof_displayName": "WoF-Guest",
 
-    # BLE Service UUIDs to detect flippers
+    # BLE Service UIDs to detect flippers
     "flipper_types": {
         "00003081-0000-1000-8000-00805f9b34fb": "B", # Black
         "00003082-0000-1000-8000-00805f9b34fb": "W", # White
