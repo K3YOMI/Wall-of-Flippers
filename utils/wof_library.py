@@ -36,7 +36,7 @@ import utils.wof_cache as cache # for important configurations and data :3
 
 def log(s_table:dict): # Logs data to the log file (utils/wof_log.txt)
     """logs data to the log file (utils/wof_log.txt)"""
-    with open('Flipper.json', 'r', encoding='utf-8') as flipper_file: # Load flipper data from Flipper.json with UTF-8 encoding
+    with open('db/Flipper.json', 'r', encoding='utf-8') as flipper_file: # Load flipper data from Flipper.json with UTF-8 encoding
         flipper_data = json.load(flipper_file)
     for s_flipper in flipper_data:
         if s_flipper["MAC"] == s_table["MAC"] and s_flipper["Name"] == s_table["Name"]:
@@ -59,8 +59,19 @@ def log(s_table:dict): # Logs data to the log file (utils/wof_log.txt)
             "Type": s_table['Type'],
             "UID": s_table['UID'],
         })
-    with open('Flipper.json', 'w', encoding='utf-8') as flipper_file: # Save the flipper data to Flipper.json
-        json.dump(flipper_data, flipper_file, indent=4)     
+    with open('db/Flipper.json', 'w', encoding='utf-8') as flipper_file: # Save the flipper data to Flipper.json
+        json.dump(flipper_data, flipper_file, indent=4)   
+
+def required2files():
+    """Checks for the required files which are Flipper.json and Backup.json, some really poor implementation but it works."""
+    if not os.path.isdir("db"): os.mkdir("db")
+    if not os.path.isfile("db/Flipper.json"):
+        with open("db/Flipper.json", "w") as new_file:
+            json.dump([], new_file)
+    if not os.path.isfile("db/Backup.json"):
+        with open("db/Backup.json", "w") as new_file:
+            json.dump([], new_file)  
+    
 
 def unix2text(unix_timestamp:int):
     """converts a unix timestamp to a human readable format."""
@@ -297,9 +308,3 @@ def init():
         print_ascii_art("Thank you for using Wall of Flippers... Goodbye!")
         print("\n[!] Wall of Flippers >> Exiting...")
         sys.exit()
-
-def check_json_file_exist():
-    """Check that Flipper.json file exists. If not creates one with an empty array inside"""
-    if not os.path.isfile("Flipper.json"):
-        with open("Flipper.json", "w") as new_file:
-            json.dump([], new_file)

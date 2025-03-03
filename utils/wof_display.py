@@ -40,17 +40,17 @@ def display(custom_text:str=None):
     """displays the data in a nice format"""
     try:
         # Load flipper data from Flipper.json
-        with open('Flipper.json', 'r', encoding='utf-8') as flipper_file:
+        with open('db/Flipper.json', 'r', encoding='utf-8') as flipper_file:
             flipper_data = json.load(flipper_file)
-            with open('backup.json', 'w', encoding='utf-8') as flipper_file:
+            with open('db/Backup.json', 'w', encoding='utf-8') as flipper_file:
                 json.dump(flipper_data, flipper_file, indent=4)
     # on any error, return
     except:
         print("Error: Could not load Flipper.json")
         # open the backup and save to the main file
-        with open('backup.json', 'r', encoding='utf-8') as flipper_file:
+        with open('db/Backup.json', 'r', encoding='utf-8') as flipper_file:
             flipper_data = json.load(flipper_file)
-        with open('Flipper.json', 'w', encoding='utf-8') as flipper_file:
+        with open('db/Flipper.json', 'w', encoding='utf-8') as flipper_file:
             json.dump(flipper_data, flipper_file, indent=4) # save the backup to the main file
     # Update base_flippers list with flipper data
     cache.wof_data['base_flippers'] = [key for key in flipper_data]

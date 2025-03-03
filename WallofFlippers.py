@@ -106,7 +106,7 @@ async def detection_async(os_param:str, detection_type=0):
         cache.wof_data['bool_isScanning'] = False
 
 # Start of the program
-library.check_json_file_exist()
+library.required2files()
 os.system('cls' if os.name == 'nt' else 'clear')
 
 cache.wof_data['system_type'] = os.name
