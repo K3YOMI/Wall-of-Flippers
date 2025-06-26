@@ -1,4 +1,61 @@
+# Virtual environments
 .venv
-__pycache__
+venv/
+virtualenv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.cover
+*.log
+.tox/
+.nox/
+
+# Claude settings
+.claude/*
+
+# Project specific
 db/Flipper.json
 db/Backup.json
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Poetry
+# Note: We intentionally do NOT ignore poetry.lock
+# poetry.lock should be committed to version control
+dist/
+poetry.toml
