@@ -92,7 +92,7 @@ wof_data = {
         "Let's hunt some flippers", 
         "Ya'll like war driving flippers?", 
         "Skid detector 9000",
-        "Nya- Who?" # Starflight was totally not here
+        "Nya- Who?", # Starflight was totally not here
         "I'm a flipper, you're a flipper, we're all flippers!",
         "Flipper Zero : Advanced Warefare",
         "Don't be a skid!!!!!!",
