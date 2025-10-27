@@ -92,14 +92,14 @@ wof_data = {
         "Let's hunt some flippers", 
         "Ya'll like war driving flippers?", 
         "Skid detector 9000",
+        "Nya- Who?" # Starflight was totally not here
         "I'm a flipper, you're a flipper, we're all flippers!",
         "Flipper Zero : Advanced Warefare",
         "Don't be a skid!!!!!!",
-        "discord.gg/squachtopia",
+        "Only 3 commits lol",
+        "https://discord.gg/TuQ9mSm5Y6 (Hack Nexus)",
         "Hack the planet!",
 	    "Now headless with commands, WallofFlippers.py -h",
-        "Nyaaaaaa",
-        "Linecon + BT Settings Flood = Fixed",
         "Please do not put your flipper in wet damp areas."
     ],
     "init_directory_options": [ # Main Menu Options
