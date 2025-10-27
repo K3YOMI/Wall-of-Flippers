@@ -160,7 +160,6 @@ def flipper2Validation(data:list, os:str): # Validates incoming flippers/ble pac
     if os == "nt":
         device_mac = str(data.address.lower())
         device_name = str(data.name)
-        advertisment_data = data.metadata.get('manufacturer_data')
         advertisement_uid = str(data.metadata.get('uids')).replace("['", "").replace("']", "")
         for key, value in cache.wof_data['flipper_types'].items():
             if key in advertisement_uid:
@@ -198,7 +197,7 @@ def flipper2Validation(data:list, os:str): # Validates incoming flippers/ble pac
             if device_name.lower().startswith("flipper"):
                 isFlipper = True
                 detectionType = "Name"
-            elif device_mac.startswith(("80:e1:26", "80:e1:27")):
+            elif device_mac.startswith(("80:e1:26", "80:e1:27", "0c:fa:22")): # FLIPPER DEVICES INC (https://maclookup.app/macaddress/0cfa22)
                 detectionType = "Address"
                 isFlipper = True
             else:

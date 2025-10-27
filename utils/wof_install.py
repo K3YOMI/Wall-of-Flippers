@@ -22,13 +22,11 @@
 #                                              /_/   /_/
 
 # Standard library Imports
-import platform
 import os
 import sys
 import json
 
 # Wall of Flippers "library" for important functions and classes :3
-import utils.wof_cache as cache # Wall of Flippers "cache" for important configurations and data :3
 import utils.wof_library as library # Wall of Flippers "library" for important functions and classes :3
 
 
