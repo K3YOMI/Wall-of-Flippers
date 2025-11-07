@@ -1,0 +1,83 @@
+[tool.poetry]
+name = "wallofflippers"
+version = "0.1.0"
+description = "Wall of Flippers - Bluetooth monitoring tool"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+license = "MIT"
+packages = [{include = "utils"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+bluepy = {version = "*", markers = "sys_platform == 'linux'"}
+bleak = {version = "*", markers = "sys_platform != 'linux'"}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+pytest-mock = "^3.11.0"
+
+[tool.poetry.scripts]
+test = "pytest:main"
+tests = "pytest:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*", "*Tests"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--verbose",
+    "-ra",
+    "--cov=utils",
+    "--cov=WallofFlippers",
+    "--cov-report=html",
+    "--cov-report=xml",
+    "--cov-report=term-missing:skip-covered"
+]
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "slow: Slow tests"
+]
+
+[tool.coverage.run]
+source = ["utils", "."]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "*/__pycache__/*",
+    "*/venv/*",
+    "*/virtualenv/*",
+    "*/.venv/*",
+    "*/site-packages/*",
+    "setup.py",
+    "conftest.py"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if __name__ == .__main__.:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if False:"
+]
+fail_under = 80
+precision = 2
+show_missing = true
+skip_covered = false
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.coverage.xml]
+output = "coverage.xml"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
